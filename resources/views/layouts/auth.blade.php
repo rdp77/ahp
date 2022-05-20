@@ -20,19 +20,6 @@
                                     @yield('content')
                                 </div>
                             </div>
-                            <div class="mt-5 text-muted text-center">
-                                @if (Request::route()->getName() == 'login')
-                                {{ __('auth.noAccount') }}
-                                <a href="{{ route('register') }}">
-                                    {{ __('auth.createAccount') }}
-                                </a>
-                                @else
-                                {{ __('auth.haveAccount') }}
-                                <a href="{{ route('login') }}">
-                                    {{ __('auth.loginAccount') }}
-                                </a>
-                                @endif
-                            </div>
                             <div class="simple-footer">
                                 @include('layouts.components.credit')
                             </div>

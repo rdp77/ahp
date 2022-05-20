@@ -18,7 +18,7 @@ use App\Http\Controllers\Template\MainController;
 // Front End
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
 // Backend
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');

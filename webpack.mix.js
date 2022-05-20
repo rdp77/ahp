@@ -32,6 +32,12 @@ mix.styles(
     "public/assets/style.css"
 ).version();
 
+// CSS Landing Page
+mix.styles(
+    ["resources/css/custom-landing.css", "resources/css/landing.css"],
+    "public/assets/landing-style.css"
+).version();
+
 // Javascript
 mix.scripts(
     [
