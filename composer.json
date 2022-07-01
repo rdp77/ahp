@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "bardiz12/ahp": "dev-master",
         "appslabke/lara-izitoast": "^1.1",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -42,7 +43,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "Bardiz12\\ahp\\Tests\\": "vendor/bardiz12/ahp/tests/"
         }
     },
     "scripts": {
