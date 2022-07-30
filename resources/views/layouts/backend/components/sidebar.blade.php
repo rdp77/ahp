@@ -31,6 +31,27 @@
                     </li>
                 </ul>
             </li>
+            <li class="nav-item dropdown {{ Request::route()->getName() == 'users.index' ? 'active' : (
+                Request::route()->getName() == 'users.create' ? 'active' : (
+                        Request::route()->getName() == 'users.edit' ? 'active' : (
+                            Request::route()->getName() == 'users.show' ? 'active' : ''))) }}">
+                <a href="{{ route('users.index') }}" class="nav-link has-dropdown" data-toggle="dropdown">
+                    <i class="fas fa-building-columns"></i>
+                    <span>{{ __('Universitas') }}</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::route()->getName() == 'users.index' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('users.index') }}">{{ __('Fakultas') }}</a>
+                    </li>
+                    <li class="{{ Request::route()->getName() == 'users.create' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('users.create') }}">{{ __('Jurusan') }}</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
+        <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
+            <a href="https://getstisla.com/docs" class="btn btn-primary btn-lg btn-block btn-icon-split">
+                <i class="fas fa-comment-dots"></i> Feedback
+            </a>
+        </div>
     </aside>
 </div>

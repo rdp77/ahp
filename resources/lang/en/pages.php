@@ -13,8 +13,8 @@ return [
     |
     */
 
-    'title' => 'Wreative',
-    'brand' => 'WEA',
+    'title' => 'Jurusan Finder',
+    'brand' => 'JF',
     'edit' => 'Save Changes',
     'save' => 'Save',
     'delete' => 'Delete',

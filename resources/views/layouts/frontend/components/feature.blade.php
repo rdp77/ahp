@@ -4,7 +4,7 @@
             <div class="col-lg-10 offset-lg-1">
                 <h2>Dirancang untuk <span class="text-primary"> calon mahasiswa yang bingung </span> memilih jurusan
                 </h2>
-                <p class="lead">Terintegerasi langsung dengan data fakta yang dimiliki oleh Universitas 17 Agustus 1945
+                <p class="lead">Terintegerasi langsung dengan data fakta yang dimiliki oleh seluruh Universitas di
                     Surabaya.</p>
             </div>
         </div>
@@ -37,7 +37,7 @@
                             <i class="fa-solid fa-handshake"></i>
                         </div>
                         <h5>Didukung</h5>
-                        <p>Aplikasi Jurusan Finder resmi didukung oleh Universitas 17 Agustus 1945 Surabaya.</p>
+                        <p>Aplikasi Jurusan Finder resmi didukung oleh seluruh Mahasiswa Surabaya.</p>
                     </div>
                     <div class="feature">
                         <div class="feature-icon">

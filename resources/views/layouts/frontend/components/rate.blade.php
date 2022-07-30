@@ -1,4 +1,4 @@
-<section class="download-section mb-2">
+<section class="download-section" style="height:0px">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-7">
