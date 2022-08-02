@@ -16,7 +16,7 @@
                     <h4>{{ __('Reaksi Senang') }}</h4>
                 </div>
                 <div class="card-body">
-                    {{ $logCount }}
+                    {{ $like }}
                 </div>
             </div>
         </div>
@@ -31,7 +31,7 @@
                     <h4>{{ __('Reaksi Tidak Senang') }}</h4>
                 </div>
                 <div class="card-body">
-                    {{ $users }}
+                    {{ $dislike }}
                 </div>
             </div>
         </div>
@@ -91,7 +91,7 @@
                     <h4>{{ __('Total Universitas') }}</h4>
                 </div>
                 <div class="card-body">
-                    {{ $users }}
+                    {{ $university }}
                 </div>
             </div>
         </div>
@@ -106,7 +106,7 @@
                     <h4>{{ __('Total Fakultas') }}</h4>
                 </div>
                 <div class="card-body">
-                    {{ $logCount }}
+                    {{ $faculty }}
                 </div>
             </div>
         </div>
@@ -121,7 +121,7 @@
                     <h4>{{ __('Total Jurusan') }}</h4>
                 </div>
                 <div class="card-body">
-                    {{ $users }}
+                    {{ $major }}
                 </div>
             </div>
         </div>

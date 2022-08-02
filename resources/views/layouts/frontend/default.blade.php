@@ -8,6 +8,9 @@
     @include('layouts.frontend.components.search')
     @include('layouts.frontend.components.rate')
     @include('layouts.frontend.components.footer')
+    @include('layouts.frontend.components.feedback')
+    @include('layouts.components.footer')
+    @yield('script')
 </body>
 
 </html>
