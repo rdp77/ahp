@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLog extends Migration
+class CreateActivityTypeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateLog extends Migration
      */
     public function up()
     {
-        Schema::create('log', function (Blueprint $table) {
+        Schema::create('activity_type', function (Blueprint $table) {
             $table->id();
-            $table->string('info');
-            $table->foreignId('u_id');
-            $table->string('url');
-            $table->string('user_agent');
-            $table->string('ip');
-            $table->timestamp('added_at');
+            $table->string('name');
+            $table->timestamps();
         });
     }
 
@@ -31,6 +27,6 @@ class CreateLog extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('log');
+        Schema::dropIfExists('activity_type');
     }
 }

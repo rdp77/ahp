@@ -63,22 +63,6 @@ class UniversityController extends Controller
 
     public function store(Request $req)
     {
-        $validator = Validator::make($req->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-
-        $validator = $this->MainController
-            ->validator($validator->errors()->all());
-
-        if (count($validator) != 0) {
-            return Response::json([
-                'status' => 'error',
-                'data' => $validator
-            ]);
-        }
-
         User::create([
             'name' => $req->name,
             'username' => $req->username,
