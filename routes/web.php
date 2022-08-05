@@ -47,4 +47,5 @@ Route::prefix('server-monitor')->group(function () {
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/data/users.php';
+require __DIR__ . '/data/activity.php';
 require __DIR__ . '/data/university.php';

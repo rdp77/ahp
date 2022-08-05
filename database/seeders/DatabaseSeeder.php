@@ -20,9 +20,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             User::class,
             ProvincesSeeder::class,
-            CitiesSeeder::class,
-            DistrictsSeeder::class,
-            VillagesSeeder::class,
+            // CitiesSeeder::class,
+            // DistrictsSeeder::class,
+            // VillagesSeeder::class,
             ActivityType::class,
             ActivityList::class,
         ]);
