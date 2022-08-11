@@ -18,8 +18,21 @@ class Major extends Model
         'faculty_id',
     ];
 
+    // public function faculty()
+    // {
+    //     return $this->belongsTo(Faculty::class);
+    // }
+
+    public function checkDuplicate()
+    {
+        $duplicate = self::where('name', 'LIKE', $this->name . '%')->where('id', '!=', $this->id)
+            ->pluck('id')->toArray();
+        if ($duplicate) return $duplicate;
+        else return false;
+    }
+
     public function faculty()
     {
-        $this->belongsTo(Faculty::class);
+        return $this->belongsToMany(Faculty::class, 'faculty_major', 'major_id', 'faculty_id');
     }
 }

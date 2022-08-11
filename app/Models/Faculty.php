@@ -15,19 +15,34 @@ class Faculty extends Model
      */
     protected $fillable = [
         'name',
-        'code',
-        'email',
-        'address',
-        'phone'
+        'university_id'
     ];
+
+    // public function university()
+    // {
+    //     return $this->belongsTo(University::class);
+    // }
+
+    // public function major()
+    // {
+    //     return $this->hasMany(Major::class);
+    // }
+
+    public function checkDuplicate()
+    {
+        $duplicate = self::where('name', 'LIKE', $this->name . '%')->where('id', '!=', $this->id)
+            ->pluck('id')->toArray();
+        if ($duplicate) return $duplicate;
+        else return false;
+    }
 
     public function university()
     {
-        $this->belongsTo(University::class);
+        return $this->belongsToMany(University::class, 'university_faculty', 'faculty_id', 'university_id');
     }
 
-    public function Major()
+    public function major()
     {
-        $this->hasMany(Major::class);
+        return $this->belongsToMany(Major::class, 'faculty_major', 'faculty_id', 'major_id');
     }
 }

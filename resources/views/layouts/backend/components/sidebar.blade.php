@@ -49,22 +49,27 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item dropdown {{ Request::route()->getName() == 'users.index' ? 'active' : (
-                Request::route()->getName() == 'users.create' ? 'active' : (
-                        Request::route()->getName() == 'users.edit' ? 'active' : (
-                            Request::route()->getName() == 'users.show' ? 'active' : ''))) }}">
-                <a href="{{ route('users.index') }}" class="nav-link has-dropdown" data-toggle="dropdown">
+            <li class="nav-item dropdown {{ Request::route()->getName() == 'university.index' ? 'active' : (
+                        Request::route()->getName() == 'university.edit' ? 'active' : (
+                                Request::route()->getName() == 'faculty.index' ? 'active' : (
+                        Request::route()->getName() == 'faculty.edit' ? 'active' : (
+                                Request::route()->getName() == 'major.index' ? 'active' : (                
+                        Request::route()->getName() == 'major.edit' ? 'active' : ''))))) }}">
+                <a href="{{ route('university.index') }}" class="nav-link has-dropdown" data-toggle="dropdown">
                     <i class="fas fa-building-columns"></i>
                     <span>{{ __('Universitas') }}</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::route()->getName() == 'users.index' ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('users.index') }}">{{ __('Daftar') }}</a>
+                    <li class="{{ Request::route()->getName() == 'university.index' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('university.index') }}">{{ __('Semua') }}</a>
                     </li>
-                    <li class="{{ Request::route()->getName() == 'users.index' ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('users.index') }}">{{ __('Fakultas') }}</a>
+                    <li class="{{ Request::route()->getName() == 'university.index' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('university.index') }}">{{ __('Daftar') }}</a>
                     </li>
-                    <li class="{{ Request::route()->getName() == 'users.create' ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('users.create') }}">{{ __('Jurusan') }}</a>
+                    <li class="{{ Request::route()->getName() == 'faculty.index' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('faculty.index') }}">{{ __('Fakultas') }}</a>
+                    </li>
+                    <li class="{{ Request::route()->getName() == 'major.index' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('major.index') }}">{{ __('Jurusan') }}</a>
                     </li>
                 </ul>
             </li>

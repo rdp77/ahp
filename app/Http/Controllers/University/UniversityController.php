@@ -3,14 +3,11 @@
 namespace App\Http\Controllers\University;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Template\MainController;
-use App\Models\User;
+use App\Http\Requests\University\UniversityRequest;
+use App\Models\Faculty;
+use App\Models\University;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
 class UniversityController extends Controller
@@ -33,114 +30,85 @@ class UniversityController extends Controller
 
     public function index(Request $req)
     {
+        // University::with('faculty')->get()->dd();
+        // Faculty::with('major')->get()->dd();
+        // University::with('faculty')->get()->first()->faculty->first()->major->dd();
+        University::with('major')->get()->dd();
         if ($req->ajax()) {
-            $data = User::where('id', '!=', Auth::user()->id)->get();
+            $data = University::all();
             return Datatables::of($data)
+                ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<div class="btn-group">';
-                    $actionBtn .= '<a onclick="reset(' . $row->id . ')" class="btn btn-primary text-white" style="cursor:pointer;">Reset Password</a>';
-                    $actionBtn .= '<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                            data-toggle="dropdown">
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>';
-                    $actionBtn .= '<div class="dropdown-menu">
-                            <a class="dropdown-item" href="' . route('users.edit', $row->id) . '">Edit</a>';
-                    $actionBtn .= '<a onclick="del(' . $row->id . ')" class="dropdown-item" style="cursor:pointer;">Hapus</a>';
-                    $actionBtn .= '</div></div>';
+                    $actionBtn = '<a class="btn btn-icon btn-primary btn-block m-1"';
+                    $actionBtn .= 'href="' . route('university.edit', $row->id) . '"><i class="far fa-edit"></i></a>';
+                    $actionBtn .= '<a onclick="del(' . $row->id . ')" class="btn btn-icon btn-danger btn-block m-1"';
+                    $actionBtn .= 'style="cursor:pointer;color:white"><i class="fas fa-trash"></i></a>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
 
-        return view('pages.backend.data.users.indexUsers');
+        return view('pages.backend.data.university.indexUniversity');
     }
 
-    public function create()
+    public function store(UniversityRequest $req)
     {
-        return view('pages.backend.data.users.createUsers');
-    }
+        $performedOn = University::create($req->all());
 
-    public function store(Request $req)
-    {
-        User::create([
-            'name' => $req->name,
-            'username' => $req->username,
-            'password' => Hash::make($req->password),
-            'created_by' => Auth::user()->name,
-            'updated_by' => '',
-            'deleted_by' => ''
-        ]);
-
-        $this->MainController->createLog(
+        // Create Log
+        $this->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            Auth::user()->name . ' membuat pengguna baru'
+            $this->getStatus(3),
+            true,
+            University::find($performedOn->id)
         );
 
         return Response::json([
             'status' => 'success',
-            'data' => 'Berhasil membuat pengguna baru'
+            'data' => 'Berhasil membuat universitas baru'
         ]);
     }
 
     public function edit($id)
     {
-        $user = User::find($id);
-        return view('pages.backend.data.users.updateUsers', ['user' => $user]);
+        $university = University::find($id);
+        return view('pages.backend.data.university.updateUniversity', compact('university'));
     }
 
-    public function update($id, Request $req)
+    public function update($id, UniversityRequest $req)
     {
-        $validator = Validator::make($req->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', 'unique:users'],
-        ]);
+        University::where('id', $id)
+            ->update($req->except('_token', '_method'));
 
-        $validator = $this->MainController
-            ->validator($validator->errors()->all());
-
-        if (count($validator) != 0) {
-            return Response::json([
-                'status' => 'error',
-                'data' => $validator
-            ]);
-        }
-
-        $this->MainController->createLog(
+        // Create Log
+        $this->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            Auth::user()->name . ' mengubah pengguna ' . User::find($id)->name
+            $this->getStatus(3),
+            true,
+            University::find($id)
         );
-
-        $createdBy = User::find($id)->created_by;
-
-        User::where('id', $id)
-            ->update([
-                'name' => $req->name,
-                'username' => $req->username,
-                'created_by' => $createdBy,
-                'updated_by' => Auth::user()->name
-            ]);
 
         return Response::json([
             'status' => 'success',
-            'data' => 'Berhasil mengubah pengguna'
+            'data' => 'Berhasil mengubah universitas'
         ]);
     }
 
     public function destroy(Request $req, $id)
     {
-        $user = User::find($id);
-        $user->deleted_by = Auth::user()->name;
-        $user->save();
+        $university = University::find($id);
 
-        User::destroy($id);
+        $university->delete();
 
-        $this->MainController->createLog(
+        // Create Log
+        $this->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            Auth::user()->name . ' menghapus data pengguna ke recycle bin'
+            $this->getStatus(5),
+            false
         );
 
         return Response::json(['status' => 'success']);

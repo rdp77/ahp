@@ -4,6 +4,9 @@ namespace App\Http\Controllers\University;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Template\MainController;
+use App\Models\Faculty;
+use App\Models\Major;
+use App\Models\University;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,126 +40,77 @@ class MajorController extends Controller
             $data = User::where('id', '!=', Auth::user()->id)->get();
             return Datatables::of($data)
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<div class="btn-group">';
-                    $actionBtn .= '<a onclick="reset(' . $row->id . ')" class="btn btn-primary text-white" style="cursor:pointer;">Reset Password</a>';
-                    $actionBtn .= '<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                            data-toggle="dropdown">
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>';
-                    $actionBtn .= '<div class="dropdown-menu">
-                            <a class="dropdown-item" href="' . route('users.edit', $row->id) . '">Edit</a>';
-                    $actionBtn .= '<a onclick="del(' . $row->id . ')" class="dropdown-item" style="cursor:pointer;">Hapus</a>';
-                    $actionBtn .= '</div></div>';
+                    $actionBtn = '<a class="btn btn-icon btn-primary btn-block m-1"';
+                    $actionBtn .= 'href="' . route('sparepart.edit', $row->id) . '"><i class="far fa-edit"></i></a>';
+                    $actionBtn .= '<a onclick="del(' . $row->id . ')" class="btn btn-icon btn-danger btn-block m-1"';
+                    $actionBtn .= 'style="cursor:pointer;color:white"><i class="fas fa-trash"></i></a>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
 
-        return view('pages.backend.data.users.indexUsers');
+        return view('pages.backend.data.university.major.indexMajor');
     }
 
     public function create()
     {
-        return view('pages.backend.data.users.createUsers');
+        $university = University::all();
+        $faculty = Faculty::all();
+        return view('pages.backend.data.university.major.createMajor', compact('university', 'faculty'));
     }
 
     public function store(Request $req)
     {
-        $validator = Validator::make($req->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-
-        $validator = $this->MainController
-            ->validator($validator->errors()->all());
-
-        if (count($validator) != 0) {
-            return Response::json([
-                'status' => 'error',
-                'data' => $validator
-            ]);
-        }
-
-        User::create([
-            'name' => $req->name,
-            'username' => $req->username,
-            'password' => Hash::make($req->password),
-            'created_by' => Auth::user()->name,
-            'updated_by' => '',
-            'deleted_by' => ''
-        ]);
+        Major::create($req->all());
 
         $this->MainController->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            Auth::user()->name . ' membuat pengguna baru'
+            Auth::user()->name . ' membuat jurusan baru'
         );
 
         return Response::json([
             'status' => 'success',
-            'data' => 'Berhasil membuat pengguna baru'
+            'data' => 'Berhasil membuat jurusan baru'
         ]);
     }
 
     public function edit($id)
     {
-        $user = User::find($id);
-        return view('pages.backend.data.users.updateUsers', ['user' => $user]);
+        $university = University::all();
+        $faculty = Faculty::all();
+        $major = Major::find($id);
+        return view('pages.backend.data.university.major.updateMajor', compact('university', 'faculty', 'major'));
     }
 
     public function update($id, Request $req)
     {
-        $validator = Validator::make($req->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', 'unique:users'],
-        ]);
-
-        $validator = $this->MainController
-            ->validator($validator->errors()->all());
-
-        if (count($validator) != 0) {
-            return Response::json([
-                'status' => 'error',
-                'data' => $validator
-            ]);
-        }
+        Major::where('id', $id)
+            ->update($req->except('_token', '_method'));
 
         $this->MainController->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            Auth::user()->name . ' mengubah pengguna ' . User::find($id)->name
+            Auth::user()->name . ' mengubah jurusan ' . User::find($id)->name
         );
-
-        $createdBy = User::find($id)->created_by;
-
-        User::where('id', $id)
-            ->update([
-                'name' => $req->name,
-                'username' => $req->username,
-                'created_by' => $createdBy,
-                'updated_by' => Auth::user()->name
-            ]);
 
         return Response::json([
             'status' => 'success',
-            'data' => 'Berhasil mengubah pengguna'
+            'data' => 'Berhasil mengubah jurusan'
         ]);
     }
 
     public function destroy(Request $req, $id)
     {
-        $user = User::find($id);
-        $user->deleted_by = Auth::user()->name;
-        $user->save();
+        $major = Major::find($id);
 
-        User::destroy($id);
+        $major->delete();
 
         $this->MainController->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            Auth::user()->name . ' menghapus data pengguna ke recycle bin'
+            Auth::user()->name . ' menghapus data jurusan ke recycle bin'
         );
 
         return Response::json(['status' => 'success']);
@@ -177,23 +131,21 @@ class MajorController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('pages.backend.data.users.recycleUsers');
+        return view('pages.backend.data.university.major.recycleMajor');
     }
 
     public function restore($id, Request $req)
     {
-        User::onlyTrashed()
+        Major::onlyTrashed()
             ->where('id', $id)
             ->restore();
 
-        $user = User::find($id);
-        $user->deleted_by = '';
-        $user->save();
+        $major = Major::find($id);
 
         $this->MainController->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            Auth::user()->name . ' mengembalikan data pengguna'
+            Auth::user()->name . ' mengembalikan data jurusan'
         );
 
         return Response::json(['status' => 'success']);
@@ -201,14 +153,14 @@ class MajorController extends Controller
 
     public function delete($id, Request $req)
     {
-        User::onlyTrashed()
+        Major::onlyTrashed()
             ->where('id', $id)
             ->forceDelete();
 
         $this->MainController->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            Auth::user()->name . ' menghapus data pengguna secara permanen'
+            Auth::user()->name . ' menghapus data jurusan secara permanen'
         );
 
         return Response::json(['status' => 'success']);
@@ -216,22 +168,22 @@ class MajorController extends Controller
 
     public function deleteAll(Request $req)
     {
-        $user = User::onlyTrashed()
+        $major = Major::onlyTrashed()
             ->forceDelete();
 
-        if ($user == 0) {
+        if ($major == 0) {
             return Response::json([
                 'status' => 'error',
                 'data' => "Tidak ada data di recycle bin"
             ]);
         } else {
-            $user;
+            $major;
         }
 
         $this->MainController->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            Auth::user()->name . ' menghapus semua data pengguna secara permanen'
+            Auth::user()->name . ' menghapus semua data jurusan secara permanen'
         );
 
         return Response::json(['status' => 'success']);

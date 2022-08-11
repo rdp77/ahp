@@ -53,7 +53,8 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.statically.io/gh/lcdsantos/jQuery-Selectric/0b92c266/public/selectric.css">
     <link rel="stylesheet" href="{{ mix('assets/style.css') }}">
-    @if (Request::route()->getName() == 'home')
+    @if(Request::route() == null)
+    @elseif(Request::route()->getName() == 'home')
     <link rel="stylesheet" href="{{ mix('assets/landing-style.css') }}">
     @endif
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css"

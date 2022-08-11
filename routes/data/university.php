@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\Auth\NewPasswordController;
-use App\Http\Controllers\UsersController;
+use App\Http\Controllers\University\FacultyController;
+use App\Http\Controllers\University\MajorController;
+use App\Http\Controllers\University\UniversityController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,15 +19,15 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'data'], function () {
     Route::resource('university', UniversityController::class)
         ->except([
-            'show',
+            'show', 'create'
         ]);
     Route::resource('faculty', FacultyController::class)
         ->except([
-            'show',
+            'show', 'create'
         ]);
     Route::resource('major', MajorController::class)
         ->except([
-            'show',
+            'show', 'create'
         ]);
 });
 
