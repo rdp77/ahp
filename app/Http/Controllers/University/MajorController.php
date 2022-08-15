@@ -3,17 +3,10 @@
 namespace App\Http\Controllers\University;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Template\MainController;
-use App\Models\Faculty;
+use App\Http\Requests\University\MajorRequest;
 use App\Models\Major;
-use App\Models\University;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
 class MajorController extends Controller
@@ -37,11 +30,12 @@ class MajorController extends Controller
     public function index(Request $req)
     {
         if ($req->ajax()) {
-            $data = User::where('id', '!=', Auth::user()->id)->get();
+            $data = Major::all();
             return Datatables::of($data)
+                ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $actionBtn = '<a class="btn btn-icon btn-primary btn-block m-1"';
-                    $actionBtn .= 'href="' . route('sparepart.edit', $row->id) . '"><i class="far fa-edit"></i></a>';
+                    $actionBtn .= 'href="' . route('major.edit', $row->id) . '"><i class="far fa-edit"></i></a>';
                     $actionBtn .= '<a onclick="del(' . $row->id . ')" class="btn btn-icon btn-danger btn-block m-1"';
                     $actionBtn .= 'style="cursor:pointer;color:white"><i class="fas fa-trash"></i></a>';
                     return $actionBtn;
@@ -53,21 +47,17 @@ class MajorController extends Controller
         return view('pages.backend.data.university.major.indexMajor');
     }
 
-    public function create()
+    public function store(MajorRequest $req)
     {
-        $university = University::all();
-        $faculty = Faculty::all();
-        return view('pages.backend.data.university.major.createMajor', compact('university', 'faculty'));
-    }
+        $performedOn =  Major::create($req->all());
 
-    public function store(Request $req)
-    {
-        Major::create($req->all());
-
-        $this->MainController->createLog(
+        // Create Log
+        $this->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            Auth::user()->name . ' membuat jurusan baru'
+            $this->getStatus(3),
+            true,
+            Major::find($performedOn->id)
         );
 
         return Response::json([
@@ -78,21 +68,22 @@ class MajorController extends Controller
 
     public function edit($id)
     {
-        $university = University::all();
-        $faculty = Faculty::all();
         $major = Major::find($id);
-        return view('pages.backend.data.university.major.updateMajor', compact('university', 'faculty', 'major'));
+        return view('pages.backend.data.university.major.updateMajor', compact('major'));
     }
 
-    public function update($id, Request $req)
+    public function update($id, MajorRequest $req)
     {
         Major::where('id', $id)
             ->update($req->except('_token', '_method'));
 
-        $this->MainController->createLog(
+        // Create Log
+        $this->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            Auth::user()->name . ' mengubah jurusan ' . User::find($id)->name
+            $this->getStatus(3),
+            true,
+            Major::find($id)
         );
 
         return Response::json([
@@ -107,10 +98,13 @@ class MajorController extends Controller
 
         $major->delete();
 
-        $this->MainController->createLog(
+        // Create Log
+        $this->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            Auth::user()->name . ' menghapus data jurusan ke recycle bin'
+            $this->getStatus(3),
+            true,
+            $major
         );
 
         return Response::json(['status' => 'success']);
@@ -119,8 +113,9 @@ class MajorController extends Controller
     public function recycle(Request $req)
     {
         if ($req->ajax()) {
-            $data = User::onlyTrashed()->get();
+            $data = Major::onlyTrashed()->get();
             return Datatables::of($data)
+                ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $actionBtn = '<button onclick="restore(' . $row->id . ')" class="btn btn btn-primary 
                 btn-action mb-1 mt-1 mr-1">Kembalikan</button>';
@@ -142,12 +137,14 @@ class MajorController extends Controller
 
         $major = Major::find($id);
 
-        $this->MainController->createLog(
+        // Create Log
+        $this->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            Auth::user()->name . ' mengembalikan data jurusan'
+            $this->getStatus(3),
+            true,
+            $major
         );
-
         return Response::json(['status' => 'success']);
     }
 
@@ -157,10 +154,12 @@ class MajorController extends Controller
             ->where('id', $id)
             ->forceDelete();
 
-        $this->MainController->createLog(
+        // Create Log
+        $this->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            Auth::user()->name . ' menghapus data jurusan secara permanen'
+            $this->getStatus(3),
+            false
         );
 
         return Response::json(['status' => 'success']);
@@ -180,10 +179,12 @@ class MajorController extends Controller
             $major;
         }
 
-        $this->MainController->createLog(
+        // Create Log
+        $this->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            Auth::user()->name . ' menghapus semua data jurusan secara permanen'
+            $this->getStatus(3),
+            false
         );
 
         return Response::json(['status' => 'success']);

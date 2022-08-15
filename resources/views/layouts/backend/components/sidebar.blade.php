@@ -54,13 +54,14 @@
                                 Request::route()->getName() == 'faculty.index' ? 'active' : (
                         Request::route()->getName() == 'faculty.edit' ? 'active' : (
                                 Request::route()->getName() == 'major.index' ? 'active' : (                
-                        Request::route()->getName() == 'major.edit' ? 'active' : ''))))) }}">
+                        Request::route()->getName() == 'major.edit' ? 'active' : (
+                            Request::route()->getName() == 'university.all' ? 'active' : '')))))) }}">
                 <a href="{{ route('university.index') }}" class="nav-link has-dropdown" data-toggle="dropdown">
                     <i class="fas fa-building-columns"></i>
                     <span>{{ __('Universitas') }}</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::route()->getName() == 'university.index' ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('university.index') }}">{{ __('Semua') }}</a>
+                    <li class="{{ Request::route()->getName() == 'university.all' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('university.all') }}">{{ __('Semua') }}</a>
                     </li>
                     <li class="{{ Request::route()->getName() == 'university.index' ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('university.index') }}">{{ __('Daftar') }}</a>

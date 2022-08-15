@@ -118,6 +118,11 @@ $("#modal").fireModal({
     autoFocus: true,
     onFormSubmit: function (modal, e, form) {
         let form_data = $(e.target).serialize();
+        let name = $("input[name=name]");
+        let email = $("input[name=email]");
+        let code = $("input[name=code]");
+        let phone = $("input[name=phone]");
+        let address = $("textarea[name=address]");
         let fake_ajax = setTimeout(function () {
             form.stopProgress();
             $.ajax({
@@ -130,6 +135,11 @@ $("#modal").fireModal({
                     }).then(() => {
                         table.draw();
                         $("#fire-modal-2").modal("hide");
+                        name.val("");
+                        email.val("");
+                        code.val("");
+                        phone.val("");
+                        address.val("");
                     });
                 },
                 statusCode: {

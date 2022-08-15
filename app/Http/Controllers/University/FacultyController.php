@@ -37,9 +37,6 @@ class FacultyController extends Controller
             $data = Faculty::with('university')->get();
             return Datatables::of($data)
                 ->addIndexColumn()
-                ->addColumn('university', function ($row) {
-                    return $row->university->name;
-                })
                 ->addColumn('action', function ($row) {
                     $actionBtn = '<a class="btn btn-icon btn-primary btn-block m-1"';
                     $actionBtn .= 'href="' . route('faculty.edit', $row->id) . '"><i class="far fa-edit"></i></a>';
@@ -80,37 +77,19 @@ class FacultyController extends Controller
         return view('pages.backend.data.university.faculty.updateFaculty', compact('faculty', 'university'));
     }
 
-    public function update($id, Request $req)
+    public function update($id, FacultyRequest $req)
     {
-        $count = count($req->input('university_id'));
-        if ($count > 1) {
-            foreach ($req->input('university_id') as $university) {
-                $performedOn = Faculty::create(
-                    $req->except('university_id') + ['university_id' => $university]
-                );
-                // Create Log
-                $this->createLog(
-                    $req->header('user-agent'),
-                    $req->ip(),
-                    $this->getStatus(3),
-                    true,
-                    Faculty::find($performedOn->id)
-                );
-            }
-        } else {
-            Faculty::where('id', $id)
-                ->update(
-                    [$req->except('_token', '_method') + ['university_id' => $req->university_id[0]]]
-                );
-            // Create Log
-            $this->createLog(
-                $req->header('user-agent'),
-                $req->ip(),
-                $this->getStatus(3),
-                true,
-                Faculty::find($performedOn->id)
-            );
-        }
+        Faculty::where('id', $id)
+            ->update($req->except('_token', '_method'));
+
+        // Create Log
+        $this->createLog(
+            $req->header('user-agent'),
+            $req->ip(),
+            $this->getStatus(3),
+            true,
+            Faculty::find($id)
+        );
 
         // Create Log
         $this->createLog(

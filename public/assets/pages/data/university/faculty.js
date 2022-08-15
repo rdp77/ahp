@@ -25,7 +25,6 @@ var table = $("#table").DataTable({
             searchable: false,
         },
         { data: "name" },
-        { data: "university" },
         { data: "action", orderable: false, searchable: true },
     ],
     buttons: [
@@ -115,6 +114,7 @@ $("#modal").fireModal({
     autoFocus: true,
     onFormSubmit: function (modal, e, form) {
         let form_data = $(e.target).serialize();
+        let name = $("input[name=name]");
         let fake_ajax = setTimeout(function () {
             form.stopProgress();
             $.ajax({
@@ -127,6 +127,7 @@ $("#modal").fireModal({
                     }).then(() => {
                         table.draw();
                         $("#fire-modal-2").modal("hide");
+                        name.val("");
                     });
                 },
                 statusCode: {

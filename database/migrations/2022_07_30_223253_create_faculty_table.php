@@ -15,8 +15,7 @@ class CreateFacultyTable extends Migration
     {
         Schema::create('faculty', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            // $table->foreignId('university_id')->constrained('university')->nullable();
+            $table->string('name');;
             $table->timestamps();
         });
     }

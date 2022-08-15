@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'data'], function () {
+    Route::get('/university-all', [UniversityController::class, 'list'])
+        ->name('university.all');
     Route::resource('university', UniversityController::class)
         ->except([
             'show', 'create'

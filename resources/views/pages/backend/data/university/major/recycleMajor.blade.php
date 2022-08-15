@@ -1,16 +1,16 @@
 @extends('layouts.backend.default')
-@section('title', __('pages.title').__(' | Pengguna'))
+@section('title', __('pages.title').__(' | Jurusan'))
 @section('backToContent')
 <div class="section-header-back">
-    <a href="{{ route('users.index') }}" class="btn btn-icon">
+    <a href="{{ route('major.index') }}" class="btn btn-icon">
         <i class="fas fa-arrow-left"></i>
     </a>
 </div>
 @endsection
-@section('titleContent', __('Pengguna'))
+@section('titleContent', __('Jurusan'))
 @section('breadcrumb', __('Data'))
 @section('morebreadcrumb')
-<div class="breadcrumb-item active">{{ __('Pengguna') }}</div>
+<div class="breadcrumb-item active">{{ __('Jurusan') }}</div>
 <div class="breadcrumb-item active">{{ __('Recycle Bin') }}</div>
 @endsection
 
@@ -30,7 +30,7 @@
             <thead>
                 <tr>
                     <th>
-                        {{ __('Username') }}
+                        {{ __('No') }}
                     </th>
                     <th>{{ __('Nama') }}</th>
                     <th>{{ __('Aksi') }}</th>
@@ -44,7 +44,7 @@
 @endsection
 @section('script')
 <script>
-    var index = '{{ route('users.recycle') }}';
+    var index = '{{ route('major.recycle') }}';
 </script>
-<script src="{{ asset('assets/pages/data/users/index.js') }}"></script>
+<script src="{{ asset('assets/pages/data/university/major.js') }}"></script>
 @endsection

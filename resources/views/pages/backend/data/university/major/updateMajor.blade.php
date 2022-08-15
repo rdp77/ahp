@@ -1,13 +1,14 @@
 @extends('layouts.backend.default')
-@section('title', __('pages.title').__(' | Edit Pengguna'))
+@section('title', __('pages.title').__(' | Edit Jurusan'))
 @section('backToContent')
-@include('pages.backend.components.backToContent',['url'=>route('users.index')])
+@include('pages.backend.components.backToContent',['url'=>route('major.index')])
 @endsection
-@section('titleContent', __('Edit Pengguna'))
+@section('titleContent', __('Edit Jurusan'))
 @section('breadcrumb', __('Data'))
 @section('morebreadcrumb')
-<div class="breadcrumb-item active">{{ __('Pengguna') }}</div>
-<div class="breadcrumb-item active">{{ __('Edit Pengguna') }}</div>
+<div class="breadcrumb-item active">{{ __('Universitas') }}</div>
+<div class="breadcrumb-item active">{{ __('Jurusan') }}</div>
+<div class="breadcrumb-item active">{{ __('Edit') }}</div>
 @endsection
 
 @section('content')
@@ -18,13 +19,8 @@
                 <div class="d-block">
                     <label for="name" class="control-label">{{ __('Nama') }}<code>*</code></label>
                 </div>
-                <input id="name" type="text" class="form-control" name="name" value="{{ $user->name }}" required
+                <input id="name" type="text" class="form-control" name="name" value="{{ $major->name }}" required
                     autofocus>
-            </div>
-            <div class="form-group">
-                <label for="username">{{ __('Username') }}<code>*</code></label>
-                <input id="username" type="text" class="form-control" name="username" value="{{ $user->username }}"
-                    required autocomplete="username">
             </div>
         </div>
         <div class="card-footer text-right">
@@ -35,8 +31,8 @@
 @endsection
 @section('script')
 <script>
-    var url = '{{ route('users.update',$user->id) }}';
-    var index = '{{ route('users.index') }}';
+    var url = '{{ route('major.update',$major->id) }}';
+    var index = '{{ route('major.index') }}';
 </script>
 <script src="{{ asset('assets/pages/stored.js') }}"></script>
 @endsection

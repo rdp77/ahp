@@ -33,7 +33,7 @@ class UniversityController extends Controller
         // University::with('faculty')->get()->dd();
         // Faculty::with('major')->get()->dd();
         // University::with('faculty')->get()->first()->faculty->first()->major->dd();
-        University::with('major')->get()->dd();
+        // University::with('major')->get()->dd();
         if ($req->ajax()) {
             $data = University::all();
             return Datatables::of($data)
@@ -112,5 +112,38 @@ class UniversityController extends Controller
         );
 
         return Response::json(['status' => 'success']);
+    }
+
+    public function list(Request $req)
+    {
+        // University::with('faculty')->get()->dd();
+        // Faculty::with('major')->get()->dd();
+        // University::with('faculty')->get()->first()->faculty->first()->major->dd();
+        // University::with('major')->get()->dd();
+        if ($req->ajax()) {
+            $data = University::all();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('university', function ($row) {
+                    return $row->name;
+                })
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '<a class="btn btn-icon btn-primary btn-block m-1"';
+                    $actionBtn .= 'href="' . route('university.edit', $row->id) . '"><i class="far fa-edit"></i></a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return view('pages.backend.data.university.allUniversity');
+    }
+
+    public function editList($id)
+    {
+    }
+
+    public function updateList(Request $req, $id)
+    {
     }
 }

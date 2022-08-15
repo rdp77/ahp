@@ -1,7 +1,7 @@
 @extends('layouts.backend.default')
 @section('title', __('pages.title').__(' | Edit Fakultas'))
 @section('backToContent')
-@include('pages.backend.components.backToContent',['url'=>route('users.index')])
+@include('pages.backend.components.backToContent',['url'=>route('faculty.index')])
 @endsection
 @section('titleContent', __('Edit Fakultas'))
 @section('breadcrumb', __('Data'))
@@ -18,14 +18,6 @@
             <div class="form-group">
                 <label>{{ __('Nama Fakultas') }}<code>*</code></label>
                 <input type="text" name="name" class="form-control" value="{{ $faculty->name }}" required>
-            </div>
-            <div class="form-group">
-                <label>{{ __('Universitas') }}<code>*</code></label>
-                <select class="form-control select2" name="university_id[]" multiple required>
-                    @foreach ($university as $u)
-                    <option value="{{ $u->id }}">{{ $u->name }}</option>
-                    @endforeach
-                </select>
             </div>
         </div>
         <div class="card-footer text-right">

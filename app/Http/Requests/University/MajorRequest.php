@@ -28,8 +28,7 @@ class MajorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'faculty_id' => ['required']
+            'name' => ['required', 'string', 'max:255', 'unique:major,name'],
         ];
     }
 
@@ -42,8 +41,7 @@ class MajorRequest extends FormRequest
     {
         return [
             'name.required' => 'Kolom Nama harus di isi',
-            'faculty_id.required' => 'Kolom Universitas harus di isi',
-            'name.unique' => 'Nama Universitas sudah ada'
+            'name.unique' => 'Nama Jurusan sudah ada'
         ];
     }
 

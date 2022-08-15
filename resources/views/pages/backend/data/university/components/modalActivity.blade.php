@@ -32,13 +32,10 @@
         <label>{{ __('Nama Fakultas') }}<code>*</code></label>
         <input type="text" name="name" class="form-control" required>
     </div>
+    @elseif(Request::route()->getName() == 'major.index')
     <div class="form-group">
-        <label>{{ __('Universitas') }}<code>*</code></label>
-        <select class="form-control select2" name="university_id" required>
-            @foreach ($university as $u)
-            <option value="{{ $u->id }}">{{ $u->name }}</option>
-            @endforeach
-        </select>
+        <label>{{ __('Nama Jurusan') }}<code>*</code></label>
+        <input type="text" name="name" class="form-control" required autofocus>
     </div>
     @endif
 </form>

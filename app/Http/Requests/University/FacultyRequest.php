@@ -28,8 +28,7 @@ class FacultyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'university_id' => ['required']
+            'name' => ['required', 'string', 'max:255', 'unique:faculty,name'],
         ];
     }
 
@@ -42,8 +41,7 @@ class FacultyRequest extends FormRequest
     {
         return [
             'name.required' => 'Kolom Nama harus di isi',
-            'university_id.required' => 'Kolom Universitas harus di isi',
-            'name.unique' => 'Nama Universitas sudah ada'
+            'name.unique' => 'Nama Fakultas sudah ada'
         ];
     }
 

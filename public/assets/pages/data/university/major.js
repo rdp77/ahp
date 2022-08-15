@@ -25,8 +25,6 @@ var table = $("#table").DataTable({
             searchable: false,
         },
         { data: "name" },
-        { data: "faculty" },
-        { data: "university" },
         { data: "action", orderable: false, searchable: true },
     ],
     buttons: [
@@ -86,24 +84,24 @@ $.ajaxSetup({
 function del(id) {
     swal({
         title: "Apakah Anda Yakin?",
-        text: "Aksi ini tidak dapat dikembalikan, dan akan menghapus data pengguna Anda.",
+        text: "Aksi ini tidak dapat dikembalikan, dan akan menghapus data jurusan Anda.",
         icon: "warning",
         buttons: true,
         dangerMode: true,
     }).then((willDelete) => {
         if (willDelete) {
             $.ajax({
-                url: "/data/users/" + id,
+                url: "/data/major/" + id,
                 type: "DELETE",
                 success: function () {
-                    swal("Data pengguna berhasil dihapus", {
+                    swal("Data jurusan berhasil dihapus", {
                         icon: "success",
                     });
                     table.draw();
                 },
             });
         } else {
-            swal("Data pengguna Anda tidak jadi dihapus!");
+            swal("Data jurusan Anda tidak jadi dihapus!");
         }
     });
 }
@@ -118,11 +116,11 @@ function reset(id) {
     }).then((willDelete) => {
         if (willDelete) {
             $.ajax({
-                url: "/users/reset/" + id,
+                url: "/major/reset/" + id,
                 type: "POST",
                 success: function () {
                     swal(
-                        "Password pengguna berhasil diubah menjadi '1234567890'",
+                        "Password jurusan berhasil diubah menjadi '1234567890'",
                         {
                             icon: "success",
                         }
@@ -130,7 +128,7 @@ function reset(id) {
                 },
             });
         } else {
-            swal("Data pengguna Anda tidak jadi direset password!");
+            swal("Data jurusan Anda tidak jadi direset password!");
         }
     });
 }
@@ -138,24 +136,24 @@ function reset(id) {
 function delRecycle(id) {
     swal({
         title: "Apakah Anda Yakin?",
-        text: "Aksi ini tidak dapat dikembalikan, dan akan menghapus data pengguna Anda secara permanen.",
+        text: "Aksi ini tidak dapat dikembalikan, dan akan menghapus data jurusan Anda secara permanen.",
         icon: "warning",
         buttons: true,
         dangerMode: true,
     }).then((willDelete) => {
         if (willDelete) {
             $.ajax({
-                url: "/temp/users/delete/" + id,
+                url: "/temp/major/delete/" + id,
                 type: "DELETE",
                 success: function () {
-                    swal("Data pengguna berhasil dihapus", {
+                    swal("Data jurusan berhasil dihapus", {
                         icon: "success",
                     });
                     table.draw();
                 },
             });
         } else {
-            swal("Data pengguna Anda tidak jadi dihapus!");
+            swal("Data jurusan Anda tidak jadi dihapus!");
         }
     });
 }
@@ -163,18 +161,18 @@ function delRecycle(id) {
 function delAll() {
     swal({
         title: "Apakah Anda Yakin?",
-        text: "Aksi ini tidak dapat dikembalikan, dan akan menghapus semua data pengguna Anda secara permanen.",
+        text: "Aksi ini tidak dapat dikembalikan, dan akan menghapus semua data jurusan Anda secara permanen.",
         icon: "warning",
         buttons: true,
         dangerMode: true,
     }).then((willDelete) => {
         if (willDelete) {
             $.ajax({
-                url: "/temp/users/delete-all",
+                url: "/temp/major/delete-all",
                 type: "DELETE",
                 success: function (data) {
                     if (data.status == "success") {
-                        swal("Semua data pengguna berhasil dihapus", {
+                        swal("Semua data jurusan berhasil dihapus", {
                             icon: "success",
                         });
                         table.draw();
@@ -187,7 +185,7 @@ function delAll() {
                 },
             });
         } else {
-            swal("Semua data pengguna Anda tidak jadi dihapus!");
+            swal("Semua data jurusan Anda tidak jadi dihapus!");
         }
     });
 }
@@ -195,24 +193,81 @@ function delAll() {
 function restore(id) {
     swal({
         title: "Apakah Anda Yakin?",
-        text: "Aksi ini mengembalikan data pengguna Anda.",
+        text: "Aksi ini mengembalikan data jurusan Anda.",
         icon: "warning",
         buttons: true,
         dangerMode: true,
     }).then((willDelete) => {
         if (willDelete) {
             $.ajax({
-                url: "/temp/users/restore/" + id,
+                url: "/temp/major/restore/" + id,
                 type: "GET",
                 success: function () {
-                    swal("Data pengguna berhasil dikembalikan", {
+                    swal("Data jurusan berhasil dikembalikan", {
                         icon: "success",
                     });
                     table.draw();
                 },
             });
         } else {
-            swal("Data pengguna Anda tidak jadi dikembalikan!");
+            swal("Data jurusan Anda tidak jadi dikembalikan!");
         }
     });
 }
+
+$("#modal").fireModal({
+    title: "Tambah Jurusan",
+    size: "modal-lg",
+    body: $("#modal-body"),
+    footerClass: "bg-whitesmoke",
+    autoFocus: true,
+    onFormSubmit: function (modal, e, form) {
+        let form_data = $(e.target).serialize();
+        let name = $("input[name=name]");
+        let fake_ajax = setTimeout(function () {
+            form.stopProgress();
+            $.ajax({
+                url: store,
+                type: "POST",
+                data: form_data,
+                success: function () {
+                    swal("Jurusan Berhasil Disimpan", {
+                        icon: "success",
+                    }).then(() => {
+                        table.draw();
+                        $("#fire-modal-2").modal("hide");
+                        name.val("");
+                    });
+                },
+                statusCode: {
+                    422: function (response) {
+                        for (var index in response.responseJSON.data) {
+                            iziToast.error({
+                                title: "Error",
+                                message: response.responseJSON.data[index],
+                            });
+                        }
+                    },
+                    419: function () {
+                        swal("Login session has expired, please login again!", {
+                            icon: "error",
+                        }).then(function () {
+                            window.location.reload();
+                        });
+                    },
+                },
+            });
+            clearInterval(fake_ajax);
+        }, 1500);
+
+        e.preventDefault();
+    },
+    buttons: [
+        {
+            text: "Tambah Data",
+            submit: true,
+            class: "btn btn-primary btn-shadow",
+            handler: function (modal) {},
+        },
+    ],
+});
