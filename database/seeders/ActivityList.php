@@ -100,6 +100,12 @@ class ActivityList extends Seeder
                 'updated_at' => date("Y-m-d h:i:s"),
             ],
             [
+                'name' => 'Mengubah semua data universitas',
+                'type_id' => 3,
+                'created_at' => date("Y-m-d h:i:s"),
+                'updated_at' => date("Y-m-d h:i:s"),
+            ],
+            [
                 'name' => 'Menghapus data universitas',
                 'type_id' => 3,
                 'created_at' => date("Y-m-d h:i:s"),
@@ -192,6 +198,18 @@ class ActivityList extends Seeder
             [
                 'name' => 'Menghapus semua data jurusan yang telah dihapus',
                 'type_id' => 5,
+                'created_at' => date("Y-m-d h:i:s"),
+                'updated_at' => date("Y-m-d h:i:s"),
+            ],
+            [
+                'name' => 'Melakukan Prediksi Jurusan',
+                'type_id' => 6,
+                'created_at' => date("Y-m-d h:i:s"),
+                'updated_at' => date("Y-m-d h:i:s"),
+            ],
+            [
+                'name' => 'Menambahkan Feedback',
+                'type_id' => 6,
                 'created_at' => date("Y-m-d h:i:s"),
                 'updated_at' => date("Y-m-d h:i:s"),
             ],

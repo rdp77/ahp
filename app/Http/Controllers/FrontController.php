@@ -22,10 +22,18 @@ class FrontController extends Controller
     {
         $react = $request->react == 1 ? ReactTypeEnum::LIKE : ReactTypeEnum::DISLIKE;
 
-        Feedback::create([
+        $performedOn = Feedback::create([
             'react' => $react->value,
             'comment' => $request->reason
         ]);
+
+        $this->createLog(
+            $request->header('user-agent'),
+            $request->ip(),
+            $this->getStatus(33),
+            true,
+            $performedOn
+        );
 
         return Response::json([
             'status' => 'success',

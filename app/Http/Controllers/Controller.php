@@ -40,15 +40,26 @@ class Controller extends BaseController
     public function createLog($header, $ip, $action, $withPerformedOn = false, $performedOn = null)
     {
         if ($withPerformedOn) {
-            activity()
-                ->causedBy(Auth::user()->id)
-                ->performedOn($performedOn)
-                ->withProperties([
-                    'url' => URL::full(),
-                    'ip' => $ip,
-                    'user_agent' => $header
-                ])
-                ->log($action);
+            if (Auth::check()) {
+                activity()
+                    ->causedBy(Auth::user()->id)
+                    ->performedOn($performedOn)
+                    ->withProperties([
+                        'url' => URL::full(),
+                        'ip' => $ip,
+                        'user_agent' => $header
+                    ])
+                    ->log($action);
+            } else {
+                activity()
+                    ->performedOn($performedOn)
+                    ->withProperties([
+                        'url' => URL::full(),
+                        'ip' => $ip,
+                        'user_agent' => $header
+                    ])
+                    ->log($action);
+            }
         } else {
             activity()
                 ->causedBy(Auth::user()->id)

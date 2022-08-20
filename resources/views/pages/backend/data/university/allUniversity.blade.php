@@ -1,7 +1,7 @@
 @extends('layouts.backend.default')
-@section('title', __('pages.title').__(' | Data Universitas'))
+@section('title', __('pages.title').__(' | Semua Universitas'))
 @section('titleContent', __('Universitas'))
-@section('breadcrumb', __('Data'))
+@section('breadcrumb', __('Semua'))
 @section('morebreadcrumb')
 <div class="breadcrumb-item active">{{ __('Universitas') }}</div>
 @endsection

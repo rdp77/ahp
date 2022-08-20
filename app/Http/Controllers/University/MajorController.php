@@ -55,7 +55,7 @@ class MajorController extends Controller
         $this->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            $this->getStatus(3),
+            $this->getStatus(26),
             true,
             Major::find($performedOn->id)
         );
@@ -81,7 +81,7 @@ class MajorController extends Controller
         $this->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            $this->getStatus(3),
+            $this->getStatus(27),
             true,
             Major::find($id)
         );
@@ -102,7 +102,7 @@ class MajorController extends Controller
         $this->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            $this->getStatus(3),
+            $this->getStatus(28),
             true,
             $major
         );
@@ -141,7 +141,7 @@ class MajorController extends Controller
         $this->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            $this->getStatus(3),
+            $this->getStatus(29),
             true,
             $major
         );
@@ -158,7 +158,7 @@ class MajorController extends Controller
         $this->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            $this->getStatus(3),
+            $this->getStatus(30),
             false
         );
 
@@ -183,7 +183,7 @@ class MajorController extends Controller
         $this->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            $this->getStatus(3),
+            $this->getStatus(31),
             false
         );
 

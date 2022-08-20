@@ -40,6 +40,16 @@ class ActivityType extends Seeder
                 'created_at' => date("Y-m-d h:i:s"),
                 'updated_at' => date("Y-m-d h:i:s"),
             ],
+            [
+                'name' => 'Prediksi',
+                'created_at' => date("Y-m-d h:i:s"),
+                'updated_at' => date("Y-m-d h:i:s"),
+            ],
+            [
+                'name' => 'Feedback',
+                'created_at' => date("Y-m-d h:i:s"),
+                'updated_at' => date("Y-m-d h:i:s"),
+            ],
         ]);
     }
 }

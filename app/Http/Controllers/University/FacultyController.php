@@ -6,9 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\University\FacultyRequest;
 use App\Models\Faculty;
 use App\Models\University;
-use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Yajra\DataTables\DataTables;
 
@@ -34,7 +32,7 @@ class FacultyController extends Controller
     {
         $university = University::all();
         if ($req->ajax()) {
-            $data = Faculty::with('university')->get();
+            $data = Faculty::all();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -59,7 +57,7 @@ class FacultyController extends Controller
         $this->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            $this->getStatus(3),
+            $this->getStatus(20),
             true,
             Faculty::find($performedOn->id)
         );
@@ -86,16 +84,7 @@ class FacultyController extends Controller
         $this->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            $this->getStatus(3),
-            true,
-            Faculty::find($id)
-        );
-
-        // Create Log
-        $this->createLog(
-            $req->header('user-agent'),
-            $req->ip(),
-            $this->getStatus(3),
+            $this->getStatus(21),
             true,
             Faculty::find($id)
         );
@@ -116,7 +105,7 @@ class FacultyController extends Controller
         $this->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            $this->getStatus(5),
+            $this->getStatus(22),
             false
         );
 

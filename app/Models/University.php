@@ -23,36 +23,13 @@ class University extends Model
         'phone'
     ];
 
-    // public function faculty()
-    // {
-    //     return $this->hasMany(Faculty::class);
-    // }
-
-    // public function major()
-    // {
-    //     return $this->hasManyThrough(Major::class, Faculty::class, 'university_id', 'faculty_id', 'id', 'id');
-    // }    
-
     public function faculty()
     {
-        return $this->belongsToMany(Faculty::class, 'university_faculty', 'university_id', 'faculty_id');
+        return $this->morphedByMany(Faculty::class, 'universitible', 'universitibles');
     }
 
     public function major()
     {
-        return $this->hasManyThrough(
-            FacultyMajor::class,
-            UniversityFaculty::class,
-            'faculty_id',
-            'major_id',
-            'id',
-            'faculty_id'
-        );
+        return $this->morphedByMany(Major::class, 'universitible', 'universitibles');
     }
-
-    // public function major()
-    // {
-    //     // return $this->belongsToMany(Major::class, Faculty::class, 'university_id', 'faculty_id', 'id', 'id');
-    //     return $this->belongsToMany(Major::class, 'university_faculty_major', 'major_id', 'university_id');
-    // }
 }

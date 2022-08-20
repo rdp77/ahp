@@ -5,6 +5,7 @@ namespace App\Http\Controllers\University;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\University\UniversityRequest;
 use App\Models\Faculty;
+use App\Models\Major;
 use App\Models\University;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -30,10 +31,6 @@ class UniversityController extends Controller
 
     public function index(Request $req)
     {
-        // University::with('faculty')->get()->dd();
-        // Faculty::with('major')->get()->dd();
-        // University::with('faculty')->get()->first()->faculty->first()->major->dd();
-        // University::with('major')->get()->dd();
         if ($req->ajax()) {
             $data = University::all();
             return Datatables::of($data)
@@ -60,7 +57,7 @@ class UniversityController extends Controller
         $this->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            $this->getStatus(3),
+            $this->getStatus(13),
             true,
             University::find($performedOn->id)
         );
@@ -86,7 +83,7 @@ class UniversityController extends Controller
         $this->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            $this->getStatus(3),
+            $this->getStatus(14),
             true,
             University::find($id)
         );
@@ -107,7 +104,7 @@ class UniversityController extends Controller
         $this->createLog(
             $req->header('user-agent'),
             $req->ip(),
-            $this->getStatus(5),
+            $this->getStatus(16),
             false
         );
 
@@ -116,23 +113,33 @@ class UniversityController extends Controller
 
     public function list(Request $req)
     {
-        // University::with('faculty')->get()->dd();
-        // Faculty::with('major')->get()->dd();
-        // University::with('faculty')->get()->first()->faculty->first()->major->dd();
-        // University::with('major')->get()->dd();
         if ($req->ajax()) {
-            $data = University::all();
+            $data = University::with('faculty', 'major')->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('university', function ($row) {
                     return $row->name;
                 })
+                ->addColumn('faculty', function ($row) {
+                    $facultyDatas = '';
+                    foreach ($row->faculty as $faculty) {
+                        $facultyDatas .= '<span class="badge badge-info mr-1">' . $faculty->name . '</span>';
+                    }
+                    return $facultyDatas;
+                })
+                ->addColumn('major', function ($row) {
+                    $majorDatas = '';
+                    foreach ($row->major as $major) {
+                        $majorDatas .= '<span class="badge badge-info mr-1">' . $major->name . '</span>';
+                    }
+                    return $majorDatas;
+                })
                 ->addColumn('action', function ($row) {
                     $actionBtn = '<a class="btn btn-icon btn-primary btn-block m-1"';
-                    $actionBtn .= 'href="' . route('university.edit', $row->id) . '"><i class="far fa-edit"></i></a>';
+                    $actionBtn .= 'href="' . route('university.all.edit', $row->id) . '"><i class="far fa-edit"></i></a>';
                     return $actionBtn;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'faculty', 'major'])
                 ->make(true);
         }
 
@@ -141,9 +148,36 @@ class UniversityController extends Controller
 
     public function editList($id)
     {
+        $university = University::findorFail($id);
+        $faculty = Faculty::all();
+        $major = Major::all();
+
+        return view('pages.backend.data.university.updateAllUniversity', compact(
+            'university',
+            'faculty',
+            'major'
+        ));
     }
 
-    public function updateList(Request $req, $id)
+    public function updateList($id, Request $req)
     {
+        $university = University::findorFail($id);
+
+        $university->faculty()->sync($req->faculty);
+        $university->major()->sync($req->major);
+
+        // Create Log
+        $this->createLog(
+            $req->header('user-agent'),
+            $req->ip(),
+            $this->getStatus(15),
+            true,
+            University::find($id)
+        );
+
+        return Response::json([
+            'status' => 'success',
+            'data' => 'Berhasil mengubah universitas ' . $university->name
+        ]);
     }
 }

@@ -47,7 +47,7 @@ class ActivityController extends Controller
                     return $row->getExtraProperty('user_agent');
                 })
                 ->addColumn('user', function ($row) {
-                    return $row->causer->name;
+                    return $row->causer->name ?? 'Guest';
                 })
                 ->rawColumns(['added_at', 'ip', 'user_agent', 'user'])
                 ->make(true);

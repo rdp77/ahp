@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'data'], function () {
     Route::get('/university-all', [UniversityController::class, 'list'])
         ->name('university.all');
+    Route::get('/university-all/{id}/edit', [UniversityController::class, 'editList'])
+        ->name('university.all.edit');
+    Route::patch('/university-all/{id}', [UniversityController::class, 'updateList'])
+        ->name('university.all.update');
     Route::resource('university', UniversityController::class)
         ->except([
             'show', 'create'

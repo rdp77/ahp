@@ -1,7 +1,7 @@
 @extends('layouts.backend.default')
 @section('title', __('pages.title').__(' | Edit Universitas'))
 @section('backToContent')
-@include('pages.backend.components.backToContent',['url'=>route('university.index')])
+    @include('pages.backend.components.backToContent',['url'=>route('university.all')])
 @endsection
 @section('titleContent', __('Edit Universitas'))
 @section('breadcrumb', __('Data'))
@@ -50,9 +50,9 @@
 </div>
 @endsection
 @section('script')
-<script>
-    var url = '{{ route('university.update',$university->id) }}';
-    var index = '{{ route('university.index') }}';
-</script>
-<script src="{{ asset('assets/pages/stored.js') }}"></script>
+    <script>
+        var url = '{{ route('university.update',$university->id) }}';
+        var index = '{{ route('university.all') }}';
+    </script>
+    <script src="{{ asset('assets/pages/stored.js') }}"></script>
 @endsection
