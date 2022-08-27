@@ -53,7 +53,7 @@
                         Request::route()->getName() == 'university.edit' ? 'active' : (
                                 Request::route()->getName() == 'faculty.index' ? 'active' : (
                         Request::route()->getName() == 'faculty.edit' ? 'active' : (
-                                Request::route()->getName() == 'major.index' ? 'active' : (                
+                                Request::route()->getName() == 'major.index' ? 'active' : (
                         Request::route()->getName() == 'major.edit' ? 'active' : (
                             Request::route()->getName() == 'university.all' ? 'active' : '')))))) }}">
                 <a href="{{ route('university.index') }}" class="nav-link has-dropdown" data-toggle="dropdown">
@@ -73,6 +73,18 @@
                         <a class="nav-link" href="{{ route('major.index') }}">{{ __('Jurusan') }}</a>
                     </li>
                 </ul>
+            </li>
+            <li class="{{ Request::route()->getName() == 'dashboard.criteria' ? 'active' : (
+                Request::route()->getName() == 'dashboard.criteria' ? 'active' : '') }}">
+                <a href="{{ route('dashboard.criteria') }}" class="nav-link">
+                    <i class="fas fa-database"></i><span>{{ __('Kriteria') }}</span>
+                </a>
+            </li>
+            <li class="{{ Request::route()->getName() == 'dashboard.alternative' ? 'active' : (
+                Request::route()->getName() == 'dashboard.alternative' ? 'active' : '') }}">
+                <a href="{{ route('dashboard.alternative') }}" class="nav-link">
+                    <i class="fas fa-database"></i><span>{{ __('Alternatif') }}</span>
+                </a>
             </li>
         </ul>
         <div class="mt-4 mb-4 p-3 hide-sidebar-mini">

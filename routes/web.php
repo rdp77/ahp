@@ -30,6 +30,10 @@ Route::controller(DashboardController::class)->group(function () {
         ->name('dashboard.log');
     Route::get('/feedback', 'feedback')
         ->name('dashboard.feedback');
+    Route::get('/criteria', 'criteria')
+        ->name('dashboard.criteria');
+    Route::get('/alternative', 'alternative')
+        ->name('dashboard.alternative');
 });
 // Debug
 Route::get('/debug-sentry', function () {

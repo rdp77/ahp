@@ -18,10 +18,8 @@ var table = $("#table").DataTable({
         sEmptyTable: "Belum ada data",
     },
     columns: [
-        {data: "DT_RowIndex", orderable: false, searchable: false, width: "10%",},
-        {data: "react"},
-        {data: "comment"},
-        {data: "created_at"},
+        {data: "DT_RowIndex", orderable: false, searchable: false, width: "10%"},
+        {data: "name"},
     ],
     buttons: [
         {

@@ -6,6 +6,7 @@ use App\Http\Controllers\Template\MainController;
 use App\Models\Faculty;
 use App\Models\Feedback;
 use App\Models\Major;
+use App\Models\Ratio;
 use App\Models\University;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -118,5 +119,35 @@ class DashboardController extends Controller
                 ->make(true);
         }
         return view('pages.backend.feedback');
+    }
+
+    public function criteria(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Ratio::where('type', 'criteria')->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('name', function ($row) {
+                    return $row->name;
+                })
+                ->rawColumns(['name'])
+                ->make(true);
+        }
+        return view('pages.backend.data.indexCriteria');
+    }
+
+    public function alternative(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Ratio::where('type', 'alternative')->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('name', function ($row) {
+                    return $row->name;
+                })
+                ->rawColumns(['name'])
+                ->make(true);
+        }
+        return view('pages.backend.data.indexAlternative');
     }
 }
