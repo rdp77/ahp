@@ -34,6 +34,8 @@ Route::controller(DashboardController::class)->group(function () {
         ->name('dashboard.criteria');
     Route::get('/alternative', 'alternative')
         ->name('dashboard.alternative');
+    Route::get('/weighting', 'weighting')
+        ->name('dashboard.weighting');
 });
 // Debug
 Route::get('/debug-sentry', function () {

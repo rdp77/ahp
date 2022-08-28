@@ -9,6 +9,7 @@ use App\Models\Major;
 use App\Models\Ratio;
 use App\Models\University;
 use App\Models\User;
+use App\Models\Weighting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
@@ -149,5 +150,20 @@ class DashboardController extends Controller
                 ->make(true);
         }
         return view('pages.backend.data.indexAlternative');
+    }
+
+    public function weighting(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Weighting::all();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('value', function ($row) {
+                    return '<span class="badge badge-success">' . $row->value . '</span>';
+                })
+                ->rawColumns(['value'])
+                ->make(true);
+        }
+        return view('pages.backend.data.indexWeighting');
     }
 }

@@ -74,17 +74,23 @@
                     </li>
                 </ul>
             </li>
-            <li class="{{ Request::route()->getName() == 'dashboard.criteria' ? 'active' : (
-                Request::route()->getName() == 'dashboard.criteria' ? 'active' : '') }}">
-                <a href="{{ route('dashboard.criteria') }}" class="nav-link">
-                    <i class="fas fa-database"></i><span>{{ __('Kriteria') }}</span>
-                </a>
-            </li>
-            <li class="{{ Request::route()->getName() == 'dashboard.alternative' ? 'active' : (
-                Request::route()->getName() == 'dashboard.alternative' ? 'active' : '') }}">
-                <a href="{{ route('dashboard.alternative') }}" class="nav-link">
-                    <i class="fas fa-database"></i><span>{{ __('Alternatif') }}</span>
-                </a>
+            <li class="nav-item dropdown {{ Request::route()->getName() == 'dashboard.criteria' ? 'active' : (
+                        Request::route()->getName() == 'dashboard.alternative' ? 'active' : (
+                                Request::route()->getName() == 'dashboard.weighting' ? 'active' : '')) }}">
+                <a href="javascript:void(0)" class="nav-link has-dropdown" data-toggle="dropdown">
+                    <i class="fas fa-database"></i>
+                    <span>{{ __('AHP') }}</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::route()->getName() == 'dashboard.criteria' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('dashboard.criteria') }}">{{ __('Kriteria') }}</a>
+                    </li>
+                    <li class="{{ Request::route()->getName() == 'dashboard.alternative' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('dashboard.alternative') }}">{{ __('Alternatif') }}</a>
+                    </li>
+                    <li class="{{ Request::route()->getName() == 'dashboard.weighting' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('dashboard.weighting') }}">{{ __('Pembobotan') }}</a>
+                    </li>
+                </ul>
             </li>
         </ul>
         <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
