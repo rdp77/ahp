@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRatioTable extends Migration
+class CreateCriteriaNormalizationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateRatioTable extends Migration
      */
     public function up()
     {
-        Schema::create('ratio', function (Blueprint $table) {
+        Schema::create('criteria_normalization', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->enum('type', ['criteria', 'alternative']);
-            $table->softDeletes();
+            $table->foreignId('comparison_id')->constrained('criteria_comparison')->onDelete('cascade');
+            $table->float('value', 8, 4);
+            $table->timestamps();
         });
     }
 
@@ -28,6 +28,6 @@ class CreateRatioTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ratio');
+        Schema::dropIfExists('criteria_normalization');
     }
 }

@@ -17,9 +17,8 @@ use App\Http\Controllers\Template\MainController;
 */
 
 // Front End
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/', [FrontController::class, 'index'])
+    ->name('home');
 Route::post('/feedback', [FrontController::class, 'feedback'])
     ->name('feedback');
 // Backend

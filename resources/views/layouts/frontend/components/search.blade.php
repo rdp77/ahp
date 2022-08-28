@@ -6,7 +6,7 @@
                 <p class="lead">Untuk mendapatkan hasil yang maksimal isi semua pertanyaan yang dibutuhkan ya, dan
                     jangan lupa tekan tombol prediksi untuk mendapatkan jawabannya.</p>
                 <div class="mt-4">
-                    <a href="https://demo.getstisla.com" class="btn">Cari Sekarang</a>
+                    <button id="search" class="btn">Cari Sekarang</button>
                 </div>
             </div>
         </div>

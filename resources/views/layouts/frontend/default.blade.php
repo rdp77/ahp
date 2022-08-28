@@ -9,6 +9,7 @@
     @include('layouts.frontend.components.rate')
     @include('layouts.frontend.components.footer')
     @include('layouts.frontend.components.feedback')
+    @include('layouts.frontend.components.modalAlternative')
     @include('layouts.components.footer')
     @yield('script')
 </body>

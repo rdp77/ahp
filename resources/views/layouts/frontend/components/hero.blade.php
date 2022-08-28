@@ -12,7 +12,7 @@
                     Bertujuan untuk membantu calon mahasiswa di seluruh Surabaya untuk memilih jurusan
                 </p>
                 <div class="cta">
-                    <a class="btn btn-lg btn-warning btn-icon icon-right" href="#calculated">Cocokkan Jurusan <i
+                    <a class="btn btn-lg btn-warning btn-icon icon-right" href="#try">Cocokkan Jurusan <i
                             class="fas fa-chevron-right"></i></a> &nbsp;
                 </div>
             </div>
