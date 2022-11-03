@@ -7,11 +7,11 @@ use App\Models\Faculty;
 use App\Models\Feedback;
 use App\Models\Major;
 use App\Models\Criteria;
-use App\Models\University;
 use App\Models\User;
 use App\Models\Weighting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 use Yajra\DataTables\DataTables;
 use Sarfraznawaz2005\ServerMonitor\ServerMonitor;
 use Spatie\Activitylog\Models\Activity;
@@ -129,13 +129,34 @@ class DashboardController extends Controller
                 ->addColumn('name', function ($row) {
                     return $row->name;
                 })
-                ->addColumn('sort', function ($row) {
-                    return '<span class="badge badge-dark">' . $row->sort . '</span>';
+                ->addColumn('order', function ($row) {
+                    return '<span class="badge badge-dark">' . $row->order . '</span>';
                 })
-                ->rawColumns(['name', 'sort'])
+                ->addColumn('action', function ($row) {
+                    return '<a href="' . route('dashboard.criteria.edit', $row->id) . '" class="btn btn-primary">Edit</a>';
+                })
+                ->rawColumns(['name', 'order', 'action'])
                 ->make(true);
         }
-        return view('pages.backend.data.indexCriteria');
+        return view('pages.backend.data.criteria.indexCriteria');
+    }
+
+    public function criteriaEdit($id)
+    {
+        $criteria = Criteria::find($id);
+        return view('pages.backend.data.criteria.updateCriteria', compact('criteria'));
+    }
+
+    public function criteriaUpdate($id, Request $request)
+    {
+        $criteria = Criteria::find($id);
+        $criteria->order = $request->order;
+        $criteria->save();
+
+        return Response::json([
+            'status' => 'success',
+            'data' => 'Berhasil mengubah urutan kriteria ' . $criteria->name
+        ]);
     }
 
     public function alternative(Request $request)
@@ -147,16 +168,37 @@ class DashboardController extends Controller
                 ->addColumn('name', function ($row) {
                     return $row->name;
                 })
-                ->addColumn('sort', function ($row) {
-                    return '<span class="badge badge-dark">' . $row->sort . '</span>';
+                ->addColumn('order', function ($row) {
+                    return '<span class="badge badge-dark">' . $row->order . '</span>';
                 })
                 ->addColumn('faculty', function ($row) {
                     return $row->faculties->first()->name;
                 })
-                ->rawColumns(['name', 'sort', 'faculty'])
+                ->addColumn('action', function ($row) {
+                    return '<a href="' . route('dashboard.alternative.edit', $row->id) . '" class="btn btn-primary">Edit</a>';
+                })
+                ->rawColumns(['name', 'order', 'faculty', 'action'])
                 ->make(true);
         }
-        return view('pages.backend.data.indexAlternative');
+        return view('pages.backend.data.alternative.indexAlternative');
+    }
+
+    public function alternativeEdit($id)
+    {
+        $alternative = Major::find($id);
+        return view('pages.backend.data.alternative.updateAlternative', compact('alternative'));
+    }
+
+    public function alternativeUpdate($id, Request $request)
+    {
+        $alternative = Major::find($id);
+        $alternative->order = $request->order;
+        $alternative->save();
+
+        return Response::json([
+            'status' => 'success',
+            'data' => 'Berhasil mengubah urutan alternatif ' . $alternative->name
+        ]);
     }
 
     public function weighting(Request $request)

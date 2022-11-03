@@ -1,5 +1,5 @@
 @extends('layouts.backend.default')
-@section('title', __('pages.title').__(' | Data Alternatif'))
+@section('title', 'Data Alternative')
 @section('titleContent', __('Alternatif'))
 @section('breadcrumb', __('Data'))
 @section('morebreadcrumb')
@@ -20,6 +20,7 @@
                     <th>{{ __('Nama') }}</th>
                     <th>{{ __('Urutan') }}</th>
                     <th>{{ __('Fakultas') }}</th>
+                    <th>{{ __('Action') }}</th>
                 </tr>
                 </thead>
                 <tbody>

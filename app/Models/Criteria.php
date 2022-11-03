@@ -23,7 +23,7 @@ class Criteria extends Model
      */
     protected $fillable = [
         'name',
-        'sort'
+        'order'
     ];
 
     /**

@@ -16,7 +16,7 @@ class CreateMajorTable extends Migration
         Schema::create('major', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('sort');
+            $table->integer('order');
             $table->softDeletes();
             $table->timestamps();
         });

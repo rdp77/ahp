@@ -21,15 +21,15 @@ class FacultyMajorSeeder extends Seeder
                 'major' => [
                     [
                         'name' => 'Program Studi Ilmu Komunikasi',
-                        'sort' => 1
+                        'order' => 1
                     ],
                     [
                         'name' => 'Program Studi Administrasi Bisnis',
-                        'sort' => 2
+                        'order' => 2
                     ],
                     [
                         'name' => 'Program Studi Administrasi Publik',
-                        'sort' => 3
+                        'order' => 3
                     ]
                 ],
             ],
@@ -38,7 +38,7 @@ class FacultyMajorSeeder extends Seeder
                 'major' => [
                     [
                         'name' => 'Program Studi Ilmu Hukum',
-                        'sort' => 4
+                        'order' => 4
                     ]
                 ],
             ],
@@ -47,15 +47,15 @@ class FacultyMajorSeeder extends Seeder
                 'major' => [
                     [
                         'name' => 'Program Studi Ekonomi Pengembangan',
-                        'sort' => 5
+                        'order' => 5
                     ],
                     [
                         'name' => 'Program Studi Manajemen',
-                        'sort' => 6
+                        'order' => 6
                     ],
                     [
                         'name' => 'Program Studi Akutansi',
-                        'sort' => 7
+                        'order' => 7
                     ]
                 ],
             ],
@@ -64,7 +64,7 @@ class FacultyMajorSeeder extends Seeder
                 'major' => [
                     [
                         'name' => 'Program Studi Psikologi',
-                        'sort' => 8
+                        'order' => 8
                     ]
                 ],
             ],
@@ -73,27 +73,27 @@ class FacultyMajorSeeder extends Seeder
                 'major' => [
                     [
                         'name' => 'Program Studi Teknik Industri',
-                        'sort' => 9
+                        'order' => 9
                     ],
                     [
                         'name' => 'Program Studi Teknik Mesin',
-                        'sort' => 10
+                        'order' => 10
                     ],
                     [
                         'name' => 'Program Studi Teknik Sipil',
-                        'sort' => 11
+                        'order' => 11
                     ],
                     [
                         'name' => 'Program Studi Teknik Arsitektur',
-                        'sort' => 12
+                        'order' => 12
                     ],
                     [
                         'name' => 'Program Studi Teknik Elektro',
-                        'sort' => 13
+                        'order' => 13
                     ],
                     [
                         'name' => 'Program Studi Teknik Informatika',
-                        'sort' => 14
+                        'order' => 14
                     ]
                 ],
             ],
@@ -107,7 +107,7 @@ class FacultyMajorSeeder extends Seeder
             foreach ($value['major'] as $major) {
                 $major = Major::create([
                     'name' => $major['name'],
-                    'sort' => $major['sort'],
+                    'order' => $major['order'],
                 ]);
 
                 $faculty->majors()->attach($major);

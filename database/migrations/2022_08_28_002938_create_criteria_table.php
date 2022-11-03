@@ -16,7 +16,7 @@ class CreateCriteriaTable extends Migration
         Schema::create('criteria', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('sort');
+            $table->integer('order');
             $table->softDeletes();
         });
     }

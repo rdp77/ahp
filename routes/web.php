@@ -33,8 +33,16 @@ Route::controller(DashboardController::class)->group(function () {
         ->name('dashboard.feedback');
     Route::get('/criteria', 'criteria')
         ->name('dashboard.criteria');
+    Route::get('/criteria/{id}', 'criteriaEdit')
+        ->name('dashboard.criteria.edit');
+    Route::patch('/criteria/{id}/update', 'criteriaUpdate')
+        ->name('dashboard.criteria.update');
     Route::get('/alternative', 'alternative')
         ->name('dashboard.alternative');
+    Route::get('/alternative/{id}', 'alternativeEdit')
+        ->name('dashboard.alternative.edit');
+    Route::patch('/alternative/{id}/update', 'alternativeUpdate')
+        ->name('dashboard.alternative.update');
     Route::get('/weighting', 'weighting')
         ->name('dashboard.weighting');
 });

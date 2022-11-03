@@ -17,43 +17,43 @@ class Criteria extends Seeder
         DB::table('criteria')->insert([
             [
                 'name' => 'Minat',
-                'sort' => 1
+                'order' => 1
             ],
             [
                 'name' => 'Bakat',
-                'sort' => 2
+                'order' => 2
             ],
             [
                 'name' => 'Jarak',
-                'sort' => 3
+                'order' => 3
             ],
             [
                 'name' => 'Reputasi',
-                'sort' => 4
+                'order' => 4
             ],
             [
                 'name' => 'Akreditasi',
-                'sort' => 5
+                'order' => 5
             ],
             [
                 'name' => 'Pemahaman Dasar',
-                'sort' => 6
+                'order' => 6
             ],
             [
                 'name' => 'Biaya',
-                'sort' => 7
+                'order' => 7
             ],
             [
                 'name' => 'Kebutuhan Khusus',
-                'sort' => 8
+                'order' => 8
             ],
             [
                 'name' => 'Lowongan Pekerjaan',
-                'sort' => 9
+                'order' => 9
             ],
             [
                 'name' => 'Kelas Khusus',
-                'sort' => 10
+                'order' => 10
             ],
         ]);
     }
