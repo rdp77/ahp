@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Enums\RatioTypeEnum;
 use App\Enums\ReactTypeEnum;
 use App\Models\Feedback;
-use App\Models\Ratio;
+use App\Models\Major;
+use App\Models\Criteria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
@@ -22,8 +23,8 @@ class FrontController extends Controller
 
     public function index()
     {
-        $alternative = Ratio::where('type', RatioTypeEnum::ALTERNATIVE)->get();
-        return view('home', compact('alternative'));
+        $alternative = Major::with('faculties')->get();
+        return view('home', ['alternative' => $alternative, 'count' => $alternative->count()]);
     }
 
     public function feedback(Request $request)

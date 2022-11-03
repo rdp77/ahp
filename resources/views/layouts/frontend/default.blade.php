@@ -13,5 +13,3 @@
     @include('layouts.components.footer')
     @yield('script')
 </body>
-
-</html>

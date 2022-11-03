@@ -17,12 +17,11 @@ class Major extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'faculty_id',
+        'name'
     ];
 
-    public function universities()
+    public function faculties()
     {
-        return $this->morphToMany(University::class, 'universitible', 'universitibles');
+        return $this->belongsToMany(Faculty::class, 'faculty_major');
     }
 }

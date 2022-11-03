@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRatioTable extends Migration
+class CreateFacultyMajorTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateRatioTable extends Migration
      */
     public function up()
     {
-        Schema::create('ratio', function (Blueprint $table) {
+        Schema::create('faculty_major', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->enum('type', ['criteria', 'alternative']);
-            $table->softDeletes();
+            $table->foreignId('faculty_id');
+            $table->foreignId('major_id');
+            $table->timestamps();
         });
     }
 
@@ -28,6 +28,6 @@ class CreateRatioTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ratio');
+        Schema::dropIfExists('facultyables');
     }
 }

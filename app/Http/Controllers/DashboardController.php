@@ -6,7 +6,7 @@ use App\Http\Controllers\Template\MainController;
 use App\Models\Faculty;
 use App\Models\Feedback;
 use App\Models\Major;
-use App\Models\Ratio;
+use App\Models\Criteria;
 use App\Models\University;
 use App\Models\User;
 use App\Models\Weighting;
@@ -46,7 +46,6 @@ class DashboardController extends Controller
         $users = User::count();
         $logCount = Activity::where('causer_id', Auth::user()->id)
             ->count();
-        $university = University::count();
         $faculty = Faculty::count();
         $major = Major::count();
 
@@ -56,7 +55,6 @@ class DashboardController extends Controller
             'log',
             'users',
             'logCount',
-            'university',
             'faculty',
             'major'
         ));
@@ -125,13 +123,16 @@ class DashboardController extends Controller
     public function criteria(Request $request)
     {
         if ($request->ajax()) {
-            $data = Ratio::where('type', 'criteria')->get();
+            $data = Criteria::all();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('name', function ($row) {
                     return $row->name;
                 })
-                ->rawColumns(['name'])
+                ->addColumn('sort', function ($row) {
+                    return '<span class="badge badge-dark">' . $row->sort . '</span>';
+                })
+                ->rawColumns(['name', 'sort'])
                 ->make(true);
         }
         return view('pages.backend.data.indexCriteria');
@@ -140,13 +141,19 @@ class DashboardController extends Controller
     public function alternative(Request $request)
     {
         if ($request->ajax()) {
-            $data = Ratio::where('type', 'alternative')->get();
+            $data = Major::with('faculties')->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('name', function ($row) {
                     return $row->name;
                 })
-                ->rawColumns(['name'])
+                ->addColumn('sort', function ($row) {
+                    return '<span class="badge badge-dark">' . $row->sort . '</span>';
+                })
+                ->addColumn('faculty', function ($row) {
+                    return $row->faculties->first()->name;
+                })
+                ->rawColumns(['name', 'sort', 'faculty'])
                 ->make(true);
         }
         return view('pages.backend.data.indexAlternative');

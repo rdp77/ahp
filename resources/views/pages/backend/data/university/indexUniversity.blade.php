@@ -7,42 +7,37 @@
 @endsection
 
 @section('content')
-@include('pages.backend.components.filterSearch')
-@include('layouts.backend.components.notification')
-<div class="card">
-    <div class="card-header">
-        <button id="modal" class="btn btn-icon icon-left btn-primary mr-2">
-            <i class="far fa-edit"></i>{{ __(' Tambah Universitas') }}
-        </button>
-    </div>
-    <div class="card-body">
-        <table class="table-striped table" id="table" width="100%">
-            <thead>
+    @include('layouts.backend.components.notification')
+    <div class="card card-primary">
+        <div class="card-body">
+            <table class="table-hover table" id="table" width="100%">
+                <thead>
                 <tr>
                     <th>
                         {{ __('NO') }}
                     </th>
-                    <th>{{ __('Nama') }}</th>
-                    <th>{{ __('Kode') }}</th>
-                    <th>{{ __('Email') }}</th>
-                    <th>{{ __('Alamat') }}</th>
-                    <th>{{ __('No HP') }}</th>
-                    <th>{{ __('Aksi') }}</th>
+                    <th>{{ __('Fakultas') }}</th>
+                    <th>{{ __('Jurusan') }}</th>
                 </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                @foreach ($faculty as $index => $item)
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ $item->name }}</td>
+                        <td>
+                            <ul>
+                                @foreach ($item->majors as $major)
+                                    <li>{{ $major->name }}</li>
+                                @endforeach
+                            </ul>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 @endsection
 @section('modal')
-@include('pages.backend.data.university.components.modalActivity')
-@endsection
-@section('script')
-<script>
-    var index = '{{ route('university.index') }}';
-    var store = '{{ route('university.store') }}';    
-</script>
-<script src="{{ asset('assets/pages/data/university/index.js') }}"></script>
+    @include('pages.backend.data.university.components.modalActivity')
 @endsection

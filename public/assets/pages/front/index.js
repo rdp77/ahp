@@ -117,3 +117,30 @@ $('#check-major').change(function () {
     this.checked ? $('#alternative').prop('disabled', true) :
         $('#alternative').prop('disabled', false);
 });
+
+function checkAlternative() {
+    $.ajax({
+        url: '/get-alternative',
+        type: "GET",
+        success: function (data) {
+            console.log(data);
+        },
+        statusCode: {
+            422: function (response) {
+                for (var index in response.responseJSON.data) {
+                    iziToast.error({
+                        title: "Error",
+                        message: response.responseJSON.data[index],
+                    });
+                }
+            },
+            419: function () {
+                swal("Login session has expired, please login again!", {
+                    icon: "error",
+                }).then(function () {
+                    window.location.reload();
+                });
+            },
+        },
+    });
+}

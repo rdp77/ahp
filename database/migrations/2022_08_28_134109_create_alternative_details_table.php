@@ -15,8 +15,8 @@ class CreateAlternativeDetailsTable extends Migration
     {
         Schema::create('alternative_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('alternative_id')->constrained('ratio')->onDelete('cascade');
-            $table->foreignId('criteria_id')->constrained('ratio')->onDelete('cascade');
+            $table->foreignId('alternative_id')->constrained('major')->onDelete('cascade');
+            $table->foreignId('criteria_id')->constrained('criteria')->onDelete('cascade');
             $table->string('value')->nullable();
             $table->timestamps();
         });

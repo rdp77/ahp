@@ -5,9 +5,9 @@ namespace App\Models;
 use App\Enums\RatioTypeEnum;
 use Illuminate\Database\Eloquent\Model;
 
-class Ratio extends Model
+class Criteria extends Model
 {
-    public $table = "ratio";
+    public $table = "criteria";
 
     /**
      * Indicates if the model should be timestamped.
@@ -23,7 +23,7 @@ class Ratio extends Model
      */
     protected $fillable = [
         'name',
-        'type'
+        'sort'
     ];
 
     /**

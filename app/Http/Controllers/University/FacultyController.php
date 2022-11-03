@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\University\FacultyRequest;
 use App\Models\Faculty;
 use App\Models\University;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Yajra\DataTables\DataTables;
@@ -25,12 +26,11 @@ class FacultyController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
 
     public function index(Request $req)
     {
-        $university = University::all();
         if ($req->ajax()) {
             $data = Faculty::all();
             return Datatables::of($data)
@@ -46,7 +46,7 @@ class FacultyController extends Controller
                 ->make(true);
         }
 
-        return view('pages.backend.data.university.faculty.indexFaculty', compact('university'));
+        return view('pages.backend.data.university.faculty.indexFaculty');
     }
 
     public function store(FacultyRequest $req)
@@ -71,8 +71,7 @@ class FacultyController extends Controller
     public function edit($id)
     {
         $faculty = Faculty::find($id);
-        $university = University::all();
-        return view('pages.backend.data.university.faculty.updateFaculty', compact('faculty', 'university'));
+        return view('pages.backend.data.university.faculty.updateFaculty', compact('faculty',));
     }
 
     public function update($id, FacultyRequest $req)

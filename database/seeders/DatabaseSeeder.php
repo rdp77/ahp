@@ -25,8 +25,11 @@ class DatabaseSeeder extends Seeder
             // VillagesSeeder::class,
             ActivityType::class,
             ActivityList::class,
-            Ratio::class,
+            Criteria::class,
             Weighting::class,
+//            FacultySeeder::class,
+//            MajorSeeder::class,
+            FacultyMajorSeeder::class,
         ]);
     }
 }

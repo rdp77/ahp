@@ -16,8 +16,8 @@ class CreateCriteriaTable extends Migration
         Schema::create('criteria', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('code');
-            $table->timestamps();
+            $table->integer('sort');
+            $table->softDeletes();
         });
     }
 
@@ -28,6 +28,6 @@ class CreateCriteriaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('criteria');
+        Schema::dropIfExists('ratio');
     }
 }

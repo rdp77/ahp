@@ -15,9 +15,9 @@ class CreateAlternativeComparisonTable extends Migration
     {
         Schema::create('alternative_comparison', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('criteria_id')->constrained('ratio')->onDelete('cascade');
-            $table->foreignId('x_alternative_id')->constrained('ratio')->onDelete('cascade');
-            $table->foreignId('y_alternative_id')->constrained('ratio')->onDelete('cascade');
+            $table->foreignId('criteria_id')->constrained('criteria')->onDelete('cascade');
+            $table->foreignId('x_alternative_id')->constrained('major')->onDelete('cascade');
+            $table->foreignId('y_alternative_id')->constrained('major')->onDelete('cascade');
             $table->float('value', 8, 5);
             $table->timestamps();
         });

@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Faculty extends Model
 {
+    use SoftDeletes;
+
     public $table = "faculty";
 
     /**
@@ -15,11 +18,10 @@ class Faculty extends Model
      */
     protected $fillable = [
         'name',
-        'university_id'
     ];
 
-    public function universities()
+    public function majors()
     {
-        return $this->morphToMany(University::class, 'universitible', 'universitibles');
+        return $this->belongsToMany(Major::class, 'faculty_major',);
     }
 }

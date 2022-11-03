@@ -21,6 +21,8 @@ Route::get('/', [FrontController::class, 'index'])
     ->name('home');
 Route::post('/feedback', [FrontController::class, 'feedback'])
     ->name('feedback');
+Route::get('/get-alternative', [FrontController::class, 'getAlternative'])
+    ->name('get.alternative');
 // Backend
 Route::controller(DashboardController::class)->group(function () {
     Route::get('/dashboard', 'index')

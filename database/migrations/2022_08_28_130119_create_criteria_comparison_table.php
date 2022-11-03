@@ -15,9 +15,9 @@ class CreateCriteriaComparisonTable extends Migration
     {
         Schema::create('criteria_comparison', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('first_criteria_id')->constrained('ratio')->onDelete('cascade');
+            $table->foreignId('first_criteria_id')->constrained('criteria')->onDelete('cascade');
             $table->float('value');
-            $table->foreignId('second_criteria_id')->constrained('ratio')->onDelete('cascade');
+            $table->foreignId('second_criteria_id')->constrained('criteria')->onDelete('cascade');
             $table->timestamps();
         });
     }

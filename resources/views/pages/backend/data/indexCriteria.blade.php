@@ -18,6 +18,7 @@
                         {{ __('No') }}
                     </th>
                     <th>{{ __('Nama') }}</th>
+                    <th>{{ __('Urutan') }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -30,5 +31,5 @@
     <script>
         var index = '{{ route('dashboard.criteria') }}';
     </script>
-    <script src="{{ asset('assets/pages/data/ratio.js') }}"></scrip>
+    <script src="{{ asset('assets/pages/data/criteria.js') }}"></script>
 @endsection
