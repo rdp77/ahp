@@ -25,6 +25,23 @@ function save() {
                 }
             }
         },
+        statusCode: {
+            422: function (response) {
+                for (var index in response.responseJSON.data) {
+                    iziToast.error({
+                        title: "Error",
+                        message: response.responseJSON.data[index],
+                    });
+                }
+            },
+            419: function () {
+                swal("Login session has expired, please login again!", {
+                    icon: "error",
+                }).then(function () {
+                    window.location.reload();
+                });
+            },
+        },
     });
 }
 
@@ -53,6 +70,23 @@ function update() {
                     });
                 }
             }
+        },
+        statusCode: {
+            422: function (response) {
+                for (var index in response.responseJSON.data) {
+                    iziToast.error({
+                        title: "Error",
+                        message: response.responseJSON.data[index],
+                    });
+                }
+            },
+            419: function () {
+                swal("Login session has expired, please login again!", {
+                    icon: "error",
+                }).then(function () {
+                    window.location.reload();
+                });
+            },
         },
     });
 }

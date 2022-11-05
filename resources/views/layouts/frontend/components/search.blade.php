@@ -7,7 +7,7 @@
                     jangan lupa tekan tombol prediksi untuk mendapatkan jawabannya.</p>
                 <div class="mt-4">
                     <button data-toggle="modal" data-target="#search" class="btn mr-3">Cari Sekarang</button>
-                    <button data-toggle="modal" data-target="#alternativeDatas" class="btn">Daftar Jurusan</button>
+                    <button data-toggle="modal" data-target="#alternativeDatas" class="btn">Daftar Universitas</button>
                 </div>
                 @auth
                     <a href="{{ route('calculate') }}" class="btn">History Perhitungan</a>
@@ -23,8 +23,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="alternativeDatasLabel">Daftar Data Alternative (Jurusan) (Total {{ $count }}
-                    )</h5>
+                <h5 class="modal-title" id="alternativeDatasLabel">Daftar Universitas</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -35,15 +34,16 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Nama Fakultas</th>
+                        <th scope="col">Nama Fakultas</th>
                         <th scope="col">Nama Jurusan</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($alternative as $index => $item)
+                    @foreach($university as $index => $univ)
                         <tr>
                             <th scope="row">{{ $index + 1 }}</th>
-                            <td>{{ $item->faculties->first()->name }}</td>
-                            <td>{{ $item->name }}</td>
+                            {{--                            <td>{{ $univ->faculties->first()->name }}</td>--}}
+                            <td>{{ $univ->name }}</td>
                         </tr>
                     @endforeach
                     </tbody>

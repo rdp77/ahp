@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             Weighting::class,
 //            FacultySeeder::class,
 //            MajorSeeder::class,
-            FacultyMajorSeeder::class,
+//            FacultyMajorSeeder::class,
         ]);
     }
 }

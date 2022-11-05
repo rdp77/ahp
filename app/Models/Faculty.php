@@ -17,11 +17,28 @@ class Faculty extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
+        'name', 'university_id'
     ];
+
+//    public function universities()
+//    {
+//        // relationship to university by university_id
+//        return $this->belongsTo(University::class, 'university_id');
+//    }
+//
+//    public function majors()
+//    {
+//        // relationship to major by faculty_id
+//        return $this->hasMany(Major::class, 'faculty_id');
+//    }
+
+    public function universities()
+    {
+        return $this->morphedByMany(University::class, 'facultyable');
+    }
 
     public function majors()
     {
-        return $this->belongsToMany(Major::class, 'faculty_major',);
+        return $this->morphedByMany(Major::class, 'facultyable');
     }
 }

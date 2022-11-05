@@ -7,6 +7,7 @@ use App\Enums\ReactTypeEnum;
 use App\Models\Feedback;
 use App\Models\Major;
 use App\Models\Criteria;
+use App\Models\University;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
@@ -24,8 +25,8 @@ class FrontController extends Controller
 
     public function index()
     {
-        $alternative = Major::with('faculties')->get();
-        return view('home', ['alternative' => $alternative, 'count' => $alternative->count()]);
+        $university = University::with('faculties', 'faculties.majors')->get();
+        return view('home', compact('university'));
     }
 
     public function feedback(Request $request)

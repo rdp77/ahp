@@ -3,6 +3,7 @@
 namespace App\Http\Requests\University;
 
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Foundation\Http\FormRequest;
@@ -28,11 +29,18 @@ class UniversityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:university,name'],
-            'code' => ['required', 'string', 'max:255', 'unique:university,code'],
+            'name' => [
+                'required', 'string', 'max:255',
+                Rule::unique('university', 'name')->ignore($this->route('university'))
+            ],
+            'code' => [
+                'required', 'string', 'max:255',
+                Rule::unique('university', 'code')->ignore($this->route('university'))
+            ],
             'email' => ['required', 'string', 'email', 'max:255'],
             'address' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:255'],
+            'order' => ['required', 'integer'],
         ];
     }
 
@@ -49,6 +57,7 @@ class UniversityRequest extends FormRequest
             'email.required' => 'Kolom email harus di isi',
             'address.required' => 'Kolom Alamat harus di isi',
             'phone.required' => 'Kolom Nomor Telepon harus di isi',
+            'order.required' => 'Kolom Urutan harus di isi',
             'email.email' => 'Kolom Email harus memiliki format email',
             'name.unique' => 'Nama Universitas sudah ada',
             'code.unique' => 'Kode Universitas sudah ada',
@@ -58,7 +67,7 @@ class UniversityRequest extends FormRequest
     /**
      * Configure the validator instance.
      *
-     * @param  \Illuminate\Validation\Validator  $validator
+     * @param \Illuminate\Validation\Validator $validator
      * @return void
      */
     protected function failedValidation(Validator $validator)

@@ -46,7 +46,7 @@ class FacultyController extends Controller
                 ->make(true);
         }
 
-        return view('pages.backend.data.university.faculty.indexFaculty');
+        return view('pages.backend.data.master.faculty.indexFaculty');
     }
 
     public function store(FacultyRequest $req)
@@ -71,7 +71,7 @@ class FacultyController extends Controller
     public function edit($id)
     {
         $faculty = Faculty::find($id);
-        return view('pages.backend.data.university.faculty.updateFaculty', compact('faculty',));
+        return view('pages.backend.data.master.faculty.updateFaculty', compact('faculty',));
     }
 
     public function update($id, FacultyRequest $req)
@@ -105,6 +105,84 @@ class FacultyController extends Controller
             $req->header('user-agent'),
             $req->ip(),
             $this->getStatus(22),
+            false
+        );
+
+        return Response::json(['status' => 'success']);
+    }
+
+    public function recycle(Request $req)
+    {
+        if ($req->ajax()) {
+            $data = Faculty::onlyTrashed()->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '<button onclick="restore(' . $row->id . ')" class="btn btn btn-primary
+                btn-action mb-1 mt-1 mr-1">Kembalikan</button>';
+                    $actionBtn .= '<button onclick="delRecycle(' . $row->id . ')" class="btn btn-danger
+                    btn-action mb-1 mt-1">Hapus</button>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('pages.backend.data.master.faculty.recycleFaculty');
+    }
+
+    public function restore($id, Request $req)
+    {
+        Faculty::onlyTrashed()
+            ->where('id', $id)
+            ->restore();
+
+        $faculty = Faculty::find($id);
+
+        // Create Log
+        $this->createLog(
+            $req->header('user-agent'),
+            $req->ip(),
+            $this->getStatus(29),
+            true,
+            $faculty
+        );
+        return Response::json(['status' => 'success']);
+    }
+
+    public function delete($id, Request $req)
+    {
+        Faculty::onlyTrashed()
+            ->where('id', $id)
+            ->forceDelete();
+
+        // Create Log
+        $this->createLog(
+            $req->header('user-agent'),
+            $req->ip(),
+            $this->getStatus(30),
+            false
+        );
+
+        return Response::json(['status' => 'success']);
+    }
+
+    public function deleteAll(Request $req)
+    {
+        $faculty = Faculty::onlyTrashed()
+            ->forceDelete();
+
+        if ($faculty == 0) {
+            return Response::json([
+                'status' => 'error',
+                'data' => "Tidak ada data di recycle bin"
+            ]);
+        }
+
+        // Create Log
+        $this->createLog(
+            $req->header('user-agent'),
+            $req->ip(),
+            $this->getStatus(31),
             false
         );
 

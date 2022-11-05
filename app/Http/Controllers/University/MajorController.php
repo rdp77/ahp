@@ -4,7 +4,9 @@ namespace App\Http\Controllers\University;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\University\MajorRequest;
+use App\Models\Faculty;
 use App\Models\Major;
+use App\Models\University;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Yajra\DataTables\DataTables;
@@ -40,16 +42,19 @@ class MajorController extends Controller
                     $actionBtn .= 'style="cursor:pointer;color:white"><i class="fas fa-trash"></i></a>';
                     return $actionBtn;
                 })
-                ->rawColumns(['action'])
+                ->addColumn('order', function ($row) {
+                    return '<span class="badge badge-dark">' . $row->order . '</span>';
+                })
+                ->rawColumns(['action', 'order'])
                 ->make(true);
         }
 
-        return view('pages.backend.data.university.major.indexMajor');
+        return view('pages.backend.data.master.major.indexMajor');
     }
 
     public function store(MajorRequest $req)
     {
-        $performedOn =  Major::create($req->all());
+        $performedOn = Major::create($req->all());
 
         // Create Log
         $this->createLog(
@@ -62,14 +67,14 @@ class MajorController extends Controller
 
         return Response::json([
             'status' => 'success',
-            'data' => 'Berhasil membuat jurusan baru'
+            'data' => 'Berhasil membuat Jurusan'
         ]);
     }
 
     public function edit($id)
     {
         $major = Major::find($id);
-        return view('pages.backend.data.university.major.updateMajor', compact('major'));
+        return view('pages.backend.data.master.major.updateMajor', compact('major'));
     }
 
     public function update($id, MajorRequest $req)
@@ -88,7 +93,7 @@ class MajorController extends Controller
 
         return Response::json([
             'status' => 'success',
-            'data' => 'Berhasil mengubah jurusan'
+            'data' => 'Berhasil mengubah Jurusan'
         ]);
     }
 
@@ -117,16 +122,19 @@ class MajorController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<button onclick="restore(' . $row->id . ')" class="btn btn btn-primary 
+                    $actionBtn = '<button onclick="restore(' . $row->id . ')" class="btn btn btn-primary
                 btn-action mb-1 mt-1 mr-1">Kembalikan</button>';
-                    $actionBtn .= '<button onclick="delRecycle(' . $row->id . ')" class="btn btn-danger 
+                    $actionBtn .= '<button onclick="delRecycle(' . $row->id . ')" class="btn btn-danger
                     btn-action mb-1 mt-1">Hapus</button>';
                     return $actionBtn;
                 })
-                ->rawColumns(['action'])
+                ->addColumn('order', function ($row) {
+                    return '<span class="badge badge-dark">' . $row->order . '</span>';
+                })
+                ->rawColumns(['action', 'order'])
                 ->make(true);
         }
-        return view('pages.backend.data.university.major.recycleMajor');
+        return view('pages.backend.data.master.major.recycleMajor');
     }
 
     public function restore($id, Request $req)
@@ -175,8 +183,6 @@ class MajorController extends Controller
                 'status' => 'error',
                 'data' => "Tidak ada data di recycle bin"
             ]);
-        } else {
-            $major;
         }
 
         // Create Log

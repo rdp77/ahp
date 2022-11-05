@@ -15,11 +15,13 @@ class CreateUniversityTable extends Migration
     {
         Schema::create('university', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('code');
+            $table->string('name')->unique();
+            $table->string('code')->unique();
             $table->string('email');
             $table->string('address');
             $table->string('phone');
+            $table->integer('order');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

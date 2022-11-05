@@ -16,28 +16,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => 'data'], function () {
-    Route::resource('university', UniversityController::class)
-        ->only([
-            'index'
-        ]);
-    Route::resource('faculty', FacultyController::class)
-        ->except([
-            'show', 'create'
-        ]);
-    Route::resource('major', MajorController::class)
-        ->except([
-            'show', 'create'
-        ]);
-});
-
-Route::group(['prefix' => 'temp'], function () {
-    Route::get('/major', [MajorController::class, 'recycle'])
-        ->name('major.recycle');
-    Route::group(['prefix' => 'major'], function () {
-        Route::get('/restore/{id}', [MajorController::class, 'restore'])
-            ->name('major.restore');;
-        Route::delete('/delete/{id}', [MajorController::class, 'delete']);
-        Route::delete('/delete-all', [MajorController::class, 'deleteAll']);
-    });
-});
+//Route::group(['prefix' => 'data'], function () {
+//    Route::resource('university', UniversityController::class)
+//        ->only([
+//            'index'
+//        ]);
+//    Route::resource('faculty', FacultyController::class)
+//        ->except([
+//            'show', 'create'
+//        ]);
+//    Route::resource('major', MajorController::class)
+//        ->except([
+//            'show', 'create'
+//        ]);
+//});
+//
+//Route::group(['prefix' => 'temp'], function () {
+//    Route::get('/major', [MajorController::class, 'recycle'])
+//        ->name('major.recycle');
+//    Route::group(['prefix' => 'major'], function () {
+//        Route::get('/restore/{id}', [MajorController::class, 'restore'])
+//            ->name('major.restore');;
+//        Route::delete('/delete/{id}', [MajorController::class, 'delete']);
+//        Route::delete('/delete-all', [MajorController::class, 'deleteAll']);
+//    });
+//});
