@@ -6,9 +6,12 @@
                 <p class="lead">Untuk mendapatkan hasil yang maksimal isi semua pertanyaan yang dibutuhkan ya, dan
                     jangan lupa tekan tombol prediksi untuk mendapatkan jawabannya.</p>
                 <div class="mt-4">
-                    <button id="search" class="btn mr-3">Cari Sekarang</button>
+                    <button data-toggle="modal" data-target="#search" class="btn mr-3">Cari Sekarang</button>
                     <button data-toggle="modal" data-target="#alternativeDatas" class="btn">Daftar Jurusan</button>
                 </div>
+                @auth
+                    <a href="{{ route('calculate') }}" class="btn">History Perhitungan</a>
+                @endauth
             </div>
         </div>
     </div>

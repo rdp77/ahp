@@ -9,7 +9,7 @@
                 </a>
                 <h1>Temukan Minatmu Sekarang!</h1>
                 <p class="lead">
-                    Bertujuan untuk membantu calon mahasiswa di seluruh Surabaya untuk memilih jurusan
+                    Bertujuan untuk membantu calon mahasiswa Universitas 17 Agustus 1945 Surabaya untuk memilih jurusan
                 </p>
                 <div class="cta">
                     <a class="btn btn-lg btn-warning btn-icon icon-right" href="#try">Cocokkan Jurusan <i

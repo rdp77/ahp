@@ -9,6 +9,7 @@ use App\Models\Major;
 use App\Models\Criteria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Validator;
 
 class FrontController extends Controller
 {
@@ -29,6 +30,17 @@ class FrontController extends Controller
 
     public function feedback(Request $request)
     {
+        $validated = Validator::make($request->all(), [
+            'reason' => 'required',
+        ]);
+
+        if ($validated->fails()) {
+            return Response::json([
+                'status' => 'error',
+                'data' => $validated->errors(),
+            ]);
+        }
+
         $react = $request->react == 1 ? ReactTypeEnum::LIKE : ReactTypeEnum::DISLIKE;
 
         $performedOn = Feedback::create([

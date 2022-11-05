@@ -16,6 +16,6 @@
     </div>
     <div class="form-group">
         <label>{{ __('Alasan') }}</label>
-        <textarea name="reason" class="form-control" style="height: 100px"></textarea>
+        <textarea name="reason" class="form-control" style="height: 100px" required></textarea>
     </div>
 </form>
