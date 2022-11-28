@@ -4,9 +4,8 @@
     @include('pages.backend.components.backToContent',['url'=>route('university.index')])
 @endsection
 @section('titleContent', __('Edit Universitas'))
-@section('breadcrumb', __('Data'))
+@section('breadcrumb', __('Master'))
 @section('morebreadcrumb')
-    <div class="breadcrumb-item active">{{ __('Master') }}</div>
     <div class="breadcrumb-item active">{{ __('Universitas') }}</div>
     <div class="breadcrumb-item active">{{ __('Edit') }}</div>
 @endsection

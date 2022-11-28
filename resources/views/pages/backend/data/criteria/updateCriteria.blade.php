@@ -4,7 +4,7 @@
     @include('pages.backend.components.backToContent',['url'=>route('dashboard.criteria')])
 @endsection
 @section('titleContent', __('Edit Kriteria'))
-@section('breadcrumb', __('Data'))
+@section('breadcrumb', __('AHP'))
 @section('morebreadcrumb')
     <div class="breadcrumb-item active">{{ __('Kriteria') }}</div>
     <div class="breadcrumb-item active">{{ __('Edit Kriteria') }}</div>

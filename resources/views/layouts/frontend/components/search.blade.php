@@ -42,8 +42,31 @@
                     @foreach($university as $index => $univ)
                         <tr>
                             <th scope="row">{{ $index + 1 }}</th>
-                            {{--                            <td>{{ $univ->faculties->first()->name }}</td>--}}
                             <td>{{ $univ->name }}</td>
+                            <td>
+                                <table class="table table-hover">
+                                    <tbody>
+                                    @foreach($univ->faculties as $faculty)
+                                        <tr>
+                                            <td>{{ $faculty->name }}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td>
+                                <table class="table table-hover">
+                                    <tbody>
+                                    @foreach($univ->faculties as $faculty)
+                                        @foreach($faculty->majors as $major)
+                                            <tr>
+                                                <td>{{ $major->name }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>

@@ -199,13 +199,24 @@ class MajorController extends Controller
     public function dataMajor(Request $req)
     {
         if ($req->ajax()) {
-            $data = Faculty::whereHas('majors')->get();
+            $data = University::whereHas('faculties', function ($query) {
+                $query->whereHas('majors');
+            })->get();
             return Datatables::of($data)
                 ->addIndexColumn()
+                ->addColumn('faculty', function ($row) {
+                    $faculty = '';
+                    foreach ($row->faculties as $f) {
+                        $faculty .= '<span class="badge badge-dark m-1">' . $f->name . '</span> ';
+                    }
+                    return $faculty;
+                })
                 ->addColumn('major', function ($row) {
                     $major = '';
-                    foreach ($row->majors as $key => $value) {
-                        $major .= '<span class="badge badge-dark mr-1">' . $value->name . '</span>';
+                    foreach ($row->faculties as $f) {
+                        foreach ($f->majors as $m) {
+                            $major .= '<span class="badge badge-dark m-1">' . $m->name . '</span> ';
+                        }
                     }
                     return $major;
                 })
@@ -216,7 +227,7 @@ class MajorController extends Controller
                     $actionBtn .= 'style="cursor:pointer;color:white"><i class="fas fa-trash"></i> Hapus Jurusan</a>';
                     return $actionBtn;
                 })
-                ->rawColumns(['action', 'major'])
+                ->rawColumns(['action', 'faculty', 'major'])
                 ->make(true);
         }
         return view('pages.backend.data.university.major.indexmajor');
@@ -224,10 +235,10 @@ class MajorController extends Controller
 
     public function createDataMajor()
     {
-        $faculties = Faculty::all();
+        $universities = University::with('faculties')->get();
         $majors = Major::all();
         return view('pages.backend.data.university.major.createmajor',
-            compact('faculties', 'majors'));
+            compact('universities', 'majors'));
     }
 
     public function storeDataMajor(Request $req)
@@ -244,7 +255,7 @@ class MajorController extends Controller
             ]);
         }
 
-        $faculty->majors()->attach($req->major_id);
+        $faculty->majors()->attach($req->major_id, ['university_id' => $req->university_id]);
         return Response::json(['status' => 'success', 'data' => 'Berhasil menambahkan jurusan']);
     }
 

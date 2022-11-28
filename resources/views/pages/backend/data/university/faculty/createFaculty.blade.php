@@ -17,7 +17,6 @@
                 <div class="form-group">
                     <label>{{ __('Nama Universitas') }}<code>*</code></label>
                     <select name="university_id" class="form-control select2" required>
-                        <option value="">{{ __('Pilih Universitas') }}</option>
                         @foreach ($universities as $university)
                             <option value="{{ $university->id }}">{{ $university->name }}</option>
                         @endforeach
@@ -26,7 +25,6 @@
                 <div class="form-group">
                     <label>{{ __('Nama Fakultas') }}<code>*</code></label>
                     <select name="faculty_id" class="form-control select2" required>
-                        <option value="">{{ __('Pilih Fakultas') }}</option>
                         @foreach ($faculties as $faculty)
                             <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>
                         @endforeach

@@ -4,7 +4,7 @@
     @include('pages.backend.components.backToContent',['url'=>route('dashboard.alternative')])
 @endsection
 @section('titleContent', __('Edit Fakultas'))
-@section('breadcrumb', __('Data'))
+@section('breadcrumb', __('AHP'))
 @section('morebreadcrumb')
     <div class="breadcrumb-item active">{{ __('Alternatif') }}</div>
     <div class="breadcrumb-item active">{{ __('Edit Alternatif') }}</div>

@@ -25,6 +25,7 @@ var table = $("#table").DataTable({
             searchable: false,
         },
         {data: "name"},
+        {data: "faculty"},
         {data: "major"},
         {data: "action", orderable: false, searchable: true},
     ],
@@ -106,3 +107,17 @@ function del(id) {
         }
     });
 }
+
+$("#university").on("change", function () {
+    const id = $(this).val();
+    $('#faculty').empty();
+    $.ajax({
+        url: "/data/faculty-data/" + id,
+        type: "GET",
+        success: function (data) {
+            $.each(data.data, function (key, value) {
+                $('#faculty').append('<option value="' + value.id + '">' + value.name + '</option>');
+            });
+        },
+    });
+});

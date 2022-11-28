@@ -43,7 +43,10 @@ class FacultyController extends Controller
                     $actionBtn .= 'style="cursor:pointer;color:white"><i class="fas fa-trash"></i></a>';
                     return $actionBtn;
                 })
-                ->rawColumns(['action'])
+                ->addColumn('order', function ($row) {
+                    return '<span class="badge badge-dark">' . $row->order . '</span>';
+                })
+                ->rawColumns(['action', 'order'])
                 ->make(true);
         }
 
@@ -142,7 +145,10 @@ class FacultyController extends Controller
                     btn-action mb-1 mt-1">Hapus</button>';
                     return $actionBtn;
                 })
-                ->rawColumns(['action'])
+                ->addColumn('order', function ($row) {
+                    return '<span class="badge badge-dark">' . $row->order . '</span>';
+                })
+                ->rawColumns(['action', 'order'])
                 ->make(true);
         }
         return view('pages.backend.data.master.faculty.recycleFaculty');
@@ -199,7 +205,7 @@ class FacultyController extends Controller
                 ->addColumn('faculty', function ($row) {
                     $faculty = '';
                     foreach ($row->faculties as $key => $value) {
-                        $faculty .= '<span class="badge badge-dark mr-1">' . $value->name . '</span>';
+                        $faculty .= '<span class="badge badge-dark m-1">' . $value->name . '</span>';
                     }
                     return $faculty;
                 })

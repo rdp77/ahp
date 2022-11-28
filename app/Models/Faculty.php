@@ -17,7 +17,7 @@ class Faculty extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'university_id'
+        'name', 'order'
     ];
 
     public function universities()

@@ -15,6 +15,7 @@ class CreateFacultyMajorTable extends Migration
     {
         Schema::create('faculty_major', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('university_id');
             $table->foreignId('faculty_id');
             $table->foreignId('major_id');
             $table->timestamps();

@@ -17,8 +17,7 @@ class Major extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'order'
+        'name', 'order'
     ];
 
     public function faculties()

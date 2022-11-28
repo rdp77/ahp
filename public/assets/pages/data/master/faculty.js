@@ -25,6 +25,7 @@ var table = $("#table").DataTable({
             searchable: false,
         },
         {data: "name"},
+        {data: "order"},
         {data: "action", orderable: false, searchable: true},
     ],
     buttons: [

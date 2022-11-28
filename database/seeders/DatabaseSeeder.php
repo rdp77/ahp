@@ -19,16 +19,14 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             User::class,
-            ProvincesSeeder::class,
-            // CitiesSeeder::class,
-            // DistrictsSeeder::class,
-            // VillagesSeeder::class,
             ActivityType::class,
             ActivityList::class,
             CriteriaSeeder::class,
             Weighting::class,
-//            FacultySeeder::class,
-//            MajorSeeder::class,
+            UniversitySeeder::class,
+            FacultySeeder::class,
+            MajorSeeder::class,
+//            UniversityFacultySeeder::class,
 //            FacultyMajorSeeder::class,
         ]);
     }

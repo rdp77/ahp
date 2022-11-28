@@ -1,7 +1,7 @@
 @extends('layouts.backend.default')
 @section('title', 'Data Alternative')
 @section('titleContent', __('Alternatif'))
-@section('breadcrumb', __('Data'))
+@section('breadcrumb', __('AHP'))
 @section('morebreadcrumb')
     <div class="breadcrumb-item active">{{ __('Alternatif') }}</div>
 @endsection

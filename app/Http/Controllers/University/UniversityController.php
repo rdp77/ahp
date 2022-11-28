@@ -198,4 +198,90 @@ class UniversityController extends Controller
 
         return Response::json(['status' => 'success']);
     }
+
+    public function dataUniversity(Request $req)
+    {
+        if ($req->ajax()) {
+            $data = University::whereHas('faculties')->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('faculty', function ($row) {
+                    $faculty = '';
+                    foreach ($row->faculties as $key => $value) {
+                        $faculty .= '<span class="badge badge-dark m-1">' . $value->name . '</span>';
+                    }
+                    return $faculty;
+                })
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '<a class="btn btn-icon btn-primary btn-block m-1"';
+                    $actionBtn .= 'href="' . route('data.faculty.edit', $row->id) . '"><i class="far fa-edit"></i> Edit Fakultas</a>';
+                    $actionBtn .= '<a onclick="del(' . $row->id . ')" class="btn btn-icon btn-danger btn-block m-1"';
+                    $actionBtn .= 'style="cursor:pointer;color:white"><i class="fas fa-trash"></i> Hapus Fakultas</a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action', 'faculty'])
+                ->make(true);
+        }
+        return view('pages.backend.data.university.faculty.indexfaculty');
+    }
+
+    public function createDataUniversity()
+    {
+        $universities = University::all();
+        $faculties = Faculty::all();
+        return view('pages.backend.data.university.faculty.createfaculty',
+            compact('universities', 'faculties'));
+    }
+
+    public function storeDataUniversity(Request $req)
+    {
+        $university = University::find($req->university_id);
+
+        // check if university already has faculty by faculty id
+        if ($university->faculties->contains($req->faculty_id)) {
+            return Response::json([
+                'status' => 'error',
+                'data' => [
+                    'Fakultas sudah ada di universitas ini'
+                ]
+            ]);
+        }
+
+        $university->faculties()->attach($req->faculty_id);
+        return Response::json(['status' => 'success', 'data' => 'Berhasil menambahkan fakultas']);
+    }
+
+    public function editDataUniversity($id)
+    {
+        $university = University::find($id);
+        $faculties = Faculty::all();
+
+        return view('pages.backend.data.university.faculty.updateFaculty',
+            compact('university', 'faculties'));
+    }
+
+    public function updateDataUniversity($id, Request $req)
+    {
+        $university = University::find($id);
+
+        $university->faculties()->sync($req->faculty_id);
+        return Response::json(['status' => 'success', 'data' => 'Berhasil mengubah fakultas']);
+    }
+
+    public function destroyDataUniversity($id)
+    {
+        $university = University::find($id);
+
+        $university->faculties()->detach();
+        return Response::json(['status' => 'success', 'data' => 'Berhasil menghapus fakultas']);
+    }
+
+    public function getFacultyablesByUniversityIdWithFaculties($id)
+    {
+        $university = University::with('faculties')->find($id);
+        return Response::json([
+            'status' => 'success',
+            'data' => $university->faculties
+        ]);
+    }
 }

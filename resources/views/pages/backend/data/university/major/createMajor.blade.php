@@ -15,18 +15,21 @@
         <form id="stored">
             <div class="card-body">
                 <div class="form-group">
-                    <label>{{ __('Nama Jurusan') }}<code>*</code></label>
-                    <select name="faculty_id" class="form-control select2" required>
-                        <option value="">{{ __('Pilih Jurusan') }}</option>
-                        @foreach ($faculties as $faculty)
-                            <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>
+                    <label>{{ __('Nama Universitas') }}<code>*</code></label>
+                    <select name="university_id" class="form-control select2" id="university" required>
+                        @foreach ($universities as $university)
+                            <option value="{{ $university->id }}">{{ $university->name }}</option>
                         @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>{{ __('Nama Fakultas') }}<code>*</code></label>
+                    <select name="faculty_id" class="form-control select2" id="faculty" required>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>{{ __('Nama Jurusan') }}<code>*</code></label>
                     <select name="major_id" class="form-control select2" required>
-                        <option value="">{{ __('Pilih Jurusan') }}</option>
                         @foreach ($majors as $major)
                             <option value="{{ $major->id }}">{{ $major->name }}</option>
                         @endforeach
@@ -45,4 +48,5 @@
         const index = '{{ route('data.major.index') }}';
     </script>
     <script src="{{ asset('assets/pages/stored.js') }}"></script>
+    <script src="{{ asset('assets/pages/data/university/major.js') }}"></script>
 @endsection

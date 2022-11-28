@@ -8,9 +8,8 @@
     </div>
 @endsection
 @section('titleContent', __('Universitas'))
-@section('breadcrumb', __('Data'))
+@section('breadcrumb', __('Master'))
 @section('morebreadcrumb')
-    <div class="breadcrumb-item active">{{ __('Master') }}</div>
     <div class="breadcrumb-item active">{{ __('Universitas') }}</div>
     <div class="breadcrumb-item active">{{ __('Recycle Bin') }}</div>
 @endsection

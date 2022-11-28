@@ -4,10 +4,6 @@
 @include('pages.backend.components.backToContent',['url'=>route('dashboard')])
 @endsection
 @section('titleContent', __('Feedback'))
-@section('breadcrumb', __('pages.dashboard'))
-@section('morebreadcrumb')
-<div class="breadcrumb-item active">{{ __('Feedback') }}</div>
-@endsection
 
 @section('content')
 @include('pages.backend.components.filterSearch')
@@ -31,8 +27,8 @@
 </div>
 @endsection
 @section('script')
-<script>
-    var index = '{{ route('dashboard.feedback') }}';    
-</script>
-<script src="{{ asset('assets/pages/data/feedback.js') }}"></script>
+    <script>
+        var index = '{{ route('dashboard.feedback') }}';
+    </script>
+    <script src="{{ asset('assets/pages/data/feedback.js') }}"></script>
 @endsection

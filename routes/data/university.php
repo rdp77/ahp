@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'data'], function () {
+    Route::get('faculty-data/{id}', [UniversityController::class, 'getFacultyablesByUniversityIdWithFaculties'])
+        ->name('faculty.get');
     Route::get('faculty', [FacultyController::class, 'dataFaculty'])
         ->name('data.faculty.index');
     Route::get('faculty/edit/{id}', [FacultyController::class, 'editDataFaculty'])

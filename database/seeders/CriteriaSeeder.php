@@ -82,18 +82,18 @@ class CriteriaSeeder extends Seeder
 
         ];
 
-        foreach ($criteriaUniversity as $criteria) {
+        foreach ($criteriaUniversity as $index => $criteria) {
             DB::table('criteria')->insert([
                 'name' => $criteria['name'],
-                'order' => random_int(1, 10),
+                'order' => $index + 1,
                 'type' => CriteriaTypeEnum::UNIVERSITY,
             ]);
         }
 
-        foreach ($criteriaMajor as $criteria) {
+        foreach ($criteriaMajor as $index => $criteria) {
             DB::table('criteria')->insert([
                 'name' => $criteria['name'],
-                'order' => random_int(1, 10),
+                'order' => $index + 1,
                 'type' => CriteriaTypeEnum::MAJOR,
             ]);
         }

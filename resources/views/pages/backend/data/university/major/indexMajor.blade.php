@@ -1,9 +1,8 @@
 @extends('layouts.backend.default')
 @section('title', __('pages.title').__(' | Data Jurusan'))
 @section('titleContent', __('Jurusan'))
-@section('breadcrumb', __('Data'))
+@section('breadcrumb', __('Universitas'))
 @section('morebreadcrumb')
-    <div class="breadcrumb-item active">{{ __('Universitas') }}</div>
     <div class="breadcrumb-item active">{{ __('Jurusan') }}</div>
 @endsection
 
@@ -23,7 +22,8 @@
                     <th>
                         {{ __('NO') }}
                     </th>
-                    <th>{{ __('Nama Fakultas') }}</th>
+                    <th>{{ __('Nama Universitas') }}</th>
+                    <th>{{ __('Daftar Fakultas') }}</th>
                     <th>{{ __('Daftar Jurusan') }}</th>
                     <th>{{ __('Aksi') }}</th>
                 </tr>

@@ -25,8 +25,7 @@ class FrontController extends Controller
 
     public function index()
     {
-//        $university = University::with('faculties', 'faculties.majors')->get();
-        $university = University::get();
+        $university = University::with('faculties', 'faculties.majors')->get();
         return view('home', compact('university'));
     }
 
