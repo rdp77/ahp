@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CriteriaTypeEnum;
 use App\Http\Controllers\Template\MainController;
 use App\Models\Faculty;
 use App\Models\Feedback;
 use App\Models\Major;
 use App\Models\Criteria;
+use App\Models\University;
 use App\Models\User;
 use App\Models\Weighting;
 use Illuminate\Http\Request;
@@ -129,13 +131,14 @@ class DashboardController extends Controller
                 ->addColumn('name', function ($row) {
                     return $row->name;
                 })
+                ->addColumn('type', function ($row) {
+                    // string capitalize
+                    return '<span class="badge badge-info">' . ucwords($row->type->value) . '</span>';
+                })
                 ->addColumn('order', function ($row) {
                     return '<span class="badge badge-dark">' . $row->order . '</span>';
                 })
-                ->addColumn('action', function ($row) {
-                    return '<a href="' . route('dashboard.criteria.edit', $row->id) . '" class="btn btn-primary">Edit</a>';
-                })
-                ->rawColumns(['name', 'order', 'action'])
+                ->rawColumns(['name', 'type', 'order', 'action'])
                 ->make(true);
         }
         return view('pages.backend.data.criteria.indexCriteria');
@@ -162,25 +165,53 @@ class DashboardController extends Controller
     public function alternative(Request $request)
     {
         if ($request->ajax()) {
-            $data = Major::with('faculties')->get();
+            $data = $this->getDataAlternative();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('name', function ($row) {
-                    return $row->name;
+                    return $row['name'];
+                })
+                ->addColumn('type', function ($row) {
+                    return '<span class="badge badge-info">' . $row['type'] . '</span>';
                 })
                 ->addColumn('order', function ($row) {
-                    return '<span class="badge badge-dark">' . $row->order . '</span>';
+                    return '<span class="badge badge-dark">' . $row['order'] . '</span>';
                 })
-                ->addColumn('faculty', function ($row) {
-                    return $row->faculties->first()->name;
-                })
-                ->addColumn('action', function ($row) {
-                    return '<a href="' . route('dashboard.alternative.edit', $row->id) . '" class="btn btn-primary">Edit</a>';
-                })
-                ->rawColumns(['name', 'order', 'faculty', 'action'])
+                ->rawColumns(['name', 'order', 'type'])
                 ->make(true);
         }
         return view('pages.backend.data.alternative.indexAlternative');
+    }
+
+    public function getDataAlternative()
+    {
+        $university = University::all();
+        $major = Major::all();
+
+        // create nested array object for university
+        $universityData = [];
+        foreach ($university as $key => $value) {
+            $universityData[$key] = [
+                'id' => $value->id,
+                'name' => $value->name,
+                'order' => $value->order,
+                'type' => CriteriaTypeEnum::UNIVERSITY->value
+            ];
+        }
+
+        // create nested array object for major
+        $majorData = [];
+        foreach ($major as $key => $value) {
+            $majorData[$key] = [
+                'id' => $value->id,
+                'name' => $value->name,
+                'order' => $value->order,
+                'type' => CriteriaTypeEnum::MAJOR->value
+            ];
+        }
+
+        // merge nested array object for university and major
+        return array_merge($universityData, $majorData);
     }
 
     public function alternativeEdit($id)

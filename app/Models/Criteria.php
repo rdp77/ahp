@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CriteriaTypeEnum;
 use App\Enums\RatioTypeEnum;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,7 +24,8 @@ class Criteria extends Model
      */
     protected $fillable = [
         'name',
-        'order'
+        'order',
+        'type'
     ];
 
     /**
@@ -32,6 +34,6 @@ class Criteria extends Model
      * @var array
      */
     protected $casts = [
-        'type' => RatioTypeEnum::class,
+        'type' => CriteriaTypeEnum::class,
     ];
 }

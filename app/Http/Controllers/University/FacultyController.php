@@ -5,6 +5,7 @@ namespace App\Http\Controllers\University;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\University\FacultyRequest;
 use App\Models\Faculty;
+use App\Models\Pivot\Facultyable;
 use App\Models\University;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -111,6 +112,23 @@ class FacultyController extends Controller
         return Response::json(['status' => 'success']);
     }
 
+    public function delete($id, Request $req)
+    {
+        Faculty::onlyTrashed()
+            ->where('id', $id)
+            ->forceDelete();
+
+        // Create Log
+        $this->createLog(
+            $req->header('user-agent'),
+            $req->ip(),
+            $this->getStatus(30),
+            false
+        );
+
+        return Response::json(['status' => 'success']);
+    }
+
     public function recycle(Request $req)
     {
         if ($req->ajax()) {
@@ -149,23 +167,6 @@ class FacultyController extends Controller
         return Response::json(['status' => 'success']);
     }
 
-    public function delete($id, Request $req)
-    {
-        Faculty::onlyTrashed()
-            ->where('id', $id)
-            ->forceDelete();
-
-        // Create Log
-        $this->createLog(
-            $req->header('user-agent'),
-            $req->ip(),
-            $this->getStatus(30),
-            false
-        );
-
-        return Response::json(['status' => 'success']);
-    }
-
     public function deleteAll(Request $req)
     {
         $faculty = Faculty::onlyTrashed()
@@ -187,5 +188,82 @@ class FacultyController extends Controller
         );
 
         return Response::json(['status' => 'success']);
+    }
+
+    public function dataFaculty(Request $req)
+    {
+        if ($req->ajax()) {
+            $data = University::whereHas('faculties')->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('faculty', function ($row) {
+                    $faculty = '';
+                    foreach ($row->faculties as $key => $value) {
+                        $faculty .= '<span class="badge badge-dark mr-1">' . $value->name . '</span>';
+                    }
+                    return $faculty;
+                })
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '<a class="btn btn-icon btn-primary btn-block m-1"';
+                    $actionBtn .= 'href="' . route('data.faculty.edit', $row->id) . '"><i class="far fa-edit"></i> Edit Fakultas</a>';
+                    $actionBtn .= '<a onclick="del(' . $row->id . ')" class="btn btn-icon btn-danger btn-block m-1"';
+                    $actionBtn .= 'style="cursor:pointer;color:white"><i class="fas fa-trash"></i> Hapus Fakultas</a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action', 'faculty'])
+                ->make(true);
+        }
+        return view('pages.backend.data.university.faculty.indexfaculty');
+    }
+
+    public function createDataFaculty()
+    {
+        $universities = University::all();
+        $faculties = Faculty::all();
+        return view('pages.backend.data.university.faculty.createfaculty',
+            compact('universities', 'faculties'));
+    }
+
+    public function storeDataFaculty(Request $req)
+    {
+        $university = University::find($req->university_id);
+
+        // check if university already has faculty by faculty id
+        if ($university->faculties->contains($req->faculty_id)) {
+            return Response::json([
+                'status' => 'error',
+                'data' => [
+                    'Fakultas sudah ada di universitas ini'
+                ]
+            ]);
+        }
+
+        $university->faculties()->attach($req->faculty_id);
+        return Response::json(['status' => 'success', 'data' => 'Berhasil menambahkan fakultas']);
+    }
+
+    public function editDataFaculty($id)
+    {
+        $university = University::find($id);
+        $faculties = Faculty::all();
+
+        return view('pages.backend.data.university.faculty.updateFaculty',
+            compact('university', 'faculties'));
+    }
+
+    public function updateDataFaculty($id, Request $req)
+    {
+        $university = University::find($id);
+
+        $university->faculties()->sync($req->faculty_id);
+        return Response::json(['status' => 'success', 'data' => 'Berhasil mengubah fakultas']);
+    }
+
+    public function destroyDataFaculty($id)
+    {
+        $university = University::find($id);
+
+        $university->faculties()->detach();
+        return Response::json(['status' => 'success', 'data' => 'Berhasil menghapus fakultas']);
     }
 }

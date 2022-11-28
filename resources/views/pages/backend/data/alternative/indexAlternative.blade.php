@@ -18,9 +18,8 @@
                         {{ __('No') }}
                     </th>
                     <th>{{ __('Nama') }}</th>
+                    <th>{{ __('Tipe') }}</th>
                     <th>{{ __('Urutan') }}</th>
-                    <th>{{ __('Fakultas') }}</th>
-                    <th>{{ __('Action') }}</th>
                 </tr>
                 </thead>
                 <tbody>

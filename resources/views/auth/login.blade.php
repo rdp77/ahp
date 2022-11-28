@@ -7,7 +7,7 @@
     <div class="form-group">
         <label for="username">{{ __('auth.username') }}</label>
         <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username"
-            tabindex="1" value="{{ old('username') }}" required autocomplete="username" autofocus>
+               tabindex="1" value="admin" required autocomplete="username" autofocus>
         @if(Session::has('error'))
         <div class="invalid-feedback">
             {{ Session::get('error') }}
@@ -25,7 +25,7 @@
             <label for="password" class="control-label">{{ __('auth.password') }}</label>
         </div>
         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
-            name="password" tabindex="2" required autocomplete="current-password">
+               name="password" tabindex="2" value="admin" required autocomplete="current-password">
         @error('password')
         <div class="invalid-feedback">
             {{ $message }}

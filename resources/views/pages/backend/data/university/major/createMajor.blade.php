@@ -1,53 +1,48 @@
 @extends('layouts.backend.default')
-@section('title', __('pages.title').__(' | Tambah Pengguna'))
+@section('title', __('pages.title').__(' | Tambah Jurusan'))
 @section('backToContent')
-@include('pages.backend.components.backToContent',['url'=>route('users.index')])
+    @include('pages.backend.components.backToContent',['url'=>route('data.major.index')])
 @endsection
-@section('titleContent', __('Tambah Pengguna'))
-@section('breadcrumb', __('Data'))
+@section('titleContent', __('Tambah Jurusan'))
+@section('breadcrumb', __('Universitas'))
 @section('morebreadcrumb')
-<div class="breadcrumb-item active">{{ __('Pengguna') }}</div>
-<div class="breadcrumb-item active">{{ __('Tambah Pengguna') }}</div>
+    <div class="breadcrumb-item active">{{ __('Jurusan') }}</div>
+    <div class="breadcrumb-item active">{{ __('Tambah Jurusan') }}</div>
 @endsection
 
 @section('content')
-<div class="card">
-    <form id="stored">
-        <div class="card-body">
-            <div class="form-group">
-                <div class="d-block">
-                    <label for="name" class="control-label">{{ __('Nama') }}<code>*</code></label>
+    <div class="card">
+        <form id="stored">
+            <div class="card-body">
+                <div class="form-group">
+                    <label>{{ __('Nama Jurusan') }}<code>*</code></label>
+                    <select name="faculty_id" class="form-control select2" required>
+                        <option value="">{{ __('Pilih Jurusan') }}</option>
+                        @foreach ($faculties as $faculty)
+                            <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
-                <input id="name" type="text" class="form-control" name="name" autofocus>
-            </div>
-            <div class="form-group">
-                <label for="username">{{ __('Username') }}<code>*</code></label>
-                <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}"
-                    autocomplete="username">
-            </div>
-            <div class="form-group">
-                <div class="d-block">
-                    <label for="password" class="control-label">{{ __('Password') }}<code>*</code></label>
+                <div class="form-group">
+                    <label>{{ __('Nama Jurusan') }}<code>*</code></label>
+                    <select name="major_id" class="form-control select2" required>
+                        <option value="">{{ __('Pilih Jurusan') }}</option>
+                        @foreach ($majors as $major)
+                            <option value="{{ $major->id }}">{{ $major->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
-                <input id="password" type="password" class="form-control" name="password"
-                    autocomplete="current-password">
-            </div>
-            <div class="form-group">
-                <label for="password-confirm" class="control-label">{{ __('Ulangi Password') }}</label>
-                <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
-                    autocomplete="new-password">
             </div>
             <div class="card-footer text-right">
-                <button class="btn btn-primary mr-1" type="button" onclick="save()">{{ __('Tambah') }}</button>
+                <button class="btn btn-primary mr-1" onclick="save()" type="button">{{ __('pages.edit') }}</button>
             </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
 @endsection
 @section('script')
-<script>
-    var url = '{{ route('users.store') }}';
-    var index = '{{ route('users.index') }}';
-</script>
-<script src="{{ asset('assets/pages/stored.js') }}"></script>
+    <script>
+        const url = '{{ route('data.major.store') }}';
+        const index = '{{ route('data.major.index') }}';
+    </script>
+    <script src="{{ asset('assets/pages/stored.js') }}"></script>
 @endsection

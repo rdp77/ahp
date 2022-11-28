@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             // VillagesSeeder::class,
             ActivityType::class,
             ActivityList::class,
-            Criteria::class,
+            CriteriaSeeder::class,
             Weighting::class,
 //            FacultySeeder::class,
 //            MajorSeeder::class,

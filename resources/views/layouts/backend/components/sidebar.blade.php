@@ -79,26 +79,30 @@
                     </li>
                 </ul>
             </li>
-            {{--            <li class="nav-item dropdown {{ Request::route()->getName() == 'university.index' ? 'active' :  (--}}
-            {{--                            Request::route()->getName() == 'faculty.index' ? 'active' : (--}}
-            {{--                                Request::route()->getName() == 'faculty.edit' ? 'active' : (--}}
-            {{--                                    Request::route()->getName() == 'major.index' ? 'active' : (--}}
-            {{--                                        Request::route()->getName() == 'major.edit' ? 'active' : '')))) }}">--}}
-            {{--                <a href="{{ route('university.index') }}" class="nav-link has-dropdown" data-toggle="dropdown">--}}
-            {{--                    <i class="fas fa-building-columns"></i>--}}
-            {{--                    <span>{{ __('Universitas') }}</span></a>--}}
-            {{--                <ul class="dropdown-menu">--}}
-            {{--                    <li class="{{ Request::route()->getName() == 'university.index' ? 'active' : '' }}">--}}
-            {{--                        <a class="nav-link" href="{{ route('university.index') }}">{{ __('Daftar') }}</a>--}}
-            {{--                    </li>--}}
-            {{--                    <li class="{{ Request::route()->getName() == 'faculty.index' ? 'active' : '' }}">--}}
-            {{--                        <a class="nav-link" href="{{ route('faculty.index') }}">{{ __('Fakultas') }}</a>--}}
-            {{--                    </li>--}}
-            {{--                    <li class="{{ Request::route()->getName() == 'major.index' ? 'active' : '' }}">--}}
-            {{--                        <a class="nav-link" href="{{ route('major.index') }}">{{ __('Jurusan') }}</a>--}}
-            {{--                    </li>--}}
-            {{--                </ul>--}}
-            {{--            </li>--}}
+            <li class="nav-item dropdown {{ Request::route()->getName() == 'data.faculty.index' ? 'active' : (
+                                                Request::route()->getName() == 'data.faculty.edit' ? 'active' : (
+                                                    Request::route()->getName() == 'data.faculty.create' ? 'active' : (
+                                                            Request::route()->getName() == 'data.major.index' ? 'active' : (
+                                                                Request::route()->getName() == 'data.major.edit' ? 'active' : (
+                                                                    Request::route()->getName() == 'data.major.create' ? 'active' : ''))))) }}">
+                <a href="javascript:void(0)" class="nav-link has-dropdown" data-toggle="dropdown">
+                    <i class="fas fa-building-columns"></i>
+                    <span>{{ __('Universitas') }}</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::route()->getName() == 'data.faculty.index' ? 'active' : (
+                                                Request::route()->getName() == 'data.faculty.edit' ? 'active' : (
+                                                    Request::route()->getName() == 'data.faculty.create' ? 'active' : ''
+                                                )) }}">
+                        <a class="nav-link" href="{{ route('data.faculty.index') }}">{{ __('Fakultas') }}</a>
+                    </li>
+                    <li class="{{ Request::route()->getName() == 'data.major.index' ? 'active' : (
+                                                Request::route()->getName() == 'data.major.edit' ? 'active' : (
+                                                    Request::route()->getName() == 'data.major.create' ? 'active' : ''
+                                                )) }}">
+                        <a class="nav-link" href="{{ route('data.major.index') }}">{{ __('Jurusan') }}</a>
+                    </li>
+                </ul>
+            </li>
             <li class="nav-item dropdown {{ Request::route()->getName() == 'dashboard.criteria' ? 'active' : (
                         Request::route()->getName() == 'dashboard.alternative' ? 'active' : (
                                 Request::route()->getName() == 'dashboard.weighting' ? 'active' : '')) }}">

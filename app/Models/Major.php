@@ -21,19 +21,8 @@ class Major extends Model
         'order'
     ];
 
-//    public function faculties()
-//    {
-//        // relationship to faculty by faculty_id
-//        return $this->belongsTo(Faculty::class, 'faculty_id');
-//    }
-
     public function faculties()
     {
-        return $this->morphedByMany(Faculty::class, 'facultyable', 'facultyables', 'facultyable_id', 'faculty_id');
-    }
-
-    public function universities()
-    {
-        return $this->morphedByMany(University::class, 'facultyable');
+        return $this->belongsToMany(Faculty::class, 'faculty_major');
     }
 }

@@ -16,28 +16,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::group(['prefix' => 'data'], function () {
-//    Route::resource('university', UniversityController::class)
-//        ->only([
-//            'index'
-//        ]);
-//    Route::resource('faculty', FacultyController::class)
-//        ->except([
-//            'show', 'create'
-//        ]);
-//    Route::resource('major', MajorController::class)
-//        ->except([
-//            'show', 'create'
-//        ]);
-//});
-//
-//Route::group(['prefix' => 'temp'], function () {
-//    Route::get('/major', [MajorController::class, 'recycle'])
-//        ->name('major.recycle');
-//    Route::group(['prefix' => 'major'], function () {
-//        Route::get('/restore/{id}', [MajorController::class, 'restore'])
-//            ->name('major.restore');;
-//        Route::delete('/delete/{id}', [MajorController::class, 'delete']);
-//        Route::delete('/delete-all', [MajorController::class, 'deleteAll']);
-//    });
-//});
+Route::group(['prefix' => 'data'], function () {
+    Route::get('faculty', [FacultyController::class, 'dataFaculty'])
+        ->name('data.faculty.index');
+    Route::get('faculty/edit/{id}', [FacultyController::class, 'editDataFaculty'])
+        ->name('data.faculty.edit');
+    Route::patch('faculty/update/{id}', [FacultyController::class, 'updateDataFaculty'])
+        ->name('data.faculty.update');
+    Route::get('faculty/create', [FacultyController::class, 'createDataFaculty'])
+        ->name('data.faculty.create');
+    Route::post('faculty', [FacultyController::class, 'storeDataFaculty'])
+        ->name('data.faculty.store');
+    Route::delete('faculty/{id}', [FacultyController::class, 'destroyDataFaculty'])
+        ->name('data.faculty.destroy');
+
+    Route::get('major', [MajorController::class, 'dataMajor'])
+        ->name('data.major.index');
+    Route::get('major/edit/{id}', [MajorController::class, 'editDataMajor'])
+        ->name('data.major.edit');
+    Route::patch('major/update/{id}', [MajorController::class, 'updateDataMajor'])
+        ->name('data.major.update');
+    Route::get('major/create', [MajorController::class, 'createDataMajor'])
+        ->name('data.major.create');
+    Route::post('major', [MajorController::class, 'storeDataMajor'])
+        ->name('data.major.store');
+    Route::delete('major/{id}', [MajorController::class, 'destroyDataMajor'])
+        ->name('data.major.destroy');
+});

@@ -17,6 +17,7 @@ class CreateCriteriaTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('order');
+            $table->string('type');
             $table->softDeletes();
         });
     }

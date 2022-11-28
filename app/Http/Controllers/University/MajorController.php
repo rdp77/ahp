@@ -115,6 +115,23 @@ class MajorController extends Controller
         return Response::json(['status' => 'success']);
     }
 
+    public function delete($id, Request $req)
+    {
+        Major::onlyTrashed()
+            ->where('id', $id)
+            ->forceDelete();
+
+        // Create Log
+        $this->createLog(
+            $req->header('user-agent'),
+            $req->ip(),
+            $this->getStatus(30),
+            false
+        );
+
+        return Response::json(['status' => 'success']);
+    }
+
     public function recycle(Request $req)
     {
         if ($req->ajax()) {
@@ -156,23 +173,6 @@ class MajorController extends Controller
         return Response::json(['status' => 'success']);
     }
 
-    public function delete($id, Request $req)
-    {
-        Major::onlyTrashed()
-            ->where('id', $id)
-            ->forceDelete();
-
-        // Create Log
-        $this->createLog(
-            $req->header('user-agent'),
-            $req->ip(),
-            $this->getStatus(30),
-            false
-        );
-
-        return Response::json(['status' => 'success']);
-    }
-
     public function deleteAll(Request $req)
     {
         $major = Major::onlyTrashed()
@@ -194,5 +194,82 @@ class MajorController extends Controller
         );
 
         return Response::json(['status' => 'success']);
+    }
+
+    public function dataMajor(Request $req)
+    {
+        if ($req->ajax()) {
+            $data = Faculty::whereHas('majors')->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('major', function ($row) {
+                    $major = '';
+                    foreach ($row->majors as $key => $value) {
+                        $major .= '<span class="badge badge-dark mr-1">' . $value->name . '</span>';
+                    }
+                    return $major;
+                })
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '<a class="btn btn-icon btn-primary btn-block m-1"';
+                    $actionBtn .= 'href="' . route('data.major.edit', $row->id) . '"><i class="far fa-edit"></i> Edit Jurusan</a>';
+                    $actionBtn .= '<a onclick="del(' . $row->id . ')" class="btn btn-icon btn-danger btn-block m-1"';
+                    $actionBtn .= 'style="cursor:pointer;color:white"><i class="fas fa-trash"></i> Hapus Jurusan</a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action', 'major'])
+                ->make(true);
+        }
+        return view('pages.backend.data.university.major.indexmajor');
+    }
+
+    public function createDataMajor()
+    {
+        $faculties = Faculty::all();
+        $majors = Major::all();
+        return view('pages.backend.data.university.major.createmajor',
+            compact('faculties', 'majors'));
+    }
+
+    public function storeDataMajor(Request $req)
+    {
+        $faculty = Faculty::find($req->faculty_id);
+
+        // check if faculty already has major by major_id
+        if ($faculty->majors->contains($req->major_id)) {
+            return Response::json([
+                'status' => 'error',
+                'data' => [
+                    'Jurusan sudah ada di fakultas ini'
+                ]
+            ]);
+        }
+
+        $faculty->majors()->attach($req->major_id);
+        return Response::json(['status' => 'success', 'data' => 'Berhasil menambahkan jurusan']);
+    }
+
+    public function editDataMajor($id)
+    {
+        $faculty = Faculty::find($id);
+        $majors = Major::all();
+
+        return view('pages.backend.data.university.major.updateMajor',
+            compact('faculty', 'majors'));
+    }
+
+    public function updateDataMajor($id, Request $req)
+    {
+        $faculty = Faculty::find($id);
+
+        $faculty->majors()->sync($req->major_id);
+        return Response::json(['status' => 'success', 'data' => 'Berhasil mengubah jurusan']);
+    }
+
+    public function destroyDataMajor($id)
+    {
+        $faculty = Faculty::find($id);
+
+        $faculty->majors()->detach();
+        return Response::json(['status' => 'success', 'data' => 'Berhasil menghapus jurusan']);
     }
 }

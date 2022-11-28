@@ -20,8 +20,8 @@ var table = $("#table").DataTable({
     columns: [
         {data: "DT_RowIndex", orderable: false, searchable: false, width: "10%"},
         {data: "name"},
+        {data: "type"},
         {data: "order"},
-        {data: "action", orderable: false, searchable: true},
     ],
     buttons: [
         {
