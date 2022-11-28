@@ -57,12 +57,10 @@
                             <td>
                                 <table class="table table-hover">
                                     <tbody>
-                                    @foreach($univ->faculties as $faculty)
-                                        @foreach($faculty->majors as $major)
-                                            <tr>
-                                                <td>{{ $major->name }}</td>
-                                            </tr>
-                                        @endforeach
+                                    @foreach($univ->majors as $major)
+                                        <tr>
+                                            <td>{{ $major->name }}</td>
+                                        </tr>
                                     @endforeach
                                     </tbody>
                                 </table>

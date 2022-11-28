@@ -3,13 +3,12 @@
 namespace App\Models\Pivot;
 
 use App\Models\Faculty;
-use App\Models\Major;
 use App\Models\University;
 use Illuminate\Database\Eloquent\Model;
 
-class FacultyMajor extends Model
+class UniversityFaculty extends Model
 {
-    public $table = "faculty_major";
+    public $table = "university_faculty";
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +16,7 @@ class FacultyMajor extends Model
      * @var array
      */
     protected $fillable = [
-        'university_id', 'faculty_id', 'major_id'
+        'university_id', 'faculty_id'
     ];
 
     public function university()
@@ -28,10 +27,5 @@ class FacultyMajor extends Model
     public function faculty()
     {
         return $this->belongsTo(Faculty::class);
-    }
-
-    public function major()
-    {
-        return $this->belongsTo(Major::class);
     }
 }

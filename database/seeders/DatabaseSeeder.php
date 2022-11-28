@@ -26,8 +26,8 @@ class DatabaseSeeder extends Seeder
             UniversitySeeder::class,
             FacultySeeder::class,
             MajorSeeder::class,
-//            UniversityFacultySeeder::class,
-//            FacultyMajorSeeder::class,
+            UniversityFacultySeeder::class,
+            FacultyMajorSeeder::class,
         ]);
     }
 }

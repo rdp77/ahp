@@ -213,10 +213,8 @@ class MajorController extends Controller
                 })
                 ->addColumn('major', function ($row) {
                     $major = '';
-                    foreach ($row->faculties as $f) {
-                        foreach ($f->majors as $m) {
-                            $major .= '<span class="badge badge-dark m-1">' . $m->name . '</span> ';
-                        }
+                    foreach ($row->majors as $m) {
+                        $major .= '<span class="badge badge-dark m-1">' . $m->name . '</span> ';
                     }
                     return $major;
                 })

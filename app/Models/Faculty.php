@@ -27,6 +27,13 @@ class Faculty extends Model
 
     public function majors()
     {
-        return $this->belongsToMany(Major::class, 'faculty_major');
+        return $this->belongsToMany(Major::class, 'faculty_major',);
+    }
+
+    public function getFacultyablesByUniversityId($universityId)
+    {
+        return $this->whereHas('universities', function ($query) use ($universityId) {
+            $query->where('university_id', $universityId);
+        })->get();
     }
 }

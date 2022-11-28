@@ -5,7 +5,7 @@ namespace App\Http\Controllers\University;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\University\FacultyRequest;
 use App\Models\Faculty;
-use App\Models\Pivot\Facultyable;
+use App\Models\Pivot\UniversityFaculty;
 use App\Models\University;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;

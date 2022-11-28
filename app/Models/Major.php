@@ -24,4 +24,11 @@ class Major extends Model
     {
         return $this->belongsToMany(Faculty::class, 'faculty_major');
     }
+
+    public function getMajorsByFacultyId($facultyId)
+    {
+        return $this->whereHas('faculties', function ($query) use ($facultyId) {
+            $query->where('faculty_id', $facultyId);
+        })->get();
+    }
 }

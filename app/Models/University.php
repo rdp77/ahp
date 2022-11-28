@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Pivot\FacultyMajor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -23,5 +24,11 @@ class University extends Model
     public function faculties()
     {
         return $this->belongsToMany(Faculty::class, 'university_faculty');
+    }
+
+    public function majors()
+    {
+        return $this->hasManyThrough(Major::class, FacultyMajor::class, 'university_id',
+            'id', 'id', 'major_id');
     }
 }
