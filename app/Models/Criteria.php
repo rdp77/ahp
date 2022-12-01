@@ -36,4 +36,35 @@ class Criteria extends Model
     protected $casts = [
         'type' => CriteriaTypeEnum::class,
     ];
+
+    public function comparisonScale($type)
+    {
+        $data = $this->where('type', $type)->get();
+        $newData = [];
+        foreach ($data as $criteria) {
+            foreach ($data as $criteria2) {
+                if ($criteria === $criteria2) {
+                    continue;
+                }
+                $isDuplicate = false;
+                foreach ($newData as $newDataItem) {
+                    if ($newDataItem['criteria1'] === $criteria2->id && $newDataItem['criteria2'] === $criteria->id) {
+                        $isDuplicate = true;
+                        break;
+                    }
+                }
+                if ($isDuplicate) {
+                    continue;
+                }
+
+                $newData[] = [
+                    'id' => $criteria->id . '-' . $criteria2->id,
+                    'criteria1' => $criteria->id,
+                    'criteria2' => $criteria2->id,
+                ];
+            }
+        }
+
+        return json_encode($newData);
+    }
 }

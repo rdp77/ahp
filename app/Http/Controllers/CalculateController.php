@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CriteriaTypeEnum;
 use App\Http\Controllers\Template\MainController;
 use App\Models\Faculty;
 use App\Models\Feedback;
 use App\Models\Major;
 use App\Models\Criteria;
+use App\Models\University;
 use App\Models\User;
 use App\Models\Weighting;
 use Illuminate\Http\Request;
@@ -38,13 +40,27 @@ class CalculateController extends Controller
     public function storeCalculate(Request $request)
     {
         $alternative = $request->alternative ?? 'check';
+        $criteria = Criteria::all();
+        $weighting = Weighting::all();
+        $majors = Major::all();
+        $universities = University::all();
+        $criteriaUniversity = (new Criteria)->comparisonScale(CriteriaTypeEnum::UNIVERSITY);
+        $criteriaMajor = (new Criteria)->comparisonScale(CriteriaTypeEnum::MAJOR);
+        $alternativeUniversity = (new University)->comparisonScale();
         if ($alternative === 'check') {
-            $alternative = Major::all();
+            $alternative = University::with('majors')->get();
+            $alternativeMajor = (new Major)->comparisonScale($alternative->pluck('id')->toArray());
         } else {
-            $alternative = Major::whereIn('id', $alternative)->get();
+            $alternative = University::whereIn('id', $alternative)->with('majors')->get();
+            $alternativeMajor = (new Major)->comparisonScale($alternative->pluck('id')->toArray());
         }
 
-        return redirect()->route('calculate')->with('alternative', $alternative);
+//        return response()->json($alternative);
+
+        return view('pages.frontend.calculate.index', compact(
+            'criteria', 'alternative', 'criteriaUniversity', 'criteriaMajor', 'weighting',
+            'alternativeUniversity', 'alternativeMajor', 'majors', 'universities'
+        ));
     }
 
     public function calculate(Request $request)

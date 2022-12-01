@@ -13,7 +13,6 @@
                     <div class="form-group">
                         <label>{{ __('Nama Universitas') }}<code>*</code></label>
                         <select name="alternative[]" class="form-control select2" multiple required id="alternative">
-                            <option value="">Pilih Universitas</option>
                             @foreach ($university as $univ)
                                 <option value="{{ $univ->id }}">{{ $univ->name }}</option>
                             @endforeach
