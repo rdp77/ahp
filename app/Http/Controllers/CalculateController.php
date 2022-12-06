@@ -94,10 +94,6 @@ class CalculateController extends Controller
         $majorAHP = $this->calculateAHP(
             $request->criteriasmaj, $request->alternativesmaj, $request->typesmaj, $request->barismaj, $request->pairwisemaj
         );
-        // check if $majorAHP response json is correct or not
-        if (json_decode($majorAHP)->status === 'error') {
-            return $majorAHP . 'majors';
-        }
 
 //        $universityRecommendation = [
 //            'name' => 'Universitas 17 Agustus 1945 Surabaya',
@@ -109,7 +105,7 @@ class CalculateController extends Controller
         $recommendation = Major::whereIn('id', $recommendation)->where('name', $majorAHP[0]['name'])->first();
 
         return response()->json([
-//            'university' => $universityAHP ?? null,
+            'university' => $universityAHP ?? null,
             'major' => $majorAHP,
             'recommendation' => [
                 'university' => $university ? University::where('name', $universityRecommendation['name'])->first() :
