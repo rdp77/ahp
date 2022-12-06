@@ -32,16 +32,19 @@
     </div>
     @foreach($criteriaMaj as $index => $maj)
         <input type="hidden" name="criteriasmaj[{{ $index }}]" value="{{ $maj->name }}" class="criteriamaj">
-        <input type="hidden" value="0" name="types[{{ $index }}]">
+        <input type="hidden" value="0" name="typesmaj[{{ $index }}]">
     @endforeach
-    <table class="table table-hover table-responsive">
-        <thead class="black white-text">
-        <tr id="table-matrix-interest-atas-maj">
-        </tr>
-        </thead>
-        <tbody id="table-matrix-interest-bawah-maj">
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="black white-text">
+            <tr id="table-matrix-interest-atas-maj">
+            </tr>
+            </thead>
+            <tbody id="table-matrix-interest-bawah-maj">
+            </tbody>
+        </table>
+    </div>
+
     {{--    @foreach (json_decode($criteriaMajor) as $major)--}}
     {{--        <div class="row align-items-center">--}}
     {{--            <div class="col">--}}
@@ -125,7 +128,7 @@
         </button>
     </div>
     @foreach($alternativeMaj as $altMaj)
-        <input type="hidden" name="alternatives[]" class="alternative-inputmaj form-control"
+        <input type="hidden" name="alternativesmaj[]" class="alternative-inputmaj form-control"
                value="{{ $altMaj->name }}">
     @endforeach
     <div class="card-body px-lg-5 pt-0 mt-2 collapse show" id="pairwise-body-maj">

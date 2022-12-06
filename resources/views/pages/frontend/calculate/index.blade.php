@@ -1,5 +1,5 @@
 @extends('layouts.calculate')
-@section('title', __('My Blogs'))
+@section('title', __('Jurusan Finder | Calculate'))
 
 @section('content')
     <div class="card card-info">
@@ -26,6 +26,7 @@
     </div>
     <div class="card card-primary">
         <form action="{{ route('calculate.data') }}" method="post">
+            {{--        <form id="stored">--}}
             <input type="hidden" name="alternative" value="{{ $alternativeids }}">
             @csrf
             <div class="card-body">
@@ -45,7 +46,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary btn-block">Hitung</button>
+                <button type="submit" onclick="save()" class="btn btn-primary btn-block">Hitung</button>
             </div>
         </form>
     </div>

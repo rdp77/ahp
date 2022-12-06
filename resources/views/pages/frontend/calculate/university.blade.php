@@ -20,24 +20,41 @@
             </tbody>
         </table>
     @endisset
-    <div class="section-title">Perbandingan Bobot Kriteria (Relative Interest Matrix)</div>
-    <div class="text-center mb-2">
-        <button type="button" class="btn btn-outline-dark" onclick="generateInterestRelativeMatrix();">
-            Generate Matrix
-        </button>
-    </div>
-    @foreach($criteriaUniv as $index => $cu)
-        <input type="hidden" name="criterias[{{ $index }}]" value="{{ $cu->name }}" class="criteria">
-        <input type="hidden" value="0" name="types[{{ $index }}]">
-    @endforeach
-    <table class="table table-hover table-responsive">
-        <thead class="black white-text">
-        <tr id="table-matrix-interest-atas">
-        </tr>
-        </thead>
-        <tbody id="table-matrix-interest-bawah">
-        </tbody>
-    </table>
+    @if(count($alternative) > 1)
+        <div class="section-title">Perbandingan Bobot Kriteria (Relative Interest Matrix)</div>
+        <div class="text-center mb-2">
+            <button type="button" class="btn btn-outline-dark" onclick="generateInterestRelativeMatrix();">
+                Generate Matrix
+            </button>
+        </div>
+        @foreach($criteriaUniv as $index => $cu)
+            <input type="hidden" name="criterias[{{ $index }}]" value="{{ $cu->name }}" class="criteria">
+            <input type="hidden" value="0" name="types[{{ $index }}]">
+        @endforeach
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="black white-text">
+                <tr id="table-matrix-interest-atas">
+                </tr>
+                </thead>
+                <tbody id="table-matrix-interest-bawah">
+                </tbody>
+            </table>
+        </div>
+        <div class="section-title">Perbandingan Bobot Alternatif (Matrix PairWise)</div>
+        <div class="text-center mb-2">
+            <button type="button" class="btn btn-outline-dark" onclick="generatePairWiseMatrix();">
+                Generate Matrix
+            </button>
+        </div>
+        @foreach($alternative as $alt)
+            <input type="hidden" name="alternatives[]" class="alternative-input form-control"
+                   value="{{ $alt->name }}">
+        @endforeach
+        <div class="card-body px-lg-5 pt-0 mt-2 collapse show" id="pairwise-body">
+        </div>
+    @endif
+
 
     {{--    @foreach (json_decode($criteriaUniversity) as $univ)--}}
     {{--        <div class="row align-items-center">--}}
@@ -115,17 +132,6 @@
     {{--            </div>--}}
     {{--        </div>--}}
     {{--    @endforeach--}}
-    <div class="section-title">Perbandingan Bobot Alternatif (Matrix PairWise)</div>
-    <div class="text-center mb-2">
-        <button type="button" class="btn btn-outline-dark" onclick="generatePairWiseMatrix();">
-            Generate Matrix
-        </button>
-    </div>
-    @foreach($alternative as $alt)
-        <input type="hidden" name="alternativesmaj[]" class="alternative-input form-control" value="{{ $alt->name }}">
-    @endforeach
-    <div class="card-body px-lg-5 pt-0 mt-2 collapse show" id="pairwise-body">
-    </div>
     {{--    @foreach (json_decode($alternativeUniversity) as $altUniv)--}}
     {{--        <div class="row align-items-center">--}}
     {{--            <div class="col">--}}

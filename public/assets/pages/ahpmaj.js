@@ -172,7 +172,7 @@ function printQuantitativeMatrix(critera_name, c) {
         tbody += `
                     <tr>
                         <td>` + element + `</td>
-                        <td><input type="text" name="pairwise[` + c + `][]" class="table-input form-control" value="" id="table-quantitative-` + c + `-` + i + `" required></td>
+                        <td><input type="text" name="pairwisemaj[` + c + `][]" class="table-input form-control" value="" id="table-quantitative-` + c + `-` + i + `" required></td>
                     </tr>
                 `;
         i++;
@@ -206,7 +206,7 @@ function printPairWiseMatrixMaj(critera_name, c) {
         var td = '';
 
         for (let j = 0; j < size; j++) {
-            td += '<td><input type="text" name="pairwise[' + c + '][' + i + '][' + j + ']" class="form-control table-input" id="table-' + c + '-input-maj-' + i + '-' + j + '" data-i="' + i + '" data-j="' + j + '" value="' + (i == j ? '1' : '') + '" ' + (i == j ? 'readonly ' : 'onKeyUp="return cekPairWiseMatrixMaj(this,' + c + ');"') + 'required/></td>';
+            td += '<td><input type="text" name="pairwisemaj[' + c + '][' + i + '][' + j + ']" class="form-control table-input" id="table-' + c + '-input-maj-' + i + '-' + j + '" data-i="' + i + '" data-j="' + j + '" value="' + (i == j ? '1' : '') + '" ' + (i == j ? 'readonly ' : 'onKeyUp="return cekPairWiseMatrixMaj(this,' + c + ');"') + 'required/></td>';
         }
 
         tbody += `<tr>

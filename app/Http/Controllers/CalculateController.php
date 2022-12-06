@@ -12,8 +12,11 @@ use App\Models\Pivot\FacultyMajor;
 use App\Models\University;
 use App\Models\User;
 use App\Models\Weighting;
+use App\Perhitungan;
+use Bardiz12\AHPDss\AHP;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
@@ -23,10 +26,6 @@ use Spatie\Activitylog\Models\Activity;
 
 class CalculateController extends Controller
 {
-    /**
-     * @var false|string
-     */
-    private $alternativeids;
 
     /**
      * Create a new controller instance.
@@ -79,34 +78,261 @@ class CalculateController extends Controller
 
     public function calculate(Request $request)
     {
-        $alternative = json_decode($request->alternative);
-        // collection by name prefix (kriteria, alternatif)
-        $criteriaUniv = collect($request->all())->filter(function ($value, $key) {
-            return str_starts_with($key, 'kriteria-univ-');
-        });
-        $criteriaMajor = collect($request->all())->filter(function ($value, $key) {
-            return str_starts_with($key, 'kriteria-maj-');
-        });
-        $alternativeUniv = collect($request->all())->filter(function ($value, $key) {
-            return str_starts_with($key, 'alternatif-univ-');
-        });
-        $alternativeMajor = collect($request->all())->filter(function ($value, $key) {
-            return str_starts_with($key, 'alternatif-maj-');
-        });
+        $university = false;
+        if (count(json_decode($request->alternative)) > 1) {
+            $university = true;
+            $universityAHP = $this->calculateAHP(
+                $request->criterias, $request->alternatives, $request->types, $request->baris, $request->pairwise
+            );
+            // get first array element of universityAHP
+            $universityRecommendation = $universityAHP[0];
+            $recommendation = University::where('name', $universityRecommendation['name'])->first();
+        } else {
+            $recommendation = University::where('id', json_decode($request->alternative)[0])->first();
+        }
 
-        $data = [
-            'university' => [
-                'criteria' => $criteriaUniv,
-                'alternative' => $alternativeUniv,
-            ],
-            'major' => [
-                'criteria' => $criteriaMajor,
-                'alternative' => $alternativeMajor,
-            ],
-            'alternative' => $alternative,
-        ];
+        $majorAHP = $this->calculateAHP(
+            $request->criteriasmaj, $request->alternativesmaj, $request->typesmaj, $request->barismaj, $request->pairwisemaj
+        );
+        // check if $majorAHP response json is correct or not
+        if (json_decode($majorAHP)->status === 'error') {
+            return $majorAHP . 'majors';
+        }
 
-        return $data;
+//        $universityRecommendation = [
+//            'name' => 'Universitas 17 Agustus 1945 Surabaya',
+//        ];
+
+        // Get University recommendation by major
+
+        $recommendation = FacultyMajor::where('university_id', $recommendation->id)->get()->pluck('major_id')->unique();
+        $recommendation = Major::whereIn('id', $recommendation)->where('name', $majorAHP[0]['name'])->first();
+
+        return response()->json([
+//            'university' => $universityAHP ?? null,
+            'major' => $majorAHP,
+            'recommendation' => [
+                'university' => $university ? University::where('name', $universityRecommendation['name'])->first() :
+                    University::where('id', json_decode($request->alternative)[0])->first(),
+                'major' => $recommendation
+            ]
+        ]);
+//            dd($request->all());
+//            $input = $request->all();
+//            unset($input['alternative']);
+//            unset($input['alternativesmaj']);
+//            unset($input['criteriasmaj']);
+//            $ahp = new AHP();
+////            foreach ($request->criterias as $value) {
+////                $ahp->addQualitativeCriteria($value);
+////            }
+////            $ahp->setCandidates($request->alternatives);
+//            foreach ($input['types'] as $key => $value) {
+//                if ($value == 0) {
+//                    $ahp->addQualitativeCriteria($input['criterias'][$key]);
+//                } else {
+//                    $ahp->addQuantitativeCriteria($input['criterias'][$key]);
+//                }
+//            }
+//            $ahp->setCandidates($input['alternatives']);
+//
+//            //relative interest matrix
+//            foreach ($input['baris'] as $i => &$ar) {
+//                foreach ($ar as $j => &$ar2) {
+//                    if ($ar2 == 'AUTO') {
+//                        $ar2 = null;
+//                    }
+//                }
+//            }
+//            $ahp->setRelativeInterestMatrix($input['baris']);
+//            foreach ($request->baris as $i => &$ar) {
+//                foreach ($ar as $j => &$ar2) {
+//                    if ($ar2 == 'AUTO') {
+//                        $ar2 = null;
+//                    }
+//                }
+//            }
+//            $baris = [];
+        // check value in array $request->baris, if 'AUTO' change to null
+//            foreach ($request->baris as $key => $value) {
+//                $baris[$key] = array_map(function ($item) {
+//                    return $item === 'AUTO' ? null : $item;
+//                }, $value);
+//            }
+//            return response()->json([
+//                'baris' => count($baris),
+//                'kriteria' => count($request->criterias),
+//            ]);
+//            $request->baris = array_map(static function ($ar) {
+//                return array_map(static function ($ar2) {
+//                    return $ar2 == 'AUTO' ? null : $ar2;
+//                }, $ar);
+//            }, $request->baris);
+//            $ahp->setRelativeInterestMatrix($baris);
+
+        //PairWise
+
+//            $pairWise = [];
+//            foreach ($input['pairwise'] as $key => &$ar) {
+//                foreach ($ar as $i => &$ar2) {
+//                    if ($input['types'][$key] == 0) {
+//                        foreach ($ar2 as $j => &$ar3) {
+//                            if ($ar3 == 'AUTO') {
+//                                $ar3 = null;
+//                            }
+//                        }
+//                    } else {
+//                        if ($ar2 == 'AUTO') {
+//                            $ar2 = null;
+//                        }
+//                    }
+//                }
+//                $pairWise[$input['criterias'][$key]] = $ar;
+//            }
+//            $ahp->setBatchCriteriaPairWise($pairWise);
+//            $pairWise = [];
+//            foreach ($input['pairwise'] as $key => &$ar) {
+//                foreach ($ar as $i => &$ar2) {
+//                    if ($input['types'][$key] == 0) {
+//                        foreach ($ar2 as $j => &$ar3) {
+//                            if ($ar3 == 'AUTO') {
+//                                $ar3 = null;
+//                            }
+//                        }
+//                    } else {
+//                        if ($ar2 == 'AUTO') {
+//                            $ar2 = null;
+//                        }
+//                    }
+//                }
+//                $pairWise[$input['criterias'][$key]] = $ar;
+//            }
+        // create new pairwise matrix
+        // replace all 'AUTO' to null in array $request->pairwise and insert to $pairWise
+//            foreach ($request->pairwise as $key => $value) {
+//                $pairWise[$request->criterias[$key]] = array_map(function ($item) {
+//                    return $item === 'AUTO' ? null : $item;
+//                }, $value);
+//            }
+//            foreach ($request->pairwise as $key => $ar) {
+//                $ar = array_map(static function ($ar2) use ($request, $key) {
+//                    array_map(static function ($ar3) {
+//                        return $ar3 === 'AUTO' ? null : $ar3;
+//                    }, $ar2) ;
+//                }, $ar);
+//                $pairWise[$request->criterias[$key]] = $ar;
+//            }
+//            foreach ($request->pairwise as $key => $ar) {
+//                $ar = array_map(static function ($ar2) use ($request, $key) {
+//                    // change 'AUTO' to null
+//                    return $request->types[$key] == 0 ? array_map(static function ($ar3) {
+//                        return $ar3 === 'AUTO' ? null : $ar3;
+//                    }, $ar2) : ($ar2 === 'AUTO' ? null : $ar2);
+//                }, $ar);
+//                $pairWise[$request->criterias[$key]] = $ar;
+//            }
+//            $ahp->finalize();
+//            logger($ahp->getResult());
+////            dd('ok');
+////            return response()->json(json_decode($ahp->getResults()));
+//            return response()->json([
+//                'result' => $ahp->getResult(),
+//                'pairwise' => $pairWise,
+//                'baris' => $input['baris'],
+//                'alternatives' => $input['alternatives'],
+//                'criterias' => $input['criterias'],
+//                'types' => $input['types'],
+//            ]);
+//            $perhitungan = Perhitungan::create([
+//                'name'=>$request->input('name'),
+//                'description'=>$request->input('description'),
+//                'data'=>json_encode($request->all())
+//            ]);
+//            echo "<a href=".route('perhitungan.show',[$perhitungan->id]).">CLICK HERE TO SEE THE RESULT</a>";
+//        } catch (\ErrorException $e) {
+//            Log::error($e->getMessage() . $e->getTraceAsString() . $e->getFile() . $e->getLine());
+//            return response()->json(['error' => $e->getMessage()]);
+//        }
+
+//        $alternative = json_decode($request->alternative);
+//        // collection by name prefix (kriteria, alternatif)
+//        $criteriaUniv = collect($request->all())->filter(function ($value, $key) {
+//            return str_starts_with($key, 'kriteria-univ-');
+//        });
+//        $criteriaMajor = collect($request->all())->filter(function ($value, $key) {
+//            return str_starts_with($key, 'kriteria-maj-');
+//        });
+//        $alternativeUniv = collect($request->all())->filter(function ($value, $key) {
+//            return str_starts_with($key, 'alternatif-univ-');
+//        });
+//        $alternativeMajor = collect($request->all())->filter(function ($value, $key) {
+//            return str_starts_with($key, 'alternatif-maj-');
+//        });
+//
+//        $data = [
+//            'university' => [
+//                'criteria' => $criteriaUniv,
+//                'alternative' => $alternativeUniv,
+//            ],
+//            'major' => [
+//                'criteria' => $criteriaMajor,
+//                'alternative' => $alternativeMajor,
+//            ],
+//            'alternative' => $alternative,
+//        ];
+//
+//        return $data;
+    }
+
+    public function calculateAHP($criterias, $alternatives, $types, $lines, $pairwise)
+    {
+        try {
+            $ahp = new AHP();
+
+            foreach ($types as $key => $value) {
+                if ($value == 0) {
+                    $ahp->addQualitativeCriteria($criterias[$key]);
+                } else {
+                    $ahp->addQuantitativeCriteria($criterias[$key]);
+                }
+            }
+            $ahp->setCandidates($alternatives);
+
+            //relative interest matrix
+            foreach ($lines as $i => &$ar) {
+                foreach ($ar as $j => &$ar2) {
+                    if ($ar2 == 'AUTO') {
+                        $ar2 = null;
+                    }
+                }
+            }
+            $ahp->setRelativeInterestMatrix($lines);
+
+            //PairWise
+            $pairWise = [];
+            foreach ($pairwise as $key => &$ar) {
+                foreach ($ar as $i => &$ar2) {
+                    if ($types[$key] == 0) {
+                        foreach ($ar2 as $j => &$ar3) {
+                            if ($ar3 == 'AUTO') {
+                                $ar3 = null;
+                            }
+                        }
+                    } else {
+                        if ($ar2 == 'AUTO') {
+                            $ar2 = null;
+                        }
+                    }
+                }
+                $pairWise[$criterias[$key]] = $ar;
+            }
+            $ahp->setBatchCriteriaPairWise($pairWise);
+            $ahp->finalize();
+            return $ahp->getResult();
+        } catch (\ErrorException $e) {
+            Log::error($e->getMessage() . $e->getTraceAsString() . $e->getFile() . $e->getLine());
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 
 //    public function index()
