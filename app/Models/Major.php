@@ -36,9 +36,7 @@ class Major extends Model
     public function comparisonScale(array $university)
     {
         $data = FacultyMajor::whereIn('university_id', $university)->get()->pluck('major_id')->unique();
-        logger($data);
         $data = Major::whereIn('id', $data)->get();
-        logger($data);
         $newData = [];
         foreach ($data as $major) {
             foreach ($data as $major2) {
@@ -57,10 +55,43 @@ class Major extends Model
                 }
 
                 $newData[] = [
-                    'id' => $major->id . $major2->id,
+                    'id' => $major->id . '-' . $major2->id,
                     'alternative1' => $major->id,
                     'alternative2' => $major2->id,
                 ];
+            }
+        }
+
+        return json_encode($newData);
+    }
+
+    public function comparisonScaleData(array $university)
+    {
+        $data = FacultyMajor::whereIn('university_id', $university)->get()->pluck('major_id')->unique();
+        $data = Major::whereIn('id', $data)->get();
+        $newData = [];
+        foreach ($data as $major) {
+            foreach ($data as $major2) {
+                if ($major === $major2) {
+                    $alternative1Data = 'AUTO';
+                    $alternative2Data = 'AUTO';
+                }
+                foreach ($newData as $newDataItem) {
+                    if ($newDataItem['alternative1'] === $major2->id && $newDataItem['alternative2'] === $major->id) {//
+                        $alternative1Data = 'AUTO';
+                        $alternative2Data = 'AUTO';
+                    }
+                }
+
+                $newData[] = [
+                    'id' => $major->id . '-' . $major2->id,
+                    'alternative1' => $alternative1Data ?? $major->id,
+                    'alternative2' => $alternative2Data ?? $major2->id,
+                    'value' => 0,
+                ];
+
+                $alternative1Data = null;
+                $alternative2Data = null;
             }
         }
 

@@ -18,6 +18,8 @@ Route::controller(CalculateController::class)->group(function () {
     Route::group(['prefix' => 'calculate'], function () {
         Route::post('/store', 'storeCalculate')
             ->name('calculate.create');
+        Route::post('/data', 'calculate')
+            ->name('calculate.data');
         Route::get('/', 'calculate')
             ->name('calculate');
         Route::get('/history', 'calculateHistory')

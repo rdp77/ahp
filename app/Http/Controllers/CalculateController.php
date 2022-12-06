@@ -15,12 +15,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 use Sarfraznawaz2005\ServerMonitor\ServerMonitor;
 use Spatie\Activitylog\Models\Activity;
 
 class CalculateController extends Controller
 {
+    /**
+     * @var false|string
+     */
+    private $alternativeids;
+
     /**
      * Create a new controller instance.
      *
@@ -46,30 +52,55 @@ class CalculateController extends Controller
         $universities = University::all();
         $criteriaUniversity = (new Criteria)->comparisonScale(CriteriaTypeEnum::UNIVERSITY);
         $criteriaMajor = (new Criteria)->comparisonScale(CriteriaTypeEnum::MAJOR);
-        $alternativeUniversity = (new University)->comparisonScale();
         if ($alternative === 'check') {
             $alternative = University::with('majors')->get();
+            $alternativeUniversity = (new University)->comparisonScale(University::all()->pluck('id')->toArray());
             $alternativeMajor = (new Major)->comparisonScale($alternative->pluck('id')->toArray());
         } else {
             $alternative = University::whereIn('id', $alternative)->with('majors')->get();
+            $alternativeUniversity = (new University)->comparisonScale($alternative->pluck('id')->toArray());
             $alternativeMajor = (new Major)->comparisonScale($alternative->pluck('id')->toArray());
         }
+        $alternativeids = json_encode($alternative->pluck('id')->toArray());
 
-//        return response()->json($alternative);
+//        return response()->json(json_decode($criteriaMajor));
 
         return view('pages.frontend.calculate.index', compact(
             'criteria', 'alternative', 'criteriaUniversity', 'criteriaMajor', 'weighting',
-            'alternativeUniversity', 'alternativeMajor', 'majors', 'universities'
+            'alternativeUniversity', 'alternativeMajor', 'majors', 'universities', 'alternativeids'
         ));
     }
 
     public function calculate(Request $request)
     {
-        return view('pages.frontend.calculate.index', [
-            'alternative' => $request->session()->get('alternative'),
-            'criteria' => Criteria::all(),
-            'weighting' => Weighting::all(),
-        ]);
+        $alternative = json_decode($request->alternative);
+        // collection by name prefix (kriteria, alternatif)
+        $criteriaUniv = collect($request->all())->filter(function ($value, $key) {
+            return str_starts_with($key, 'kriteria-univ-');
+        });
+        $criteriaMajor = collect($request->all())->filter(function ($value, $key) {
+            return str_starts_with($key, 'kriteria-maj-');
+        });
+        $alternativeUniv = collect($request->all())->filter(function ($value, $key) {
+            return str_starts_with($key, 'alternatif-univ-');
+        });
+        $alternativeMajor = collect($request->all())->filter(function ($value, $key) {
+            return str_starts_with($key, 'alternatif-maj-');
+        });
+
+        $data = [
+            'university' => [
+                'criteria' => $criteriaUniv,
+                'alternative' => $alternativeUniv,
+            ],
+            'major' => [
+                'criteria' => $criteriaMajor,
+                'alternative' => $alternativeMajor,
+            ],
+            'alternative' => $alternative,
+        ];
+
+        return $data;
     }
 
 //    public function index()

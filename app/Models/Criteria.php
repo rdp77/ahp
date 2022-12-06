@@ -67,4 +67,36 @@ class Criteria extends Model
 
         return json_encode($newData);
     }
+
+    public function comparisonScaleData($type)
+    {
+        $data = $this->where('type', $type)->get();
+        $newData = [];
+        foreach ($data as $criteria) {
+            foreach ($data as $criteria2) {
+                if ($criteria === $criteria2) {
+                    $criteria1Data = 'AUTO';
+                    $criteria2Data = 'AUTO';
+                }
+                foreach ($newData as $newDataItem) {
+                    if ($newDataItem['criteria1'] === $criteria2->id && $newDataItem['criteria2'] === $criteria->id) {
+                        $criteria1Data = 'AUTO';
+                        $criteria2Data = 'AUTO';
+                    }
+                }
+
+                $newData[] = [
+                    'id' => $criteria->id . '-' . $criteria2->id,
+                    'criteria1' => $criteria1Data ?? $criteria->id,
+                    'criteria2' => $criteria2Data ?? $criteria2->id,
+                    'value' => 0,
+                ];
+
+                $criteria1Data = null;
+                $criteria2Data = null;
+            }
+        }
+
+        return json_encode($newData);
+    }
 }

@@ -32,9 +32,9 @@ class University extends Model
             'id', 'id', 'major_id');
     }
 
-    public function comparisonScale()
+    public function comparisonScale(array $univData)
     {
-        $data = self::all();
+        $data = self::whereIn('id', $univData)->get();
         $newData = [];
         foreach ($data as $university) {
             foreach ($data as $university2) {
@@ -53,7 +53,7 @@ class University extends Model
                 }
 
                 $newData[] = [
-                    'id' => $university->id . $university2->id,
+                    'id' => $university->id . '-' . $university2->id,
                     'alternative1' => $university->id,
                     'alternative2' => $university2->id,
                 ];

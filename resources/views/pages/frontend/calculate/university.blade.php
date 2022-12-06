@@ -20,7 +20,7 @@
             </tbody>
         </table>
     @endisset
-    <div class="section-title">Perbandingan Bobot Kriteria</div>
+    <div class="section-title">Perbandingan Bobot Kriteria (Relative Interest Matrix)</div>
     @foreach (json_decode($criteriaUniversity) as $univ)
         <div class="row align-items-center">
             <div class="col">
@@ -37,40 +37,49 @@
                     <div class="text-center">
                         <div class="selectgroup w-100">
                             <label class="selectgroup-item">
-                                <input type="radio" name="kriteria{{ $univ->id }}" value="1" class="selectgroup-input">
+                                <input type="radio" name="kriteria-univ-{{ $univ->id }}" value="1"
+                                       class="selectgroup-input">
                                 <span class="selectgroup-button">1</span>
                             </label>
                             <label class="selectgroup-item">
-                                <input type="radio" name="kriteria{{ $univ->id }}" value="2" class="selectgroup-input">
+                                <input type="radio" name="kriteria-univ-{{ $univ->id }}" value="2"
+                                       class="selectgroup-input">
                                 <span class="selectgroup-button">2</span>
                             </label>
                             <label class="selectgroup-item">
-                                <input type="radio" name="kriteria{{ $univ->id }}" value="3" class="selectgroup-input">
+                                <input type="radio" name="kriteria-univ-{{ $univ->id }}" value="3"
+                                       class="selectgroup-input">
                                 <span class="selectgroup-button">3</span>
                             </label>
                             <label class="selectgroup-item">
-                                <input type="radio" name="kriteria{{ $univ->id }}" value="4" class="selectgroup-input">
+                                <input type="radio" name="kriteria-univ-{{ $univ->id }}" value="4"
+                                       class="selectgroup-input">
                                 <span class="selectgroup-button">4</span>
                             </label>
                             <label class="selectgroup-item">
-                                <input type="radio" name="kriteria{{ $univ->id }}" value="5" class="selectgroup-input"
+                                <input type="radio" name="kriteria-univ-{{ $univ->id }}" value="5"
+                                       class="selectgroup-input"
                                        checked>
                                 <span class="selectgroup-button">5</span>
                             </label>
                             <label class="selectgroup-item">
-                                <input type="radio" name="kriteria{{ $univ->id }}" value="6" class="selectgroup-input">
+                                <input type="radio" name="kriteria-univ-{{ $univ->id }}" value="6"
+                                       class="selectgroup-input">
                                 <span class="selectgroup-button">6</span>
                             </label>
                             <label class="selectgroup-item">
-                                <input type="radio" name="kriteria{{ $univ->id }}" value="7" class="selectgroup-input">
+                                <input type="radio" name="kriteria-univ-{{ $univ->id }}" value="7"
+                                       class="selectgroup-input">
                                 <span class="selectgroup-button">7</span>
                             </label>
                             <label class="selectgroup-item">
-                                <input type="radio" name="kriteria{{ $univ->id }}" value="8" class="selectgroup-input">
+                                <input type="radio" name="kriteria-univ-{{ $univ->id }}" value="8"
+                                       class="selectgroup-input">
                                 <span class="selectgroup-button">8</span>
                             </label>
                             <label class="selectgroup-item">
-                                <input type="radio" name="kriteria{{ $univ->id }}" value="9" class="selectgroup-input">
+                                <input type="radio" name="kriteria-univ-{{ $univ->id }}" value="9"
+                                       class="selectgroup-input">
                                 <span class="selectgroup-button">9</span>
                             </label>
                         </div>
@@ -88,7 +97,7 @@
             </div>
         </div>
     @endforeach
-    <div class="section-title">Perbandingan Bobot Alternatif</div>
+    <div class="section-title">Perbandingan Bobot Alternatif (Matrix PairWise)</div>
     @foreach (json_decode($alternativeUniversity) as $altUniv)
         <div class="row align-items-center">
             <div class="col">
@@ -106,48 +115,48 @@
                     <div class="text-center">
                         <div class="selectgroup w-100">
                             <label class="selectgroup-item">
-                                <input type="radio" name="alternatif{{ $altUniv->id }}" value="1"
+                                <input type="radio" name="alternatif-univ-{{ $altUniv->id }}" value="1"
                                        class="selectgroup-input">
                                 <span class="selectgroup-button">1</span>
                             </label>
                             <label class="selectgroup-item">
-                                <input type="radio" name="alternatif{{ $altUniv->id }}" value="2"
+                                <input type="radio" name="alternatif-univ-{{ $altUniv->id }}" value="2"
                                        class="selectgroup-input">
                                 <span class="selectgroup-button">2</span>
                             </label>
                             <label class="selectgroup-item">
-                                <input type="radio" name="alternatif{{ $altUniv->id }}" value="3"
+                                <input type="radio" name="alternatif-univ-{{ $altUniv->id }}" value="3"
                                        class="selectgroup-input">
                                 <span class="selectgroup-button">3</span>
                             </label>
                             <label class="selectgroup-item">
-                                <input type="radio" name="alternatif{{ $altUniv->id }}" value="4"
+                                <input type="radio" name="alternatif-univ-{{ $altUniv->id }}" value="4"
                                        class="selectgroup-input">
                                 <span class="selectgroup-button">4</span>
                             </label>
                             <label class="selectgroup-item">
-                                <input type="radio" name="alternatif{{ $altUniv->id }}" value="5"
+                                <input type="radio" name="alternatif-univ-{{ $altUniv->id }}" value="5"
                                        class="selectgroup-input"
                                        checked>
                                 <span class="selectgroup-button">5</span>
                             </label>
                             <label class="selectgroup-item">
-                                <input type="radio" name="alternatif{{ $altUniv->id }}" value="6"
+                                <input type="radio" name="alternatif-univ-{{ $altUniv->id }}" value="6"
                                        class="selectgroup-input">
                                 <span class="selectgroup-button">6</span>
                             </label>
                             <label class="selectgroup-item">
-                                <input type="radio" name="alternatif{{ $altUniv->id }}" value="7"
+                                <input type="radio" name="alternatif-univ-{{ $altUniv->id }}" value="7"
                                        class="selectgroup-input">
                                 <span class="selectgroup-button">7</span>
                             </label>
                             <label class="selectgroup-item">
-                                <input type="radio" name="alternatif{{ $altUniv->id }}" value="8"
+                                <input type="radio" name="alternatif-univ-{{ $altUniv->id }}" value="8"
                                        class="selectgroup-input">
                                 <span class="selectgroup-button">8</span>
                             </label>
                             <label class="selectgroup-item">
-                                <input type="radio" name="alternatif{{ $altUniv->id }}" value="9"
+                                <input type="radio" name="alternatif-univ-{{ $altUniv->id }}" value="9"
                                        class="selectgroup-input">
                                 <span class="selectgroup-button">9</span>
                             </label>

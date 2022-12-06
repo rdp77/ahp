@@ -25,21 +25,31 @@
         </div>
     </div>
     <div class="card card-primary">
-        <div class="card-body">
-            <ul class="nav nav-pills justify-content-center mb-3" id="myTab3" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="home-tab3" data-toggle="tab" href="#home3" role="tab"
-                       aria-controls="home" aria-selected="true">Universitas</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="profile-tab3" data-toggle="tab" href="#profile3" role="tab"
-                       aria-controls="profile" aria-selected="false">Jurusan</a>
-                </li>
-            </ul>
-            <div class="tab-content" id="myTabContent2">
-                @include('pages.frontend.calculate.university')
-                @include('pages.frontend.calculate.major')
+        <form action="{{ route('calculate.data') }}" method="post">
+            <input type="hidden" name="alternative" value="{{ $alternativeids }}">
+            @csrf
+            <div class="card-body">
+                <ul class="nav nav-pills justify-content-center mb-3" id="myTab3" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab3" data-toggle="tab" href="#home3" role="tab"
+                           aria-controls="home" aria-selected="true">Universitas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab3" data-toggle="tab" href="#profile3" role="tab"
+                           aria-controls="profile" aria-selected="false">Jurusan</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent2">
+                    @include('pages.frontend.calculate.university')
+                    @include('pages.frontend.calculate.major')
+                </div>
             </div>
-        </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary btn-block">Hitung</button>
+            </div>
+        </form>
     </div>
+@endsection
+@section('scripts')
+    <script src="{{ asset('assets/pages/ahp.js') }}"></script>
 @endsection
