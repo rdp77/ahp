@@ -8,6 +8,7 @@ use App\Models\Faculty;
 use App\Models\Feedback;
 use App\Models\Major;
 use App\Models\Criteria;
+use App\Models\Pivot\FacultyMajor;
 use App\Models\University;
 use App\Models\User;
 use App\Models\Weighting;
@@ -52,6 +53,8 @@ class CalculateController extends Controller
         $universities = University::all();
         $criteriaUniversity = (new Criteria)->comparisonScale(CriteriaTypeEnum::UNIVERSITY);
         $criteriaMajor = (new Criteria)->comparisonScale(CriteriaTypeEnum::MAJOR);
+        $criteriaUniv = Criteria::where('type', CriteriaTypeEnum::UNIVERSITY)->get();
+        $criteriaMaj = Criteria::where('type', CriteriaTypeEnum::MAJOR)->get();
         if ($alternative === 'check') {
             $alternative = University::with('majors')->get();
             $alternativeUniversity = (new University)->comparisonScale(University::all()->pluck('id')->toArray());
@@ -62,12 +65,15 @@ class CalculateController extends Controller
             $alternativeMajor = (new Major)->comparisonScale($alternative->pluck('id')->toArray());
         }
         $alternativeids = json_encode($alternative->pluck('id')->toArray());
+        $alternativeMaj = FacultyMajor::whereIn('university_id', $alternative->pluck('id')->toArray())->get()->pluck('major_id')->unique();
+        $alternativeMaj = Major::whereIn('id', $alternativeMaj)->get();
 
 //        return response()->json(json_decode($criteriaMajor));
 
         return view('pages.frontend.calculate.index', compact(
             'criteria', 'alternative', 'criteriaUniversity', 'criteriaMajor', 'weighting',
-            'alternativeUniversity', 'alternativeMajor', 'majors', 'universities', 'alternativeids'
+            'alternativeUniversity', 'alternativeMajor', 'majors', 'universities', 'alternativeids',
+            'criteriaUniv', 'criteriaMaj', 'alternativeMaj'
         ));
     }
 

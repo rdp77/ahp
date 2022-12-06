@@ -50,6 +50,10 @@
         </form>
     </div>
 @endsection
+{{--@section('scripts')--}}
+{{--    <script src="{{ asset('assets/pages/ahp.js') }}"></script>--}}
+{{--@endsection--}}
 @section('scripts')
     <script src="{{ asset('assets/pages/ahp.js') }}"></script>
+    <script src="{{ asset('assets/pages/ahpmaj.js') }}"></script>
 @endsection

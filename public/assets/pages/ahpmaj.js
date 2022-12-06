@@ -1,13 +1,13 @@
-var criterias = [];
+var criteriasmaj = [];
 var types = [];
-var candidates = [];
+var candidatesmaj = [];
 var numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
 
 function addNewCriteriaInput() {
     $("#criteria-form-container").append(`<div class="md-form">
                         <div class="row">
                             <div class="col-10">
-                                <input type="text" name="criterias[]" placeholder="Masukan criteria" class="form-control criteria" required >
+                                <input type="text" name="criteriasmaj[]" placeholder="Masukan criteria" class="form-control criteria" required >
                                 <span class="d-block">
                                     <select name="types[]" class="browser-default custom-select criteria-type small" required>
                                         <option value="0" selected>Qualitative</option>
@@ -25,16 +25,16 @@ function addNewCriteriaInput() {
     $(".criteria").focus();
 }
 
-function generateInterestRelativeMatrix() {
-    var size = ($("input.criteria").length);
+function generateInterestRelativeMatrixMaj() {
+    var size = ($("input.criteriamaj").length);
 
-    criterias = [];
+    criteriasmaj = [];
     var tr = `<th scope="col" class="text-center">#</th>`;
     var tbody = '';
     var flag = false;
     types = [];
-    $.each($("input.criteria"), function (i, element) {
-        if (criterias.includes($(element).val())) {
+    $.each($("input.criteriamaj"), function (i, element) {
+        if (criteriasmaj.includes($(element).val())) {
             flag = true;
             return swal({
                 type: 'error',
@@ -43,28 +43,28 @@ function generateInterestRelativeMatrix() {
             });
         }
         types.push($('select.criteria-type').eq(i).val());
-        criterias.push($(element).val());
+        criteriasmaj.push($(element).val());
         tr += `<th scope="col" class="text-center">` + $(element).val() + `</th>`;
 
         var td = '';
         for (let j = 0; j < size; j++) {
-            td += '<td><input type="text" name="baris[' + i + '][' + j + ']" class="form-control table-input" id="table-input-' + i + '-' + j + '" data-i="' + i + '" data-j="' + j + '" value="' + (i == j ? '1' : '') + '" ' + (i == j ? 'readonly ' : 'onKeyUp="return cekInputMatrix(this);"') + 'required /></td>';
+            td += '<td><input type="text" name="barismaj[' + i + '][' + j + ']" class="form-control table-input" id="table-input-maj-' + i + '-' + j + '" data-i="' + i + '" data-j="' + j + '" value="' + (i == j ? '1' : '') + '" ' + (i == j ? 'readonly ' : 'onKeyUp="return cekInputMatrixMaj(this);"') + 'required /></td>';
         }
         tbody += `<tr>
                             <th scope="row" class="black white-text text-center">` + $(element).val() + `</th>
                             ` + td + `
                         </tr>`;
     });
-    console.log(criterias, tr);
+    console.log(criteriasmaj, tr);
     if (!flag) {
-        $("#table-matrix-interest-atas").html(tr);
-        $("#table-matrix-interest-bawah").html(tbody);
+        $("#table-matrix-interest-atas-maj").html(tr);
+        $("#table-matrix-interest-bawah-maj").html(tbody);
     }
 
 
 }
 
-function cekInputMatrix(trig) {
+function cekInputMatrixMaj(trig) {
     var str = $(trig).val();
     var nstr = '';
 
@@ -87,17 +87,17 @@ function cekInputMatrix(trig) {
     var j = $(trig).data('j');
     if (nstr !== '') {
         var nextEl = null
-        $('#table-input-' + j + '-' + i).val('AUTO');
+        $('#table-input-maj-' + j + '-' + i).val('AUTO');
         var increment = null;
-        if ($('#table-input-' + i + '-' + (j + 1)).length > 0) {
+        if ($('#table-input-maj-' + i + '-' + (j + 1)).length > 0) {
             j++;
-            nextEl = $('#table-input-' + i + '-' + (j));
+            nextEl = $('#table-input-maj-' + i + '-' + (j));
             increment &= j;
-        } else if ($('#table-input-' + (i + 1) + '-0').length > 0) {
+        } else if ($('#table-input-maj-' + (i + 1) + '-0').length > 0) {
             i++;
             j = 0;
             increment &= i;
-            nextEl = $('#table-input-' + (i) + '-0');
+            nextEl = $('#table-input-maj-' + (i) + '-0');
         }
         if (nextEl) {
             if (i != j) {
@@ -107,13 +107,13 @@ function cekInputMatrix(trig) {
         }
 
     } else {
-        $('#table-input-' + j + '-' + i).val('');
+        $('#table-input-maj-' + j + '-' + i).val('');
     }
     //clearInterval(timer);
     //},1000);
 }
 
-function cekPairWiseMatrix(trig, c) {
+function cekPairWiseMatrixMaj(trig, c) {
     var str = $(trig).val();
     var nstr = '';
 
@@ -128,19 +128,19 @@ function cekPairWiseMatrix(trig, c) {
     var i = $(trig).data('i');
     var j = $(trig).data('j');
     if (nstr !== '') {
-        $('#table-' + c + '-input-' + j + '-' + i).val('AUTO');
+        $('#table-' + c + '-input-maj-' + j + '-' + i).val('AUTO');
     } else {
-        $('#table-' + c + '-input-' + j + '-' + i).val('');
+        $('#table-' + c + '-input-maj-' + j + '-' + i).val('');
     }
 }
 
-function generatePairWiseMatrix() {
-    $('#pairwise-body').html('');
-    candidates = [];
+function generatePairWiseMatrixMaj() {
+    $('#pairwise-body-maj').html('');
+    candidatesmaj = [];
     var flag = false;
-    $.each($("input.alternative-input"), function (i, element) {
+    $.each($("input.alternative-inputmaj"), function (i, element) {
         var candidate = $(element).val();
-        if (candidates.includes(candidate)) {
+        if (candidatesmaj.includes(candidate)) {
             flag = true;
             return swal({
                 type: 'error',
@@ -148,13 +148,13 @@ function generatePairWiseMatrix() {
                 text: '2 Alternative can\'t have same name : ' + $(element).val()
             });
         }
-        candidates.push(candidate);
+        candidatesmaj.push(candidate);
     });
     if (!flag) {
         var i = 0;
-        criterias.forEach(element => {
+        criteriasmaj.forEach(element => {
             // if (types[i] == 0) {
-            printPairWiseMatrix(element, i);
+            printPairWiseMatrixMaj(element, i);
             // } else {
             //     printQuantitativeMatrix(element, i);
             // }
@@ -164,11 +164,11 @@ function generatePairWiseMatrix() {
 }
 
 function printQuantitativeMatrix(critera_name, c) {
-    var size = candidates.length;
+    var size = candidatesmaj.length;
 
     var tbody = '';
     var i = 0;
-    candidates.forEach(element => {
+    candidatesmaj.forEach(element => {
         tbody += `
                     <tr>
                         <td>` + element + `</td>
@@ -193,12 +193,12 @@ function printQuantitativeMatrix(critera_name, c) {
     $('#pairwise-body').append(html);
 }
 
-function printPairWiseMatrix(critera_name, c) {
-    var size = candidates.length;
+function printPairWiseMatrixMaj(critera_name, c) {
+    var size = candidatesmaj.length;
 
     var tr = `<th scope="col" class="text-center">#</th>`;
 
-    candidates.forEach(element => {
+    candidatesmaj.forEach(element => {
         tr += `<th scope="col" class="text-center">` + element + `</th>`;
     });
     var tbody = '';
@@ -206,11 +206,11 @@ function printPairWiseMatrix(critera_name, c) {
         var td = '';
 
         for (let j = 0; j < size; j++) {
-            td += '<td><input type="text" name="pairwise[' + c + '][' + i + '][' + j + ']" class="form-control table-input" id="table-' + c + '-input-' + i + '-' + j + '" data-i="' + i + '" data-j="' + j + '" value="' + (i == j ? '1' : '') + '" ' + (i == j ? 'readonly ' : 'onKeyUp="return cekPairWiseMatrix(this,' + c + ');"') + 'required/></td>';
+            td += '<td><input type="text" name="pairwise[' + c + '][' + i + '][' + j + ']" class="form-control table-input" id="table-' + c + '-input-maj-' + i + '-' + j + '" data-i="' + i + '" data-j="' + j + '" value="' + (i == j ? '1' : '') + '" ' + (i == j ? 'readonly ' : 'onKeyUp="return cekPairWiseMatrixMaj(this,' + c + ');"') + 'required/></td>';
         }
 
         tbody += `<tr>
-                            <th scope="row" class="black white-text text-center">` + candidates[i] + `</th>
+                            <th scope="row" class="black white-text text-center">` + candidatesmaj[i] + `</th>
                             ` + td + `
                         </tr>`
     }
@@ -225,7 +225,7 @@ function printPairWiseMatrix(critera_name, c) {
                                 ` + tbody + `
                             </tbody>
                         </table>`;
-    $('#pairwise-body').append(html);
+    $('#pairwise-body-maj').append(html);
 
 }
 
