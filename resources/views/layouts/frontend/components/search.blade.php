@@ -10,7 +10,7 @@
                     <button data-toggle="modal" data-target="#alternativeDatas" class="btn">Daftar Universitas</button>
                 </div>
                 @auth
-                    <a href="{{ route('calculate') }}" class="btn">History Perhitungan</a>
+                    <a href="{{ route('calculate.history') }}" class="btn">History Perhitungan</a>
                 @endauth
             </div>
         </div>

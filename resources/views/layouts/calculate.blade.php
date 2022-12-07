@@ -13,13 +13,7 @@
                 <ul class="navbar-nav">
                     @auth
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('dashboard') }}">Perhitungan Kriteria</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('dashboard') }}">Perhitungan Alternatif</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('dashboard') }}">History</a>
+                            <a class="nav-link" href="{{ route('calculate.history') }}">History</a>
                         </li>
                     @endauth
                 </ul>

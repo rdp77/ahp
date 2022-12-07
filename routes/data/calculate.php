@@ -24,6 +24,8 @@ Route::controller(CalculateController::class)->group(function () {
             ->name('calculate');
         Route::get('/history', 'calculateHistory')
             ->name('calculate.history');
+        Route::get('/history/{id}', 'calculateHistoryShow')
+            ->name('calculate.history.show');
         Route::get('/criteria', 'calculateCriteria')
             ->name('calculate.criteria');
         Route::get('/alternative/{id}', 'calculateAlternative')

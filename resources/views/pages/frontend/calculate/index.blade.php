@@ -26,8 +26,6 @@
     </div>
     <div class="card card-primary">
         <form action="{{ route('calculate.data') }}" method="post">
-            {{--        <form id="stored">--}}
-            <input type="hidden" name="alternative" value="{{ $alternativeids }}">
             @csrf
             <div class="card-body">
                 <ul class="nav nav-pills justify-content-center mb-3" id="myTab3" role="tablist">
@@ -51,9 +49,6 @@
         </form>
     </div>
 @endsection
-{{--@section('scripts')--}}
-{{--    <script src="{{ asset('assets/pages/ahp.js') }}"></script>--}}
-{{--@endsection--}}
 @section('scripts')
     <script src="{{ asset('assets/pages/ahp.js') }}"></script>
     <script src="{{ asset('assets/pages/ahpmaj.js') }}"></script>
