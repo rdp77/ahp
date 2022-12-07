@@ -58,6 +58,9 @@ class CalculateController extends Controller
         if ($alternative === 'check') {
             $alternativesUniv = University::with('majors')->get();
         } else {
+            if (count($request->alternative) === 2) {
+                return redirect()->back()->with('error', 'Minimal memilih 3 Universitas atau 1 Universitas');
+            }
             $alternativesUniv = University::whereIn('id', $alternative)->with('majors')->get();
         }
         $alternativesMaj = $alternativesUniv->pluck('majors')->flatten()->unique('id')->values();

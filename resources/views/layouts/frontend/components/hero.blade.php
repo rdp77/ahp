@@ -2,6 +2,14 @@
     <div class="hero">
         <div class="container">
             <div class="text text-center text-lg-left">
+                @if(Session::has('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>{{ Session::get('error') }}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
                 <a href="javascript:void(0)" class="headline">
                     <div class="badge badge-info">Info</div>
                     Aplikasi Ini Hanyalah Sebagai Rujukan Atau Rekomendasi &nbsp;
