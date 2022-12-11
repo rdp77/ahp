@@ -29,7 +29,7 @@ var table = $("#table").DataTable({
         {data: "email"},
         {data: "address"},
         {data: "phone"},
-        {data: "order"},
+        // {data: "order"},
         {data: "action", orderable: false, searchable: true},
     ],
     buttons: [

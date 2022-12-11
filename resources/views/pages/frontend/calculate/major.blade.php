@@ -6,7 +6,7 @@
             <tr>
                 <th scope="col">No</th>
                 <th scope="col">Universitas</th>
-                <th scope="col">Fakultas</th>
+                <th scope="col">Jurusan</th>
             </tr>
             </thead>
             <tbody>

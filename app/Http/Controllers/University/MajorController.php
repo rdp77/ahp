@@ -228,14 +228,14 @@ class MajorController extends Controller
                 ->rawColumns(['action', 'faculty', 'major'])
                 ->make(true);
         }
-        return view('pages.backend.data.university.major.indexmajor');
+        return view('pages.backend.data.university.major.indexMajor');
     }
 
     public function createDataMajor()
     {
         $universities = University::with('faculties')->get();
         $majors = Major::all();
-        return view('pages.backend.data.university.major.createmajor',
+        return view('pages.backend.data.university.major.createMajor',
             compact('universities', 'majors'));
     }
 

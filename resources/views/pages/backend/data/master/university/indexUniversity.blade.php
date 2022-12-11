@@ -25,12 +25,12 @@
                     <th>
                         {{ __('No') }}
                     </th>
-                    <th>{{ __('Kode') }}</th>
                     <th>{{ __('Nama') }}</th>
+                    <th>{{ __('Kode') }}</th>
                     <th>{{ __('Email') }}</th>
                     <th>{{ __('Alamat') }}</th>
                     <th>{{ __('No HP') }}</th>
-                    <th>{{ __('Urutan') }}</th>
+                    {{--                    <th>{{ __('Urutan') }}</th>--}}
                     <th>{{ __('Aksi') }}</th>
                 </tr>
                 </thead>

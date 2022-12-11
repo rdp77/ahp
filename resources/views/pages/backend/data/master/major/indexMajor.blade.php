@@ -26,7 +26,7 @@
                         {{ __('No') }}
                     </th>
                     <th>{{ __('Nama') }}</th>
-                    <th>{{ __('Urutan') }}</th>
+{{--                    <th>{{ __('Urutan') }}</th>--}}
                     <th>{{ __('Aksi') }}</th>
                 </tr>
                 </thead>

@@ -219,14 +219,14 @@ class FacultyController extends Controller
                 ->rawColumns(['action', 'faculty'])
                 ->make(true);
         }
-        return view('pages.backend.data.university.faculty.indexfaculty');
+        return view('pages.backend.data.university.faculty.indexFaculty');
     }
 
     public function createDataFaculty()
     {
         $universities = University::all();
         $faculties = Faculty::all();
-        return view('pages.backend.data.university.faculty.createfaculty',
+        return view('pages.backend.data.university.faculty.createFaculty',
             compact('universities', 'faculties'));
     }
 
