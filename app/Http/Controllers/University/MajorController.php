@@ -8,6 +8,7 @@ use App\Models\Faculty;
 use App\Models\Major;
 use App\Models\University;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Yajra\DataTables\DataTables;
 
@@ -219,11 +220,14 @@ class MajorController extends Controller
                     return $major;
                 })
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a class="btn btn-icon btn-primary btn-block m-1"';
-                    $actionBtn .= 'href="' . route('data.major.edit', $row->id) . '"><i class="far fa-edit"></i> Edit Jurusan</a>';
-                    $actionBtn .= '<a onclick="del(' . $row->id . ')" class="btn btn-icon btn-danger btn-block m-1"';
-                    $actionBtn .= 'style="cursor:pointer;color:white"><i class="fas fa-trash"></i> Hapus Jurusan</a>';
-                    return $actionBtn;
+                    if (Auth::user()->is_admin === 1) {
+                        $actionBtn = '<a class="btn btn-icon btn-primary btn-block m-1"';
+                        $actionBtn .= 'href="' . route('data.major.edit', $row->id) . '"><i class="far fa-edit"></i> Edit Jurusan</a>';
+                        $actionBtn .= '<a onclick="del(' . $row->id . ')" class="btn btn-icon btn-danger btn-block m-1"';
+                        $actionBtn .= 'style="cursor:pointer;color:white"><i class="fas fa-trash"></i> Hapus Jurusan</a>';
+                        return $actionBtn;
+                    }
+                    return '';
                 })
                 ->rawColumns(['action', 'faculty', 'major'])
                 ->make(true);

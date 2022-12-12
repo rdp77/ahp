@@ -36,6 +36,13 @@ class UsersController extends Controller
         if ($req->ajax()) {
             $data = User::where('id', '!=', Auth::user()->id)->get();
             return Datatables::of($data)
+                ->addColumn('role', function ($data) {
+                    if ($data->is_admin === 1) {
+                        return 'Admin';
+                    }
+
+                    return 'User';
+                })
                 ->addColumn('action', function ($row) {
                     $actionBtn = '<div class="btn-group">';
                     $actionBtn .= '<a onclick="reset(' . $row->id . ')" class="btn btn-primary text-white" style="cursor:pointer;">Reset Password</a>';
@@ -168,9 +175,9 @@ class UsersController extends Controller
             $data = User::onlyTrashed()->get();
             return Datatables::of($data)
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<button onclick="restore(' . $row->id . ')" class="btn btn btn-primary 
+                    $actionBtn = '<button onclick="restore(' . $row->id . ')" class="btn btn btn-primary
                 btn-action mb-1 mt-1 mr-1">Kembalikan</button>';
-                    $actionBtn .= '<button onclick="delRecycle(' . $row->id . ')" class="btn btn-danger 
+                    $actionBtn .= '<button onclick="delRecycle(' . $row->id . ')" class="btn btn-danger
                     btn-action mb-1 mt-1">Hapus</button>';
                     return $actionBtn;
                 })

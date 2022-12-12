@@ -15,6 +15,7 @@
                 </a>
             </li>
             <li class="menu-header">{{ __('Data') }}</li>
+            @if(Auth::user()->is_admin == 1)
             <li class="nav-item dropdown {{ Request::route()->getName() == 'users.index' ? 'active' : (
                 Request::route()->getName() == 'users.create' ? 'active' : (
                         Request::route()->getName() == 'users.edit' ? 'active' : (
@@ -127,5 +128,50 @@
                 <i class="fas fa-comment-dots"></i> Feedback
             </a>
         </div>
+        @else
+            <li class="nav-item dropdown {{ Request::route()->getName() == 'data.faculty.index' ? 'active' : (
+                                                Request::route()->getName() == 'data.faculty.edit' ? 'active' : (
+                                                    Request::route()->getName() == 'data.faculty.create' ? 'active' : (
+                                                            Request::route()->getName() == 'data.major.index' ? 'active' : (
+                                                                Request::route()->getName() == 'data.major.edit' ? 'active' : (
+                                                                    Request::route()->getName() == 'data.major.create' ? 'active' : ''))))) }}">
+                <a href="javascript:void(0)" class="nav-link has-dropdown" data-toggle="dropdown">
+                    <i class="fas fa-building-columns"></i>
+                    <span>{{ __('Universitas') }}</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::route()->getName() == 'data.faculty.index' ? 'active' : (
+                                                Request::route()->getName() == 'data.faculty.edit' ? 'active' : (
+                                                    Request::route()->getName() == 'data.faculty.create' ? 'active' : ''
+                                                )) }}">
+                        <a class="nav-link" href="{{ route('data.faculty.index') }}">{{ __('Fakultas') }}</a>
+                    </li>
+                    <li class="{{ Request::route()->getName() == 'data.major.index' ? 'active' : (
+                                                Request::route()->getName() == 'data.major.edit' ? 'active' : (
+                                                    Request::route()->getName() == 'data.major.create' ? 'active' : ''
+                                                )) }}">
+                        <a class="nav-link" href="{{ route('data.major.index') }}">{{ __('Jurusan') }}</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown {{ Request::route()->getName() == 'dashboard.criteria' ? 'active' : (
+                        Request::route()->getName() == 'dashboard.alternative' ? 'active' : (
+                                Request::route()->getName() == 'dashboard.weighting' ? 'active' : '')) }}">
+                <a href="javascript:void(0)" class="nav-link has-dropdown" data-toggle="dropdown">
+                    <i class="fas fa-database"></i>
+                    <span>{{ __('AHP') }}</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::route()->getName() == 'dashboard.criteria' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('dashboard.criteria') }}">{{ __('Kriteria') }}</a>
+                    </li>
+                    <li class="{{ Request::route()->getName() == 'dashboard.alternative' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('dashboard.alternative') }}">{{ __('Alternatif') }}</a>
+                    </li>
+                    <li class="{{ Request::route()->getName() == 'dashboard.weighting' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('dashboard.weighting') }}">{{ __('Pembobotan') }}</a>
+                    </li>
+                </ul>
+            </li>
+            </ul>
+        @endif
     </aside>
 </div>

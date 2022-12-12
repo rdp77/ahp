@@ -21,13 +21,14 @@
     <div class="card-body">
         <table class="table-striped table" id="table" width="100%">
             <thead>
-                <tr>
-                    <th>
-                        {{ __('Username') }}
-                    </th>
-                    <th>{{ __('Nama') }}</th>
-                    <th>{{ __('Aksi') }}</th>
-                </tr>
+            <tr>
+                <th>
+                    {{ __('Username') }}
+                </th>
+                <th>{{ __('Nama') }}</th>
+                <th>{{ __('Hak Akses') }}</th>
+                <th>{{ __('Aksi') }}</th>
+            </tr>
             </thead>
             <tbody>
             </tbody>
@@ -36,8 +37,8 @@
 </div>
 @endsection
 @section('script')
-<script>
-    var index = '{{ route('users.index') }}';    
-</script>
-<script src="{{ asset('assets/pages/data/users/index.js') }}"></script>
+    <script>
+        var index = '{{ route('users.index') }}';
+    </script>
+    <script src="{{ asset('assets/pages/data/users/index.js') }}"></script>
 @endsection

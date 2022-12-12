@@ -9,6 +9,7 @@ use App\Models\Pivot\UniversityFaculty;
 use App\Models\University;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Yajra\DataTables\DataTables;
 
@@ -210,11 +211,15 @@ class FacultyController extends Controller
                     return $faculty;
                 })
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a class="btn btn-icon btn-primary btn-block m-1"';
-                    $actionBtn .= 'href="' . route('data.faculty.edit', $row->id) . '"><i class="far fa-edit"></i> Edit Fakultas</a>';
-                    $actionBtn .= '<a onclick="del(' . $row->id . ')" class="btn btn-icon btn-danger btn-block m-1"';
-                    $actionBtn .= 'style="cursor:pointer;color:white"><i class="fas fa-trash"></i> Hapus Fakultas</a>';
-                    return $actionBtn;
+                    if (Auth::user()->is_admin === 1) {
+                        $actionBtn = '<a class="btn btn-icon btn-primary btn-block m-1"';
+                        $actionBtn .= 'href="' . route('data.faculty.edit', $row->id) . '"><i class="far fa-edit"></i> Edit Fakultas</a>';
+                        $actionBtn .= '<a onclick="del(' . $row->id . ')" class="btn btn-icon btn-danger btn-block m-1"';
+                        $actionBtn .= 'style="cursor:pointer;color:white"><i class="fas fa-trash"></i> Hapus Fakultas</a>';
+                        return $actionBtn;
+                    }
+
+                    return '';
                 })
                 ->rawColumns(['action', 'faculty'])
                 ->make(true);
