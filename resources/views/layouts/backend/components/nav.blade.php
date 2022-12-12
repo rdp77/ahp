@@ -12,14 +12,20 @@
     <ul class="navbar-nav navbar-right">
         <li class="dropdown">
             <a href="javascript:void(0)" data-toggle="dropdown"
-                class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+               class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                 {{-- <img alt="image" src="{{ asset('assets/img/avatar.png') }}" class="rounded-circle mr-1"> --}}
                 <figure class="avatar mr-2 avatar-sm bg-info text-white"
-                    data-initial="{{ Str::upper(substr(Auth::user()->name, 0, 2)) }}"></figure>
+                        data-initial="{{ Str::upper(substr(Auth::user()->name, 0, 2)) }}"></figure>
                 <div class="d-sm-none d-lg-inline-block">{{ __('Hai, ') . Auth::user()->name }}</div>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <div class="dropdown-title">{{ __('Administrator') }}</div>
+                <div class="dropdown-title">
+                    @if(Auth::user()->is_admin == 1)
+                        {{ __('Administrator') }}
+                    @else
+                        {{ __('User') }}
+                    @endif
+                </div>
                 <a id="name" class="dropdown-item has-icon" style="cursor: pointer">
                     <i class="fas fa-user"></i> {{ __('Ganti Nama') }}
                 </a>
@@ -29,7 +35,7 @@
                 <div class="dropdown-divider"></div>
                 <a href="{{ route('logout') }}" onclick="event.preventDefault();
                               document.getElementById('logout-form').submit();"
-                    class="dropdown-item has-icon text-danger">
+                   class="dropdown-item has-icon text-danger">
                     <i class="fas fa-sign-out-alt"></i> {{ __('auth.logout') }}
                 </a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
