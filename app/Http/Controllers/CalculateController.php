@@ -166,7 +166,7 @@ class CalculateController extends Controller
                     'url' => URL::full(),
                     'ip' => $request->ip(),
                     'user_agent' => $request->header('user-agent'),
-                    'university' => $universityAHP ?? null,
+                    'university' => $universityAHP ?? [University::where('id', json_decode($request->alternativeuniv)[0])->first()],
                     'major' => $majorAHP,
                     'recommendation' => [
                         'university' => $university ? University::where('name', $universityRecommendation['name'])->first() :
@@ -177,11 +177,11 @@ class CalculateController extends Controller
                 ->log('calculate');
 
             return view('pages.frontend.calculate.history', [
-                'university' => $universityAHP ?? null,
+                'university' => $universityAHP ?? [University::where('id', json_decode($request->alternativeuniv)[0])->first()],
                 'major' => $majorAHP,
                 'recommendation' => [
                     'university' => $university ? University::where('name', $universityRecommendation['name'])->first() :
-                        University::where('id', json_decode($request->alternative)[0])->first(),
+                        University::where('id', json_decode($request->alternativeuniv)[0])->first(),
                     'major' => $recommendation
                 ]
             ]);
