@@ -6,7 +6,7 @@
                 <p class="lead">Buat keputusan untuk mendukung kami agar kami bisa lebih berkembang.</p>
             </div>
             <div class="col-md-5 text-right">
-                <button id="modal" class="btn btn-primary btn-lg">Beri Keputusan</button>
+                <button id="modal" class="btn btn-primary btn-lg">Beri Feedback</button>
             </div>
         </div>
     </div>
