@@ -35,7 +35,6 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/",
-            "Bardiz12\\ahp\\Tests\\": "vendor/bardiz12/ahp/tests/"
         }
     },
     "scripts": {
