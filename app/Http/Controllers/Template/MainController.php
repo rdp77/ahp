@@ -11,7 +11,6 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
-use Sarfraznawaz2005\ServerMonitor\ServerMonitor;
 
 class MainController extends Controller
 {
@@ -20,10 +19,9 @@ class MainController extends Controller
      *
      * @return void
      */
-    public function __construct(ServerMonitor $serverMonitor)
+    public function __construct()
     {
         $this->middleware('auth');
-        $this->serverMonitor = $serverMonitor;
     }
 
     /**
@@ -145,15 +143,5 @@ class MainController extends Controller
             ->get(["name", "id"]);
 
         return Response::json($data);
-    }
-
-    public function serverMonitorRefreshAll(): array
-    {
-        return $this->serverMonitor->runChecks();
-    }
-
-    public function serverMonitorRefresh(): array
-    {
-        return $this->serverMonitor->runCheck(request()->check);
     }
 }

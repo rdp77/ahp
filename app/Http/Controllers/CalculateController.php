@@ -4,15 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Enums\CriteriaTypeEnum;
 use App\Http\Controllers\Template\MainController;
-use App\Models\Faculty;
 use App\Models\Feedback;
 use App\Models\Major;
 use App\Models\Criteria;
 use App\Models\Pivot\FacultyMajor;
 use App\Models\University;
-use App\Models\User;
 use App\Models\Weighting;
-use App\Perhitungan;
 use Bardiz12\AHPDss\AHP;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -20,10 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
-use Sarfraznawaz2005\ServerMonitor\ServerMonitor;
 use Spatie\Activitylog\Models\Activity;
 
 class CalculateController extends Controller
@@ -36,10 +30,9 @@ class CalculateController extends Controller
      *
      * @return void
      */
-    public function __construct(MainController $MainController, ServerMonitor $serverMonitor)
+    public function __construct(MainController $MainController)
     {
         $this->MainController = $MainController;
-        $this->serverMonitor = $serverMonitor;
         $this->criteriaUniv = Criteria::where('type', CriteriaTypeEnum::UNIVERSITY)->get();
         $this->criteriaMaj = Criteria::where('type', CriteriaTypeEnum::MAJOR)->get();
     }
@@ -294,17 +287,6 @@ class CalculateController extends Controller
                 'major' => $activity->properties['recommendation']['major']
             ],
         ]);
-    }
-
-    public function serverMonitor(Request $req)
-    {
-        $checkResults = $this->serverMonitor->getChecks();
-        $lastRun = $this->serverMonitor->getLastCheckedTime();
-
-        return view('pages.backend.server.indexServer', compact(
-            'checkResults',
-            'lastRun'
-        ));
     }
 
     public function feedback(Request $req)

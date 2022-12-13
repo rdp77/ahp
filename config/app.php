@@ -168,8 +168,6 @@ return [
         Milon\Barcode\BarcodeServiceProvider::class,
         LaraIzitoast\LaraIzitoastServiceProvider::class,
         Laravolt\Indonesia\ServiceProvider::class,
-        Sarfraznawaz2005\ServerMonitor\ServiceProvider::class,
-        Spatie\Menu\Laravel\MenuServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -236,7 +234,6 @@ return [
         'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,
         'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
         'Indonesia' => Laravolt\Indonesia\Facade::class,
-        'Menu' => Spatie\Menu\Laravel\Facades\Menu::class,
 
     ],
 

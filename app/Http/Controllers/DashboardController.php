@@ -15,7 +15,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Yajra\DataTables\DataTables;
-use Sarfraznawaz2005\ServerMonitor\ServerMonitor;
 use Spatie\Activitylog\Models\Activity;
 
 class DashboardController extends Controller
@@ -25,11 +24,10 @@ class DashboardController extends Controller
      *
      * @return void
      */
-    public function __construct(MainController $MainController, ServerMonitor $serverMonitor)
+    public function __construct(MainController $MainController)
     {
         $this->middleware('auth');
         $this->MainController = $MainController;
-        $this->serverMonitor = $serverMonitor;
     }
 
     /**
@@ -85,17 +83,6 @@ class DashboardController extends Controller
                 ->make(true);
         }
         return view('pages.backend.log.IndexLog');
-    }
-
-    public function serverMonitor(Request $req)
-    {
-        $checkResults = $this->serverMonitor->getChecks();
-        $lastRun = $this->serverMonitor->getLastCheckedTime();
-
-        return view('pages.backend.server.indexServer', compact(
-            'checkResults',
-            'lastRun'
-        ));
     }
 
     public function feedback(Request $req)
