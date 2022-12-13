@@ -43,9 +43,10 @@ class DashboardController extends Controller
         $log = Activity::limit(7)
             ->orderBy('id', 'desc')
             ->get();
-        $users = User::count();
+        $users = User::where('is_admin', 1)->count();
         $logCount = Activity::where('causer_id', Auth::user()->id)
             ->count();
+        $university = University::count();
         $faculty = Faculty::count();
         $major = Major::count();
 
@@ -55,6 +56,7 @@ class DashboardController extends Controller
             'log',
             'users',
             'logCount',
+            'university',
             'faculty',
             'major'
         ));

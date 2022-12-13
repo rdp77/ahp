@@ -50,6 +50,11 @@
     </div>
 @endsection
 @section('scripts')
+    <style>
+        .form-control {
+            width: 70px;
+        }
+    </style>
     <script src="{{ asset('assets/pages/ahp.js') }}"></script>
     <script src="{{ asset('assets/pages/ahpmaj.js') }}"></script>
 @endsection

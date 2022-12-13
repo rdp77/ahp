@@ -170,7 +170,7 @@ class CalculateController extends Controller
                     'major' => $majorAHP,
                     'recommendation' => [
                         'university' => $university ? University::where('name', $universityRecommendation['name'])->first() :
-                            University::where('id', json_decode($request->alternative)[0])->first(),
+                            University::where('id', json_decode($request->alternativeuniv)[0])->first(),
                         'major' => $recommendation
                     ]
                 ])
@@ -186,6 +186,7 @@ class CalculateController extends Controller
                 ]
             ]);
         } catch (\Exception $e) {
+            Log::error($e->getMessage() . $e->getTraceAsString() . $e->getFile() . $e->getLine());
             return response()->json([
                 'error' => $e->getMessage()
             ]);
