@@ -235,4 +235,9 @@ class DashboardController extends Controller
         }
         return view('pages.backend.data.indexWeighting');
     }
+
+    public function report(Request $request)
+    {
+
+    }
 }

@@ -20,6 +20,7 @@ class User extends Seeder
                 'id' => '1',
                 'name' => 'Wreative',
                 'username' => 'admin',
+                'is_admin' => true,
                 'password' => Hash::make('admin'),
                 'updated_by' => 'Wreative',
                 'created_by' => 'Wreative',

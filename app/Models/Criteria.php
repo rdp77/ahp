@@ -25,7 +25,8 @@ class Criteria extends Model
     protected $fillable = [
         'name',
         'order',
-        'type'
+        'type',
+        'description',
     ];
 
     /**

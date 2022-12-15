@@ -19,7 +19,6 @@
                     </th>
                     <th>{{ __('Nama') }}</th>
                     <th>{{ __('Tipe') }}</th>
-                    <th>{{ __('Urutan') }}</th>
                 </tr>
                 </thead>
                 <tbody>

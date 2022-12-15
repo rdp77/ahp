@@ -45,6 +45,8 @@ Route::controller(DashboardController::class)->group(function () {
         ->name('dashboard.alternative.update');
     Route::get('/weighting', 'weighting')
         ->name('dashboard.weighting');
+    Route::get('/report', 'report')
+        ->name('dashboard.report');
 });
 
 require __DIR__ . '/auth.php';

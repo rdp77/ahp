@@ -19,7 +19,7 @@
                     </th>
                     <th>{{ __('Nama') }}</th>
                     <th>{{ __('Tipe') }}</th>
-                    <th>{{ __('Urutan') }}</th>
+                    <th>{{ __('Deskripsi') }}</th>
                 </tr>
                 </thead>
                 <tbody>

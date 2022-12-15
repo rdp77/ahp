@@ -1,9 +1,9 @@
 @extends('layouts.backend.default')
-@section('title', __('pages.title').__(' | Data Kriteria'))
-@section('titleContent', __('Kriteria'))
+@section('title', __('pages.title').__(' | Data Pembobotan'))
+@section('titleContent', __('Pembobotan'))
 @section('breadcrumb', __('AHP'))
 @section('morebreadcrumb')
-    <div class="breadcrumb-item active">{{ __('Kriteria') }}</div>
+    <div class="breadcrumb-item active">{{ __('Pembobotan') }}</div>
 @endsection
 
 @section('content')
@@ -32,5 +32,5 @@
     <script>
         var index = '{{ route('dashboard.weighting') }}';
     </script>
-    <script src="{{ asset('assets/pages/data/weighting.js') }}"></scrip>
+    <script src="{{ asset('assets/pages/data/weighting.js') }}"></script>
 @endsection

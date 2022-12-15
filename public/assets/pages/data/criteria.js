@@ -21,7 +21,7 @@ var table = $("#table").DataTable({
         {data: "DT_RowIndex", orderable: false, searchable: false, width: "10%"},
         {data: "name"},
         {data: "type"},
-        {data: "order"},
+        {data: "description"},
     ],
     buttons: [
         {
