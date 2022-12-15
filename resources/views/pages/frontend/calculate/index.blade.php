@@ -55,6 +55,7 @@
             width: 70px;
         }
     </style>
+    <script src="{{ asset('assets/pages/create.js') }}"></script>
     <script src="{{ asset('assets/pages/ahp.js') }}"></script>
     <script src="{{ asset('assets/pages/ahpmaj.js') }}"></script>
 @endsection

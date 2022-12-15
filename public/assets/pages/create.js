@@ -1,26 +1,9 @@
 "use strict";
 
-var cleave = new Cleave(".cleavePhone", {
-    prefix: "+62",
-    delimiter: " ",
-    phone: true,
-    phoneRegionCode: "id",
-});
-var cleave = new Cleave(".cleaveNIK", {
-    numeral: true,
-    delimiter: "",
-});
-var cleave = new Cleave(".cleavePostCode", {
-    numeral: true,
-    delimiter: "",
-});
-var cleave = new Cleave(".cleaveRT", {
-    creditCard: true,
-    delimiter: "",
-});
-var cleave = new Cleave(".cleaveRW", {
-    creditCard: true,
-    delimiter: "",
+$(".table-input").on('keyup', function () {
+    if ($(this).val() == 0) {
+        $(this).val(1);
+    }
 });
 
 $("#province").on("change", function () {

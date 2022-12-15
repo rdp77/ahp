@@ -93,7 +93,7 @@ class CalculateController extends Controller
             $tr .= '<th scope="col" class="text-center">' . $criteria->name . '</th>';
             $td = '';
             for ($j = 0; $j < $size; $j++) {
-                $td .= '<td><input type="text" name="' . $baris . '[' . $i . '][' . $j . ']" class="form-control table-input" id="' . $tableInput . $i . '-' . $j . '" data-i="' . $i . '" data-j="' . $j . '" value="' . ($i == $j ? '1' : '') . '" ' . ($i == $j ? 'readonly ' : 'onKeyUp="return ' . $function . ';"') . 'required /></td>';
+                $td .= '<td><input type="text" maxlength="1" name="' . $baris . '[' . $i . '][' . $j . ']" class="form-control table-input" id="' . $tableInput . $i . '-' . $j . '" data-i="' . $i . '" data-j="' . $j . '" value="' . ($i == $j ? '1' : '') . '" ' . ($i == $j ? 'readonly ' : 'onKeyUp="return ' . $function . ';"') . 'required /></td>';
             }
             $tbody .= '<tr>
                             <th scope="row" class="black white-text text-center">' . $criteria->name . '</th>
@@ -115,7 +115,7 @@ class CalculateController extends Controller
             foreach ($candidates as $i => $candidate) {
                 $td = '';
                 foreach ($candidates as $j => $candidate2) {
-                    $td .= '<td><input type="text" name="' . $name . '[' . $c . '][' . $i . '][' . $j . ']" class="form-control table-input" id="table-' . $c . $table . $i . '-' . $j . '" data-i="' . $i . '" data-j="' . $j . '" value="' . ($i == $j ? '1' : '') . '" ' . ($i == $j ? 'readonly ' : 'onKeyUp="return ' . $function . '(this,' . $c . ');"') . 'required/></td>';
+                    $td .= '<td><input type="text"  maxlength="1" name="' . $name . '[' . $c . '][' . $i . '][' . $j . ']" class="form-control table-input" id="table-' . $c . $table . $i . '-' . $j . '" data-i="' . $i . '" data-j="' . $j . '" value="' . ($i == $j ? '1' : '') . '" ' . ($i == $j ? 'readonly ' : 'onKeyUp="return ' . $function . '(this,' . $c . ');"') . 'required/></td>';
                 }
                 $tbody .= '<tr>
                             <th scope="row" class="black white-text text-center">' . $candidate->name . '</th>
