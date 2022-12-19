@@ -12,6 +12,7 @@ use App\Models\University;
 use App\Models\User;
 use App\Models\Weighting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Yajra\DataTables\DataTables;
@@ -238,6 +239,25 @@ class DashboardController extends Controller
 
     public function report(Request $request)
     {
-
+        if ($request->ajax()) {
+            $data = Activity::all()->where('description', 'calculate');
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('recommendation', function ($row) {
+                    $data = $row->properties['recommendation'];
+                    $university = $data['university']['name'];
+                    $major = $data['major']['name'];
+                    return $university . ' - ' . $major;
+                })
+                ->addColumn('user', function ($row) {
+                    return User::find($row->causer_id)->name;
+                })
+                ->addColumn('created_at', function ($row) {
+                    return Carbon::parse($row->created_at)->format('d F Y');
+                })
+                ->rawColumns(['recommendation', 'user', 'created_at'])
+                ->make(true);
+        }
+        return view('pages.backend.report');
     }
 }
