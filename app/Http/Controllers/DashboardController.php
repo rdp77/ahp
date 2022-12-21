@@ -250,7 +250,7 @@ class DashboardController extends Controller
                     return $university . ' - ' . $major;
                 })
                 ->addColumn('user', function ($row) {
-                    return User::find($row->causer_id)->name;
+                    return User::find($row->causer_id)->name ?? 'Anonymous';
                 })
                 ->addColumn('created_at', function ($row) {
                     return Carbon::parse($row->created_at)->format('d F Y');
