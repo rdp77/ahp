@@ -125,8 +125,8 @@ class DashboardController extends Controller
                     // string capitalize
                     return '<span class="badge badge-info">' . ucwords($row->type->value) . '</span>';
                 })
-                ->addColumn('order', function ($row) {
-                    return '<span class="badge badge-dark">' . $row->order . '</span>';
+                ->addColumn('description', function ($row) {
+                    return $row->description ?? 'Tidak Ada';
                 })
                 ->rawColumns(['name', 'type', 'order', 'action'])
                 ->make(true);
