@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row mb-5 text-center">
             <div class="col-lg-10 offset-lg-1">
-                <h2>Dirancang untuk <span class="text-primary"> calon mahasiswa yang bingung </span> memilih jurusan
+                <h2>Dirancang untuk calon mahasiswa yang bingung memilih jurusan
                 </h2>
                 <p class="lead">Terintegerasi langsung dengan data fakta yang dimiliki oleh PDDikti (Pangkalan Data
                     Pendidikan Tinggi).</p>
