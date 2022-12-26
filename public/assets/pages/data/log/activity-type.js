@@ -42,24 +42,12 @@ var table = $("#table").DataTable({
         },
         {
             extend: "csv",
-        },
-        {
-            extend: "print",
-            text: "Print Yang Dipilih",
-            exportOptions: {
-                columns: ":visible",
-            },
+            text: "Export CSV"
         },
         {
             extend: "excelHtml5",
             exportOptions: {
                 columns: ":visible",
-            },
-        },
-        {
-            extend: "pdfHtml5",
-            exportOptions: {
-                columns: [0, 1, 2, 5],
             },
         },
         {
