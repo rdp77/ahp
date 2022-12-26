@@ -30,7 +30,7 @@ var table = $("#table").DataTable({
     buttons: [
         {
             extend: "print",
-            text: "Print Semua",
+            text: "Print",
             exportOptions: {
                 modifier: {
                     selected: null,
