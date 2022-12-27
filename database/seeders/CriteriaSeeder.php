@@ -18,66 +18,86 @@ class CriteriaSeeder extends Seeder
         $criteriaUniversity = [
             [
                 'name' => 'Biaya',
+                'description' => 'Total biaya selama kuliah'
             ],
             [
                 'name' => 'Jarak',
+                'description' => 'Jarak antara lokasi dengan universitas'
             ],
             [
                 'name' => 'Persyaratan Masuk',
+                'description' => 'Persyaratan yang dibutuhkan untuk masuk kedalam universitas'
             ],
             [
                 'name' => 'Mata Kuliah',
+                'description' => 'Total mata kuliah atau jenis dari matakuliah yang dipelajari'
             ],
             [
                 'name' => 'Beasiswa',
+                'description' => 'Adanya dukungan beasiswa untuk mahasiswa dari universitas'
             ],
             [
                 'name' => 'Jenis',
+                'description' => 'Jenis Universitas, seperti swasta, universitas terbuka atau negeri'
             ],
             [
                 'name' => 'Ranking',
+                'description' => 'Ranking universitas dari terkecil sampai terbesar'
             ],
             [
                 'name' => 'Akreditasi',
+                'description' => 'Akreditasi yang diperoleh oleh universitas'
             ],
             [
                 'name' => 'Prestasi',
+                'description' => 'Riwayat prestasi mahasiswa yang telah dilakukan di universitas tersebut'
             ],
             [
                 'name' => 'Rekomendasi',
+                'description' => 'Rekomendasi dari mahasiswa, dosen, rekan, ataupun keluarga'
             ],
         ];
 
         $criteriaMajor = [
             [
-                'name' => 'Minat'
+                'name' => 'Minat',
+                'description' => 'Minat mahasiswa dalam mempelajari jurusan tersebut'
             ],
             [
-                'name' => 'Bakat'
+                'name' => 'Bakat',
+                'description' => 'Adanya bakat untuk lebih cepat memahami dan mempelajari terkait jurusan tersebut'
             ],
             [
-                'name' => 'Jarak'
+                'name' => 'Jarak',
+                'description' => 'Jarak antara lokasi dengan jurusan atau fakultas'
             ],
             [
-                'name' => 'Reputasi'
+                'name' => 'Reputasi',
+                'description' => 'Reputasi yang pernah diperoleh terkait jurusan tersebut'
             ],
             [
-                'name' => 'Akreditasi'
+                'name' => 'Akreditasi',
+                'description' => 'Akreditasi yang diperoleh oleh jurusan'
             ],
             [
-                'name' => 'Pemahaman Dasar'
+                'name' => 'Pemahaman Dasar',
+                'description' => 'Pemahaman dasar mahasiswa terkait jurusan tersebut'
             ],
             [
-                'name' => 'Biaya'
+                'name' => 'Biaya',
+                'description' => 'Total biaya selama menempuh kuliah di jurusan tersebut'
             ],
             [
-                'name' => 'Kebutuhan Khusus'
+                'name' => 'Kebutuhan Khusus',
+                'description' => 'Prioritas kebutuhan khusus mahasiswa terhadap jurusan tersebut'
             ],
             [
-                'name' => 'Lowongan Pekerjaan'
+                'name' => 'Lowongan Pekerjaan',
+                'description' => 'Banyaknya minat di bidang industri terkait dengan jurusan tersebut'
             ],
             [
-                'name' => 'Kelas Khusus'
+                'name' => 'Kelas Khusus',
+                'description' => 'Adanya kelas khusus untuk meningkatkan softskill dan hardskill'
             ]
 
         ];
