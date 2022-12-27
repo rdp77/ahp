@@ -105,6 +105,7 @@ class CriteriaSeeder extends Seeder
         foreach ($criteriaUniversity as $index => $criteria) {
             DB::table('criteria')->insert([
                 'name' => $criteria['name'],
+                'description' => $criteria['description'],
                 'order' => $index + 1,
                 'type' => CriteriaTypeEnum::UNIVERSITY,
             ]);
@@ -113,6 +114,7 @@ class CriteriaSeeder extends Seeder
         foreach ($criteriaMajor as $index => $criteria) {
             DB::table('criteria')->insert([
                 'name' => $criteria['name'],
+                'description' => $criteria['description'],
                 'order' => $index + 1,
                 'type' => CriteriaTypeEnum::MAJOR,
             ]);
