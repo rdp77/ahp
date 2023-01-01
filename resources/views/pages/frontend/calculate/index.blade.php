@@ -24,6 +24,30 @@
             </table>
         </div>
     </div>
+    <div class="card card-dark">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Nama</th>
+                    <th scope="col">Tipe</th>
+                    <th scope="col">Deskripsi</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach ($criteria as $c)
+                    <tr>
+                        <th scope="row">{{ $loop->iteration }}</th>
+                        <td>{{ $c->name }}</td>
+                        <td>{{ $c->type->value }}</td>
+                        <td>{{ $c->description }}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
     <div class="card card-primary">
         <form action="{{ route('calculate.data') }}" method="post">
             @csrf
